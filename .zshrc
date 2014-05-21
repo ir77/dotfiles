@@ -127,6 +127,42 @@
 	alias vimrc="vim ~/.vimrc"
 	alias zshrc="vim ~/.zshrc"
 
+	# 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
+	# ./でpythonを開く
+	alias -s py=python
+	alias -s rb='ruby'
+
+	# ./で画像を開く
+	if [ `uname` = "Darwin" ]; then
+	  alias eog='open -a Preview'
+	fi
+	alias -s {pdf,png,jpg,bmp,PNG,JPG,BMP}=eog
+
+	# ./で圧縮ファイルを展開する
+	function extract() {
+	  case $1 in
+		*.tar.gz|*.tgz) tar xzvf $1;;
+		*.tar.xz) tar Jxvf $1;;
+		*.zip) unzip $1;;
+		*.lzh) lha e $1;;
+		*.tar.bz2|*.tbz) tar xjvf $1;;
+		*.tar.Z) tar zxvf $1;;
+		*.gz) gzip -dc $1;;
+		*.bz2) bzip2 -dc $1;;
+		*.Z) uncompress $1;;
+		*.tar) tar xvf $1;;
+		*.arj) unarj $1;;
+	  esac
+	}
+	alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+
+	# ./でC言語の実行
+	#function runcpp () { g++ -O2 $1; ./a.out }
+	#function runc () { gcc -o $1; ./a.out }
+	function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
+	function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
+	alias -s c=runc
+	alias -s cpp=runcpp
 #--------------------********--------------------
 
 #------------------- function -------------------

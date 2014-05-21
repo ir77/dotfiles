@@ -88,6 +88,8 @@
 # --------------------********--------------------
 
 # --------------------エイリアス------------------
+	alias cddot="cd ~/Dropbox/Backup/SymbolicLink/dotfiles"
+
 	setopt complete_aliases # aliased ls needs if file/dir completions work
 	bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 
@@ -163,6 +165,17 @@
 	function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
 	alias -s c=runc
 	alias -s cpp=runcpp
+
+	# .appの起動
+	if [[ ! -e ~/.zsh/app ]]; then
+		for i in /Applications/*.app; do
+		file=$(basename "$i" .app)
+		name=$(echo $file | tr '[ A-Z]' '[_a-z]')
+		echo alias $name="\"open -a '$file'\"" >> ~/.zsh/app
+		done
+	fi
+	source ~/.zsh/app
+
 #--------------------********--------------------
 
 #------------------- function -------------------
@@ -235,6 +248,31 @@
 
 #------------------- function -------------------
 
+#-------------------- 通知 --------------------
+	# 一定時間以上かかる処理の場合は終了時に通知してくれる
+	local COMMAND=""
+	local COMMAND_TIME=""
+	precmd() {
+		if [ "$COMMAND_TIME" -ne "0" ] ; then
+			local d=`date +%s`
+			d=`expr $d - $COMMAND_TIME`
+			if [ "$d" -ge "10" ] ; then
+				COMMAND="$COMMAND "
+				which terminal-notifier > /dev/null 2>&1 && terminal-notifier -message "${${(s: :)COMMAND}[1]}" -m "$COMMAND";
+			fi
+		fi
+		COMMAND="0"
+		COMMAND_TIME="0"
+	}
+	preexec () {
+		COMMAND="${1}"
+		if [ "`perl -e 'print($ARGV[0]=~/ssh|^vi/)' $COMMAND`" -ne 1 ] ; then
+			COMMAND_TIME=`date +%s`
+		fi
+	}
+
+#-------------------- 通知 --------------------
+
 #-------------------- その他 --------------------
 	# ディレクトリ名だけでcdする
 	setopt auto_cd
@@ -265,6 +303,7 @@
 
 	# Node.jsのバージョン管理
 	source ~/Dropbox/Backup/Export/nvm/bash_completion
+
 	# nvmの自動起動
 	. ~/Dropbox/Backup/Export/nvm/nvm.sh 
 	nvm use v0.8.9

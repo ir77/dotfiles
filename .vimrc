@@ -212,10 +212,9 @@
 	inoremap <C-B>     <LEFT>
 	inoremap <C-H>     <BS>
 	inoremap <C-F>     <RIGHt>
+
 	"inoremap <C-N>	   <DOWN>
 	"inoremap <C-P>	   <UP>
-	"inoremap <C-K>     <ESC>ld$i
-	"inoremap <C-Y>	   <ESC>pi
 
 	" jj でノーマルモードに移動する 
 	"inoremap jj <esc>

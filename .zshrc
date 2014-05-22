@@ -133,6 +133,14 @@
 	# ./でpythonを開く
 	alias -s py=python
 	alias -s rb='ruby'
+	
+	alias excel="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Excel.app"
+	alias powerPoint="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ PowerPoint.app"
+	alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
+
+	alias -s {xlsx,xls,xltx,xlt,csv}=excel
+	alias -s {docx,doc,dotx,dot}=word
+	alias -s {pptx,ppt,potx,pot}=powerPoint
 
 	# ./で画像を開く
 	if [ `uname` = "Darwin" ]; then
@@ -245,6 +253,19 @@
 		echo $pwd > ~/.workspace
 	}
 	alias cdworkspace="cd `cat ~/.workspace`"
+
+	function command_not_found_handler() {
+		local str opt
+		if [ $# != 0 ]; then
+			for i in $*; do
+				# $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
+				str="$str${str:++}$i"
+			done
+			opt='search?num=100'
+			opt="${opt}&q=${str}"
+		fi
+		open -a Safari http://www.google.co.jp/$opt
+	}
 
 #------------------- function -------------------
 

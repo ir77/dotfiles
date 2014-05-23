@@ -187,6 +187,10 @@
 #--------------------********--------------------
 
 #------------------- function -------------------
+	function d(){
+		open dict://$1
+	}
+
 	function tex(){
 		platex -kanji=sjis $1.tex
 		jbibtex -kanji=sjis $1

@@ -335,6 +335,12 @@
 	# nvm alias default v0.x.x としてエイリアスを作成し、
 	# nvm use default とするのもあり
 
+	# 濁点・半濁点の入ったファイルの表示
+	setopt COMBINING_CHARS
+
+	# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+	setopt auto_param_slash      
+
 	# 他の設定ファイルを読み込む
 	[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 

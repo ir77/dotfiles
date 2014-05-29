@@ -30,7 +30,7 @@
 		local name st color
 
 		if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-				return
+			return
 		fi
 		name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
 		if [[ -z $name ]]; then
@@ -270,12 +270,35 @@
 		w3m http://www.google.co.jp/$opt
 	}
 
+
+	# 一定時間以上かかる処理の場合は終了時に通知してくれる
+	local COMMAND=""
+	local COMMAND_TIME=""
+
 	#--- cd 時の仕掛け ---
 	function precmd () {
 		#path 指定のみで cd 実行
 		pwd=`pwd`
 		#実行の度に pwd 保存
 		echo $pwd > ~/.curdir
+
+		if [ "$COMMAND_TIME" -ne "0" ] ; then
+			local d=`date +%s`
+			d=`expr $d - $COMMAND_TIME`
+			if [ "$d" -ge "10" ] ; then
+				COMMAND="$COMMAND "
+				which terminal-notifier > /dev/null 2>&1 && terminal-notifier -message "${${(s: :)COMMAND}[1]}" -m "$COMMAND";
+			fi
+		fi
+		COMMAND="0"
+		COMMAND_TIME="0"
+	}
+
+	preexec () {
+		COMMAND="${1}"
+		if [ "`perl -e 'print($ARGV[0]=~/ssh|^vi/)' $COMMAND`" -ne 1 ] ; then
+			COMMAND_TIME=`date +%s`
+		fi
 	}
 	# 端末を新規に開くと自動的に前回の pwd に移動して始める
 	cd `cat ~/.curdir`
@@ -313,30 +336,6 @@
 
 #------------------- function -------------------
 
-#-------------------- 通知 --------------------
-	# 一定時間以上かかる処理の場合は終了時に通知してくれる
-	local COMMAND=""
-	local COMMAND_TIME=""
-	precmd() {
-		if [ "$COMMAND_TIME" -ne "0" ] ; then
-			local d=`date +%s`
-			d=`expr $d - $COMMAND_TIME`
-			if [ "$d" -ge "10" ] ; then
-				COMMAND="$COMMAND "
-				which terminal-notifier > /dev/null 2>&1 && terminal-notifier -message "${${(s: :)COMMAND}[1]}" -m "$COMMAND";
-			fi
-		fi
-		COMMAND="0"
-		COMMAND_TIME="0"
-	}
-	preexec () {
-		COMMAND="${1}"
-		if [ "`perl -e 'print($ARGV[0]=~/ssh|^vi/)' $COMMAND`" -ne 1 ] ; then
-			COMMAND_TIME=`date +%s`
-		fi
-	}
-
-#-------------------- 通知 --------------------
 
 #-------------------- その他 --------------------
 	# ディレクトリ名だけでcdする

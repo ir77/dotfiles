@@ -19,10 +19,6 @@
 	autoload colors
 	colors
 
-	#PROMPT="%n%% "
-	#RPROMPT="[%~]"
-	SPROMPT="correct: %R -> %r ? "
-
 	# ${fg[...]} や $reset_color をロード
 	autoload -U colors; colors
 
@@ -59,7 +55,11 @@
 	# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 	setopt prompt_subst
 
-	RPROMPT='[`rprompt-git-current-branch`%~]'
+	#PROMPT="%n%% "
+	#RPROMPT="[%~]"
+
+	PROMPT=$'[`rprompt-git-current-branch`%~]\n[%B%F{blue}%*%f%b] => '
+	SPROMPT="correct: %R -> %r ? "
 
 	# lsコマンドとzsh補完候補の色を揃える設定
 	unset LANG

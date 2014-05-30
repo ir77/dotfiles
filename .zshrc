@@ -58,7 +58,7 @@
 	#PROMPT="%n%% "
 	#RPROMPT="[%~]"
 
-	PROMPT=$'[`rprompt-git-current-branch`%~]\n[%B%F{blue}%*%f%b] => '
+	PROMPT=$'[( `rprompt-git-current-branch`) %~]\n[%B%F{blue}%*%f%b] => '
 	SPROMPT="correct: %R -> %r ? "
 
 	# lsコマンドとzsh補完候補の色を揃える設定

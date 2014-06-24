@@ -213,8 +213,13 @@
 	inoremap <C-H>     <BS>
 	inoremap <C-F>     <RIGHt>
 
-	"inoremap <C-N>	   <DOWN>
-	"inoremap <C-P>	   <UP>
+	"非補完時は行移動をj,kと同じ動作にして補完中は候補選択
+	"inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
+	"inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
+	"inoremap <silent> <expr> <Up>   pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
+	"inoremap <silent> <expr> <Down> pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
+	inoremap <C-N>	   <DOWN>
+	inoremap <C-P>	   <UP>
 
 	" jj でノーマルモードに移動する 
 	"inoremap jj <esc>

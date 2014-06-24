@@ -58,7 +58,8 @@
 	#PROMPT="%n%% "
 	#RPROMPT="[%~]"
 
-	PROMPT=$'[( `rprompt-git-current-branch`) %~]\n[%B%F{blue}%*%f%b] => '
+	PROMPT=$'[( `rprompt-git-current-branch`) %~]\n[%B%F{white}%*%f%b] => '
+	RPROMPT="--------------------------------------------------------"
 	SPROMPT="correct: %R -> %r ? "
 
 	# lsコマンドとzsh補完候補の色を揃える設定
@@ -164,6 +165,7 @@
 	alias lal="ls -a -lA"
 
 	alias memo="vim ~/Dropbox/Backup/memo.txt"
+	alias ememo="emacs ~/Dropbox/Backup/memo.txt"
 	alias vimrc="vim ~/.vimrc"
 	alias zshrc="vim ~/.zshrc"
 
@@ -175,6 +177,11 @@
 	alias excel="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Excel.app"
 	alias powerPoint="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ PowerPoint.app"
 	alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
+
+	alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
+
+	alias disk_Utility="open /Applications/Utilities/Disk\ Utility.app"
+	alias activity_Monitor="open /Applications/Utilities/Activity\ Monitor.app"
 
 	alias -s {xlsx,xls,xltx,xlt,csv}=excel
 	alias -s {docx,doc,dotx,dot}=word

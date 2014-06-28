@@ -108,6 +108,7 @@
 
 	# 重複したコマンドを無視する
 	setopt hist_ignore_dups
+	setopt hist_ignore_all_dups
 
 	# 重複したディレクトリを追加しない
 	setopt pushd_ignore_dups
@@ -340,6 +341,51 @@
 	}
 
 	function history-all { history -E 1 }
+
+	function peco-select-history() {
+		local tac
+		if which tac > /dev/null; then
+			tac="tac"
+		else
+			tac="tail -r"
+		fi
+		BUFFER=$(history -n 1 | \
+			eval $tac | \
+			peco --query "$LBUFFER")
+		CURSOR=$#BUFFER
+		zle clear-screen
+	}
+	zle -N peco-select-history
+	bindkey '^r' peco-select-history
+
+	# {{{
+	# cd 履歴を記録
+	typeset -U chpwd_functions
+	CD_HISTORY_FILE=${HOME}/.cd_history_file # cd 履歴の記録先ファイル
+	function chpwd_record_history() {
+		echo $PWD >> ${CD_HISTORY_FILE}
+	}
+	chpwd_functions=($chpwd_functions chpwd_record_history)
+
+	# peco を使って cd 履歴の中からディレクトリを選択
+	# 過去の訪問回数が多いほど選択候補の上に来る
+	function peco_get_destination_from_history() {
+		sort ${CD_HISTORY_FILE} | uniq -c | sort -r | \
+			sed -e 's/^[ ]*[0-9]*[ ]*//' | \
+			sed -e s"/^${HOME//\//\\/}/~/" | \
+			peco | xargs echo
+	}
+
+	# peco を使って cd 履歴の中からディレクトリを選択し cd するウィジェット
+	function peco_cd_history() {
+		local destination=$(peco_get_destination_from_history)
+		[ -n $destination ] && cd ${destination/#\~/${HOME}}
+		zle reset-prompt
+	}
+	zle -N peco_cd_history
+	# }}}
+
+	bindkey '^s' peco_cd_history
 
 #------------------- function -------------------
 

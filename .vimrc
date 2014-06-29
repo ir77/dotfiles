@@ -186,7 +186,7 @@
 
 "--------------------Normalモード--------------------"
 	"noremap <C-A>	   <HOME>
-	"noremap <C-E>	   <END>
+	noremap <C-E>	   <END>
 	noremap f           za
 	noremap F           zA
 
@@ -338,6 +338,9 @@
 
 	" vimのビープ音を殺す
 	set vb t_vb=
+
+	" scrollが遅いことを解決できる？
+	set lazyredraw
 
 "--------------------別ファイルの読み込み--------------------"
 	"if filereadable(expand('~/.vimrc.chInsert'))

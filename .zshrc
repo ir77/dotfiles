@@ -351,9 +351,15 @@
 		fi
 		BUFFER=$(history -n 1 | \
 			eval $tac | \
-			peco --query "$LBUFFER")
-		CURSOR=$#BUFFER
-		zle clear-screen
+			peco --query "$LBUFFER"
+		)
+		#echo $BUFFER
+		#eval $BUFFER
+		#BUFFER=""
+		#zle reset-prompt
+		
+		##CURSOR=$#BUFFER
+		##zle clear-screen
 	}
 	zle -N peco-select-history
 	bindkey '^r' peco-select-history
@@ -379,12 +385,12 @@
 	# peco を使って cd 履歴の中からディレクトリを選択し cd するウィジェット
 	function peco_cd_history() {
 		local destination=$(peco_get_destination_from_history)
+		echo "cd "${destination/#\~/${HOME}}
 		[ -n $destination ] && cd ${destination/#\~/${HOME}}
 		zle reset-prompt
 	}
 	zle -N peco_cd_history
 	# }}}
-
 	bindkey '^s' peco_cd_history
 
 #------------------- function -------------------

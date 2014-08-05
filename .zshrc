@@ -128,6 +128,7 @@
 # --------------------********--------------------
 
 # --------------------エイリアス------------------
+	alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 	alias cddot="cd ~/Dropbox/Backup/SymbolicLink/dotfiles"
 
 	setopt complete_aliases # aliased ls needs if file/dir completions work
@@ -238,21 +239,23 @@
 	}
 
 	function tex(){
-		platex -kanji=sjis $1.tex
-		jbibtex -kanji=sjis $1
-		platex -kanji=sjis $1.tex
-		platex -kanji=sjis $1.tex
-		dvipdfmx $1.dvi
-		open $1.pdf
-	}
-
-	function texEUC(){
-		platex -kanji=euc $1.tex
-		jbibtex -kanji=euc $1
-		platex -kanji=euc $1.tex
-		platex -kanji=euc $1.tex
-		dvipdfmx $1.dvi
-		open $1.pdf
+		VAR=`nkf -g $1.tex`
+		if [ "${VAR}" = "Shift_JIS" ]; then
+			platex -kanji=sjis $1.tex
+			jbibtex -kanji=sjis $1
+			platex -kanji=sjis $1.tex
+			platex -kanji=sjis $1.tex
+			dvipdfmx $1.dvi
+			open $1.pdf
+		elif [ "${VAR}" = "EUC-JP" ]; then
+			platex -kanji=euc $1.tex
+			jbibtex -kanji=euc $1
+			platex -kanji=euc $1.tex
+			platex -kanji=euc $1.tex
+			dvipdfmx $1.dvi
+			open $1.pdf
+		fi
+		echo ${VAR}
 	}
 
 	function texUTF8(){
@@ -353,13 +356,6 @@
 			eval $tac | \
 			peco --query "$LBUFFER"
 		)
-		#echo $BUFFER
-		#eval $BUFFER
-		#BUFFER=""
-		#zle reset-prompt
-		
-		##CURSOR=$#BUFFER
-		##zle clear-screen
 	}
 	zle -N peco-select-history
 	bindkey '^r' peco-select-history

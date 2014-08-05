@@ -102,7 +102,6 @@
 	colorscheme desert
 	"colorscheme molokai
 	"colorscheme zenburn
-
 	"カラー設定"
 	syntax on
 
@@ -342,6 +341,7 @@
 	" scrollが遅いことを解決できる？
 	set lazyredraw
 
+	au BufRead,BufNewFile *.txt set syntax=desert.vim
 "--------------------別ファイルの読み込み--------------------"
 	"if filereadable(expand('~/.vimrc.chInsert'))
 	"	source ~/.vimrc.chInsert

@@ -7,6 +7,8 @@ upgrade
 # Packages for development
 install zsh
 install git
+install nkf
+install coreutils
 
 # Packages for brew-cask
 install brew-cask
@@ -18,9 +20,10 @@ cask install iterm2
 cask install xquartz
 cask install caffeine
 cask install Karabiner
+cask install appcleaner
+cask install bettertouchtool
+cask insatll google-japanese-ime
 
-tap 'komagata/mycask'
-cask install line
 
 # Remove outdated versions
 cleanup

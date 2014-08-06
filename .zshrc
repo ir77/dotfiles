@@ -421,11 +421,11 @@
 	setopt globdots
 
 	# Node.jsのバージョン管理
-	source ~/Dropbox/Backup/Export/nvm/bash_completion
+	#source ~/Dropbox/Backup/Export/nvm/bash_completion
 
 	# nvmの自動起動
-	. ~/Dropbox/Backup/Export/nvm/nvm.sh 
-	nvm use v0.8.9
+	#. ~/Dropbox/Backup/Export/nvm/nvm.sh 
+	#nvm use v0.8.9
 	# nvm alias default v0.x.x としてエイリアスを作成し、
 	# nvm use default とするのもあり
 

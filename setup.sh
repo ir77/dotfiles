@@ -13,5 +13,8 @@ mkdir -p ~/.vim/bundle
 git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 git clone https://github.com/ir77/dotfiles.git ~/Desktop/
 
-ln -snf ~/Desktop/dotfiles/.zshrc ~/                                                               
+ln -snf ~/Desktop/dotfiles/.zshrc ~/
 ln -snf ~/Desktop/dotfiles/.vimrc ~/
+
+brew tap peco/peco
+brew install peco

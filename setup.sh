@@ -18,3 +18,7 @@ ln -snf ~/Desktop/dotfiles/.vimrc ~/
 
 brew tap peco/peco
 brew install peco
+
+brew tap caskroom/versions
+brew cask search java
+brew cask install java7

@@ -9,6 +9,7 @@ install zsh
 install git
 install nkf
 install coreutils
+install tig
 
 # Packages for brew-cask
 install brew-cask

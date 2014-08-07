@@ -443,3 +443,11 @@
 	export LESSCHARSET=utf-8 
 	
 # -------------------- その他 --------------------
+
+# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+export COCOS_CONSOLE_ROOT=/Users/JP20014/Desktop/cocos2d-x/tools/cocos2d-console/bin
+export PATH=$COCOS_CONSOLE_ROOT:$PATH
+
+# Add environment variable ANT_ROOT for cocos2d-x
+export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
+export PATH=$ANT_ROOT:$PATH

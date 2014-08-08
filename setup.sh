@@ -22,3 +22,5 @@ brew install peco
 brew tap caskroom/versions
 brew cask search java
 brew cask install java7
+
+curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh

@@ -10,6 +10,7 @@ install git
 install nkf
 install coreutils
 install tig
+install vim
 
 # Packages for brew-cask
 install brew-cask

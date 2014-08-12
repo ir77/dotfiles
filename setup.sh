@@ -24,3 +24,7 @@ brew cask search java
 brew cask install java7
 
 curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
+
+# do
+# sudo mv /usr/bin/vim /usr/bin/old_vim
+# sudo ln /usr/local/Cellar/vim/7.4.hoge/bin/vim /usr/bin/

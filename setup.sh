@@ -23,6 +23,8 @@ brew tap caskroom/versions
 brew cask search java
 brew cask install java7
 
+sudo gem install tw
+
 curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
 
 # do

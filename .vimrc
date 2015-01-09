@@ -23,7 +23,6 @@
 	NeoBundle 'Shougo/neosnippet-snippets'
 	NeoBundle 'git://github.com/scrooloose/syntastic.git'
 	NeoBundle 'git://github.com/Yggdroot/indentLine.git'
-	NeoBundle 'kana/vim-submode'
 	NeoBundle 'osyo-manga/vim-over'
 	NeoBundle 'Align'
 	NeoBundle 'thinca/vim-quickrun'
@@ -106,9 +105,10 @@
 	" }}}
 
 "--------------------View設定--------------------"
-	colorscheme desert
+	"colorscheme desert
 	"colorscheme molokai
-	"colorscheme zenburn
+	colorscheme zenburn
+	
 	"カラー設定"
 	syntax on
 
@@ -191,8 +191,6 @@
 	map <silent> [Tag]p :tabprevious<CR>
 
 "--------------------Normalモード--------------------"
-	"noremap <C-A>	   <HOME>
-	noremap <C-E>	   <END>
 	noremap f           za
 	noremap F           zA
 
@@ -211,26 +209,6 @@
 	" 置換
     noremap S           :%s///g<LEFT><LEFT><LEFT>
 
-	" 一行挿入
-	noremap <CR> o<ESC>
-	noremap <S-CR> O<ESC>
-
-	" スペースキーを使ってスクロール
-	nnoremap <Space> jzz
-	nnoremap <S-Space> kzz
-
-	"Vimの便利な画面分割＆タブページと、それを更に便利にする方法 - Qiita
-	"http://qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca
-	"画面分割時のウィンドウサイズの変更を便利にする
-	call submode#enter_with('bufmove', 'n', '', 's>', '<C-w><')
-	call submode#enter_with('bufmove', 'n', '', 's<', '<C-w>>')
-	call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
-	call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
-	call submode#map('bufmove', 'n', '', '>', '<C-w><')
-	call submode#map('bufmove', 'n', '', '<', '<C-w>>')
-	call submode#map('bufmove', 'n', '', '+', '<C-w>+')
-	call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-	
 "--------------------Insertモード--------------------"
 	inoremap <C-A>     <HOME>
 	inoremap <C-E>     <END>
@@ -246,9 +224,6 @@
 	"inoremap <silent> <expr> <Down> pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
 	inoremap <C-N>	   <DOWN>
 	inoremap <C-P>	   <UP>
-
-	" jj でノーマルモードに移動する 
-	"inoremap jj <esc>
 
 	"BSで削除できるものを指定する
 	" indent  : 行頭の空白
@@ -349,8 +324,3 @@
 	set lazyredraw
 
 	au BufRead,BufNewFile *.txt set syntax=desert.vim
-"--------------------別ファイルの読み込み--------------------"
-	"if filereadable(expand('~/.vimrc.chInsert'))
-	"	source ~/.vimrc.chInsert
-	"endif
-

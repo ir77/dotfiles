@@ -129,7 +129,6 @@
 
 # --------------------エイリアス------------------
 	alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
-	alias cddot="cd ~/Dropbox/Backup/SymbolicLink/dotfiles"
 
 	setopt complete_aliases # aliased ls needs if file/dir completions work
 	bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
@@ -137,9 +136,6 @@
 	# javaのコンパイル時に文字化けするのを防ぐ
 	alias java='java -Dfile.encoding=UTF-8'
 	alias javac='javac -J-Dfile.encoding=UTF-8'
-
-	# erutaso
-	alias erutaso="~/Code/Terminal/sl-master/./erutaso"
 
 	# rmコマンドでゴミ箱に送る
 	alias trashClean='rm ~/.trash/*'
@@ -149,9 +145,6 @@
 	# sudo du -hxd 1 ~/Dropbox/    
 	alias duDropbox="du -hxd 1 ~/Dropbox/"
 
-	# グローバルエイリアス
-	alias -g L='| less'
-	alias -g G='| grep'
 	# grep結果に色を点ける
 	alias grep="grep -a --color"
 
@@ -167,7 +160,6 @@
 	alias lal="ls -a -lA"
 
 	alias memo="vim ~/Dropbox/Backup/memo.txt"
-	alias ememo="emacs ~/Dropbox/Backup/memo.txt"
 	alias vimrc="vim ~/.vimrc"
 	alias zshrc="vim ~/.zshrc"
 
@@ -185,6 +177,7 @@
 	alias disk_Utility="open /Applications/Utilities/Disk\ Utility.app"
 	alias activity_Monitor="open /Applications/Utilities/Activity\ Monitor.app"
 
+	#alias rand="echo "hoge1"$'\n'"hoge2"$'\n'"hoge3" | php -R 'echo rand(0, PHP_INT_MAX)." ".$argn.PHP_EOL;' | sort | head -n 1"
 	alias -s {xlsx,xls,xltx,xlt,csv}=excel
 	alias -s {docx,doc,dotx,dot}=word
 	alias -s {pptx,ppt,potx,pot}=powerPoint
@@ -214,12 +207,13 @@
 	alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 	# ./でC言語の実行
-	#function runcpp () { g++ -O2 $1; ./a.out }
-	#function runc () { gcc -o $1; ./a.out }
 	function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
 	function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
+	function runocaml () { ocaml $1 }
+
 	alias -s c=runc
 	alias -s cpp=runcpp
+	alias -s ml=runocaml
 
 	# .appの起動
 	if [[ ! -e ~/.zsh/app ]]; then
@@ -230,7 +224,6 @@
 		done
 	fi
 	source ~/.zsh/app
-
 #--------------------********--------------------
 
 #------------------- function -------------------
@@ -239,24 +232,28 @@
 	}
 
 	function tex(){
-		VAR=`nkf -g $1.tex`
+		FILESTRING=$1
+		FILENAME=${FILESTRING%.*}
+
+		VAR=`nkf -g ${FILENAME}.tex`
 		if [ "${VAR}" = "Shift_JIS" ]; then
-			platex -kanji=sjis $1.tex
-			jbibtex -kanji=sjis $1
-			platex -kanji=sjis $1.tex
-			platex -kanji=sjis $1.tex
-			dvipdfmx $1.dvi
-			open $1.pdf
+			platex -kanji=sjis ${FILENAME}.tex
+			jbibtex -kanji=sjis ${FILENAME}
+			platex -kanji=sjis ${FILENAME}.tex
+			platex -kanji=sjis ${FILENAME}.tex
+			dvipdfmx ${FILENAME}.dvi
+			open ${FILENAME}.pdf
 		elif [ "${VAR}" = "EUC-JP" ]; then
-			platex -kanji=euc $1.tex
-			jbibtex -kanji=euc $1
-			platex -kanji=euc $1.tex
-			platex -kanji=euc $1.tex
-			dvipdfmx $1.dvi
-			open $1.pdf
+			platex -kanji=euc ${FILENAME}.tex
+			jbibtex -kanji=euc ${FILENAME}
+			platex -kanji=euc ${FILENAME}.tex
+			platex -kanji=euc ${FILENAME}.tex
+			dvipdfmx ${FILENAME}.dvi
+			open ${FILENAME}.pdf
 		fi
 		echo ${VAR}
 	}
+	alias -s tex=tex
 
 	function texUTF8(){
 		platex -kanji=utf8 $1.tex
@@ -388,7 +385,6 @@
 	zle -N peco_cd_history
 	# }}}
 	bindkey '^s' peco_cd_history
-
 #------------------- function -------------------
 
 
@@ -400,7 +396,7 @@
 	setopt no_tify
 
 	# cd後に自動でls
-	function chpwd() { ls }
+	# function chpwd() { ls }
 
 	# 自動修正機能 ex.lls →  ls?
 	setopt correct
@@ -441,13 +437,29 @@
 	## 言語環境を日本語、UTF-8 にそろえておく
 	export LANG=ja_JP.UTF-8
 	export LESSCHARSET=utf-8 
-	
 # -------------------- その他 --------------------
 
-# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/JP20014/Desktop/cocos2d-x/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
 
-# Add environment variable ANT_ROOT for cocos2d-x
-export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
-export PATH=$ANT_ROOT:$PATH
+# ---------------- Cocos2d-x 3.2 ---------------- #
+	# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+	export COCOS_CONSOLE_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/cocos2d-x-3.2/tools/cocos2d-console/bin
+	export PATH=$COCOS_CONSOLE_ROOT:$PATH
+
+	# Add environment variable ANT_ROOT for cocos2d-x
+	export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
+	export PATH=$ANT_ROOT:$PATH
+
+	# Add environment variable NDK_ROOT for cocos2d-x
+	export NDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/ndk/
+	export PATH=$NDK_ROOT:$PATH
+
+	# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
+	export ANDROID_SDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/sdk/
+	export PATH=$ANDROID_SDK_ROOT:$PATH
+	export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
+
+	alias androidEmulator='emulator -avd cocos'
+	alias cocosAndroid='cocos run -p android --ap 19'
+	alias cocosAndroidClean='sh ~/Dropbox/code/RepeaterGame/RepeaterGameProject/proj.android/build_native.sh'
+# ---------------- Cocos2d-x 3.2 ---------------- #
+

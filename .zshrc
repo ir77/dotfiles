@@ -1,232 +1,404 @@
-# --------------------基本設定-------------------- #
-	PATH=/usr/local/bin:$PATH
-	export PATH
-	export PATH="/Applications/UpTeX.app/teTeX/bin:$PATH"
-	
-	# pythonからSkypeをプログラムで操作する際に必要
-	#VERSIONER_PYTHON_PREFER_32_BIT=yes /usr/bin/python
-	export VERSIONER_PYTHON_PREFER_32_BIT=yes
-	
-	# emacs like keybind 
-	bindkey -e
-	
-	# Added by the Heroku Toolbelt
-	export PATH="/usr/local/heroku/bin:$PATH"
-# --------------------基本設定-------------------- #
+# -------------------- 基本設定 -------------------- #
+	function basicSettings {
+		PATH=/usr/local/bin:$PATH
+		export PATH
+		export PATH="/Applications/UpTeX.app/teTeX/bin:$PATH"
+		
+		# pythonからSkypeをプログラムで操作する際に必要
+		#VERSIONER_PYTHON_PREFER_32_BIT=yes /usr/bin/python
+		export VERSIONER_PYTHON_PREFER_32_BIT=yes
+		
+		# emacs like keybind 
+		bindkey -e
+		
+		# Added by the Heroku Toolbelt
+		export PATH="/usr/local/heroku/bin:$PATH"
+		
+		eval "$(rbenv init -)"
+		export PATH="$HOME/.rbenv/shims:$PATH"
 
-#--------------------表示設定-------------------- 
-	# プロンプトの設定
-	autoload colors
-	colors
-
-	# ${fg[...]} や $reset_color をロード
-	autoload -U colors; colors
-
-	#作業ディレクトリがクリーンなら緑
-	#追跡されていないファイルがあるときは黄色
-	#追跡されているファイルに変更があるときは赤
-	#変更あり＋未追跡ファイルありで太字の赤
-	function rprompt-git-current-branch {
-		local name st color
-
-		if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-			return
+		### Virtualenvwrapper
+		if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+			export WORKON_HOME=$HOME/.virtualenvs
+			source /usr/local/bin/virtualenvwrapper.sh
 		fi
-		name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
-		if [[ -z $name ]]; then
-				return
-		fi
-		st=`git status 2> /dev/null`
-		if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-				color=${fg[green]}
-		elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
-				color=${fg[yellow]}
-		elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
-				color=${fg_bold[red]}
-		else
-				color=${fg[red]}
-	fi
-
-	# %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-	# これをしないと右プロンプトの位置がずれる
-	echo "%{$color%}$name%{$reset_color%} "
 	}
+	basicSettings
 
-	# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-	setopt prompt_subst
+# -------------------- プロンプト表示設定 -------------------- #
+	function myPromptSettings {
+		autoload colors
+		colors
+		autoload -Uz vcs_info
+		autoload -Uz add-zsh-hook
+		autoload -Uz is-at-least
+		autoload -Uz colors
 
-	#PROMPT="%n%% "
-	#RPROMPT="[%~]"
+		# ${fg[...]} や $reset_color をロード
+		autoload -U colors; colors
 
-	PROMPT=$'[( `rprompt-git-current-branch`) %~]\n[%B%F{white}%*%f%b] => '
-	RPROMPT="--------------------------------------------------------"
-	SPROMPT="correct: %R -> %r ? "
+		# 以下の3つのメッセージをエクスポートする
+		#$vcs_info_msg_0_ : 通常メッセージ用 (緑)
+		#$vcs_info_msg_1_ : 警告メッセージ用 (黄色)
+		#$vcs_info_msg_2_ : エラーメッセージ用 (赤)
+		zstyle ':vcs_info:*' max-exports 3
 
-	# lsコマンドとzsh補完候補の色を揃える設定
-	unset LANG
-	export LSCOLORS=ExFxCxdxBxegedabagacad
-	export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-	zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
-	zstyle ':completion:*:default' menu select=2
-	zstyle ':completion:*' list-separator '-->'
-	zstyle ':completion:*:manuals' separate-sections true
+		zstyle ':vcs_info:*' enable git svn hg bzr
+		# 標準のフォーマット(git 以外で使用)
+		# misc(%m) は通常は空文字列に置き換えられる
+		zstyle ':vcs_info:*' formats '(%s)-[%b]'
+		zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
+		zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
+		zstyle ':vcs_info:bzr:*' use-simple true
 
-	#=============================
-	## source zsh-syntax-highlighting
-	##=============================
-	if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-	  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+		if is-at-least 4.3.10; then
+			# git 用のフォーマット
+			# git のときはステージしているかどうかを表示
+			zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u %m'
+			zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
+			zstyle ':vcs_info:git:*' check-for-changes true
+			zstyle ':vcs_info:git:*' stagedstr "+"    # %c で表示する文字列
+			zstyle ':vcs_info:git:*' unstagedstr "-"  # %u で表示する文字列
+		fi
+	}
+	myPromptSettings
+
+	# hooks 設定
+	if is-at-least 4.3.11; then
+		# git のときはフック関数を設定する
+
+		# formats '(%s)-[%b]' '%c%u %m' , actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
+		# のメッセージを設定する直前のフック関数
+		# 今回の設定の場合はformat の時は2つ, actionformats の時は3つメッセージがあるので
+		# 各関数が最大3回呼び出される。
+		zstyle ':vcs_info:git+set-message:*' hooks \
+												git-hook-begin \
+												git-untracked \
+												git-push-status \
+												git-nomerge-branch \
+												git-stash-count
+
+		# フックの最初の関数
+		# git の作業コピーのあるディレクトリのみフック関数を呼び出すようにする
+		# (.git ディレクトリ内にいるときは呼び出さない)
+		# .git ディレクトリ内では git status --porcelain などがエラーになるため
+		function +vi-git-hook-begin() {
+			if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+				# 0以外を返すとそれ以降のフック関数は呼び出されない
+				return 1
+			fi
+
+			return 0
+		}
+
+		# untracked ファイル表示
+		#
+		# untracked ファイル(バージョン管理されていないファイル)がある場合は
+		# unstaged (%u) に ? を表示
+		function +vi-git-untracked() {
+			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
+			if [[ "$1" != "1" ]]; then
+				return 0
+			fi
+
+			if command git status --porcelain 2> /dev/null \
+				| awk '{print $1}' \
+				| command grep -F '??' > /dev/null 2>&1 ; then
+
+				# unstaged (%u) に追加
+				hook_com[unstaged]+='?'
+			fi
+		}
+
+		# push していないコミットの件数表示
+		#
+		# リモートリポジトリに push していないコミットの件数を
+		# pN という形式で misc (%m) に表示する
+		function +vi-git-push-status() {
+			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
+			if [[ "$1" != "1" ]]; then
+				return 0
+			fi
+
+			if [[ "${hook_com[branch]}" != "master" ]]; then
+				# master ブランチでない場合は何もしない
+				return 0
+			fi
+
+			# push していないコミット数を取得する
+			local ahead
+			ahead=$(command git rev-list origin/master..master 2>/dev/null \
+				| wc -l \
+				| tr -d ' ')
+
+			if [[ "$ahead" -gt 0 ]]; then
+				# misc (%m) に追加
+				hook_com[misc]+="(p${ahead})"
+			fi
+		}
+
+		# マージしていない件数表示
+		#
+		# master 以外のブランチにいる場合に、
+		# 現在のブランチ上でまだ master にマージしていないコミットの件数を
+		# (mN) という形式で misc (%m) に表示
+		function +vi-git-nomerge-branch() {
+			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
+			if [[ "$1" != "1" ]]; then
+				return 0
+			fi
+
+			if [[ "${hook_com[branch]}" == "master" ]]; then
+				# master ブランチの場合は何もしない
+				return 0
+			fi
+
+			local nomerged
+			nomerged=$(command git rev-list master..${hook_com[branch]} 2>/dev/null | wc -l | tr -d ' ')
+
+			if [[ "$nomerged" -gt 0 ]] ; then
+				# misc (%m) に追加
+				hook_com[misc]+="(m${nomerged})"
+			fi
+		}
+
+
+		# stash 件数表示
+		#
+		# stash している場合は :SN という形式で misc (%m) に表示
+		function +vi-git-stash-count() {
+			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
+			if [[ "$1" != "1" ]]; then
+				return 0
+			fi
+
+			local stash
+			stash=$(command git stash list 2>/dev/null | wc -l | tr -d ' ')
+			if [[ "${stash}" -gt 0 ]]; then
+				# misc (%m) に追加
+				hook_com[misc]+=":S${stash}"
+			fi
+		}
 	fi
-# ----------------------****---------------------- 
+
+	function _update_vcs_info_msg() {
+		local -a messages
+		local prompt
+
+		LANG=en_US.UTF-8 vcs_info
+
+		if [[ -z ${vcs_info_msg_0_} ]]; then
+			# vcs_info で何も取得していない場合はプロンプトを表示しない
+			prompt="--------------------------"
+		else
+			# vcs_info で情報を取得した場合
+			# $vcs_info_msg_0_ , $vcs_info_msg_1_ , $vcs_info_msg_2_ を
+			# それぞれ緑、黄色、赤で表示する
+			[[ -n "$vcs_info_msg_0_" ]] && messages+=( "%F{green}${vcs_info_msg_0_}%f" )
+			[[ -n "$vcs_info_msg_1_" ]] && messages+=( "%F{yellow}${vcs_info_msg_1_}%f" )
+			[[ -n "$vcs_info_msg_2_" ]] && messages+=( "%F{red}${vcs_info_msg_2_}%f" )
+
+			# 間にスペースを入れて連結する
+			prompt="${(j: :)messages}"
+		fi
+
+		RPROMPT="$prompt"
+	}
+	add-zsh-hook precmd _update_vcs_info_msg
+
+	function myPromptSettings2 {
+		# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+		setopt prompt_subst
+
+		#RPROMPT="$prompt"
+		PROMPT=$'[ %~ ]\n[%B%F{white}%*%f%b] => '
+		SPROMPT="correct: %R -> %r ? "
+
+		# lsコマンドとzsh補完候補の色を揃える設定
+		unset LANG
+		export LSCOLORS=ExFxCxdxBxegedabagacad
+		export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+
+		# 補完関数の表示を強化する
+		zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+		zstyle ':completion:*:default' menu select=2
+		zstyle ':completion:*:manuals' separate-sections true
+		zstyle ':completion:*' verbose yes
+		zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+		zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+		zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
+		zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
+		zstyle ':completion:*:options' description 'yes'
+		zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
+
+		zstyle ':completion:*:manuals' separate-sections true
+		zstyle ':completion:*' list-separator '-->'
+
+		# マッチ種別を別々に表示
+		zstyle ':completion:*' group-name ''
+
+		#=============================
+		## source zsh-syntax-highlighting
+		##=============================
+		if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+		  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+		fi
+	}
+	myPromptSettings2
 
 # --------------------補完設定-------------------- 
-	# 補完機能を有効にする
-	autoload -Uz compinit
-	compinit
-	# 補完で小文字でも大文字にマッチさせる
-	zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 
+	function myCompletionSettings {
+		autoload -Uz compinit # 補完機能を有効にする
+		compinit
+		# 補完で小文字でも大文字にマッチさせる
+		zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 
 
-	# cd したら自動的にpushdする
-	setopt auto_pushd
+		# cd したら自動的にpushdする
+		setopt auto_pushd
 
-	# 補完候補が複数あるときに自動的に一覧表示する
-	setopt auto_menu
+		# 補完候補が複数あるときに自動的に一覧表示する
+		setopt auto_menu
 
-	# 補完候補にファイルの種類も表示
-	setopt list_types
-
-	# bindkey "^I" menu-complete   # 展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
-	# setopt always_last_prompt    # カーソル位置は保持したままファイル名一覧を順次その場で表示
-
-#--------------------********--------------------
+		# bindkey "^I" menu-complete   # 展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
+		# setopt always_last_prompt    # カーソル位置は保持したままファイル名一覧を順次その場で表示
+		#
+		# 補完候補にファイルの種類も表示
+		setopt list_types
+	}
+	myCompletionSettings
 
 # --------------------ヒストリー-------------------- 
-	# ヒストリの設定
-	HISTFILE=~/.zsh_history
-	HISTSIZE=1000000
-	SAVEHIST=1000000
+	function myHistorySettings {
+		HISTFILE=~/.zsh_history
+		HISTSIZE=1000000
+		SAVEHIST=1000000
 
-	# 重複したコマンドを無視する
-	setopt hist_ignore_dups
-	setopt hist_ignore_all_dups
+		# 重複したコマンドを無視する
+		setopt hist_ignore_dups
+		setopt hist_ignore_all_dups
 
-	# 重複したディレクトリを追加しない
-	setopt pushd_ignore_dups
+		# 重複したディレクトリを追加しない
+		setopt pushd_ignore_dups
 
-	# 同時に起動したzshの間でヒストリを共有する
-	setopt share_history
-	 
-	# 同じコマンドをヒストリに残さない
-	setopt hist_ignore_all_dups
+		# 同時に起動したzshの間でヒストリを共有する
+		setopt share_history
+		 
+		# 同じコマンドをヒストリに残さない
+		setopt hist_ignore_all_dups
 
-	autoload history-search-end
-	zle -N history-beginning-search-backward-end history-search-end
-	zle -N history-beginning-search-forward-end history-search-end
-	bindkey "^P" history-beginning-search-backward-end
-	bindkey "^N" history-beginning-search-forward-end
-
-# --------------------********--------------------
+		autoload history-search-end
+		zle -N history-beginning-search-backward-end history-search-end
+		zle -N history-beginning-search-forward-end history-search-end
+		bindkey "^P" history-beginning-search-backward-end
+		bindkey "^N" history-beginning-search-forward-end
+	}
+	myHistorySettings
 
 # --------------------エイリアス------------------
-	alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
+	function myAliasSettings {
+		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
-	setopt complete_aliases # aliased ls needs if file/dir completions work
-	bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+		setopt complete_aliases # aliased ls needs if file/dir completions work
+		bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 
-	# javaのコンパイル時に文字化けするのを防ぐ
-	alias java='java -Dfile.encoding=UTF-8'
-	alias javac='javac -J-Dfile.encoding=UTF-8'
+		# javaのコンパイル時に文字化けするのを防ぐ
+		alias java='java -Dfile.encoding=UTF-8'
+		alias javac='javac -J-Dfile.encoding=UTF-8'
 
-	# rmコマンドでゴミ箱に送る
-	alias trashClean='rm ~/.trash/*'
-	alias rm='gmv -f --backup=numbered --target-directory ~/.trash'
+		# rmコマンドでゴミ箱に送る
+		alias trashClean='rm ~/.trash/*'
+		alias rm='gmv -f --backup=numbered --target-directory ~/.trash'
 
-	# Dropbox以下の容量を調べるときに使うコマンド
-	# sudo du -hxd 1 ~/Dropbox/    
-	alias duDropbox="du -hxd 1 ~/Dropbox/"
+		# Dropbox以下の容量を調べるときに使うコマンド
+		# sudo du -hxd 1 ~/Dropbox/    
+		alias duDropbox="du -hxd 1 ~/Dropbox/"
+		alias duHome="du -gxd 1 ~/ | awk '$1 > 1{print}'"
 
-	# grep結果に色を点ける
-	alias grep="grep -a --color"
+		# grep結果に色を点ける
+		alias grep="grep -a --color"
 
-	# Python実行時に.pycファイルを作成しないようにする
-	alias python="python -B"
+		# Python実行時に.pycファイルを作成しないようにする
+		alias python="python -B"
+		alias pyramid="~/env/bin/python"
 
-	# 画面クリア時にlsを行う
-	alias clear=clear
+		# 画面クリア時にlsを行う
+		alias clear=clear
 
-	alias ls="ls -GFS"
-	alias la="ls -aA"
-	alias ll="ls -l"
-	alias lal="ls -a -lA"
+		alias ls="ls -GFS"
+		alias la="ls -aA"
+		alias ll="ls -l"
+		alias lal="ls -a -lA"
 
-	alias memo="vim ~/Dropbox/Backup/memo.txt"
-	alias vimrc="vim ~/.vimrc"
-	alias zshrc="vim ~/.zshrc"
+		alias memo="vim ~/Dropbox/Backup/memo.txt"
+		alias vimrc="vim ~/.vimrc"
+		alias zshrc="vim ~/.zshrc"
 
-	# 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
-	# ./でpythonを開く
-	alias -s py=python
-	alias -s rb='ruby'
-	
-	alias excel="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Excel.app"
-	alias powerPoint="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ PowerPoint.app"
-	alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
+		# 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
+		# ./でpythonを開く
+		alias -s py=python
+		alias -s rb='ruby'
+		
+		alias excel="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Excel.app"
+		alias powerPoint="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ PowerPoint.app"
+		alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
 
-	alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
+		alias word="open /Applications/Microsoft\ Office\ 2011\ 23.40.30/Microsoft\ Word.app"
 
-	alias disk_Utility="open /Applications/Utilities/Disk\ Utility.app"
-	alias activity_Monitor="open /Applications/Utilities/Activity\ Monitor.app"
+		alias disk_Utility="open /Applications/Utilities/Disk\ Utility.app"
+		alias activity_Monitor="open /Applications/Utilities/Activity\ Monitor.app"
 
-	#alias rand="echo "hoge1"$'\n'"hoge2"$'\n'"hoge3" | php -R 'echo rand(0, PHP_INT_MAX)." ".$argn.PHP_EOL;' | sort | head -n 1"
-	alias -s {xlsx,xls,xltx,xlt,csv}=excel
-	alias -s {docx,doc,dotx,dot}=word
-	alias -s {pptx,ppt,potx,pot}=powerPoint
+		#alias rand="echo "hoge1"$'\n'"hoge2"$'\n'"hoge3" | php -R 'echo rand(0, PHP_INT_MAX)." ".$argn.PHP_EOL;' | sort | head -n 1"
+		alias -s {xlsx,xls,xltx,xlt,csv}=excel
+		alias -s {docx,doc,dotx,dot}=word
+		alias -s {pptx,ppt,potx,pot}=powerPoint
 
-	# ./で画像を開く
-	if [ `uname` = "Darwin" ]; then
-	  alias eog='open -a Preview'
-	fi
-	alias -s {pdf,png,jpg,bmp,PNG,JPG,BMP}=eog
+		# ./で画像を開く
+		if [ `uname` = "Darwin" ]; then
+		  alias eog='open -a Preview'
+		fi
+		alias -s {pdf,png,jpg,bmp,PNG,JPG,BMP}=eog
 
-	# ./で圧縮ファイルを展開する
-	function extract() {
-	  case $1 in
-		*.tar.gz|*.tgz) tar xzvf $1;;
-		*.tar.xz) tar Jxvf $1;;
-		*.zip) unzip $1;;
-		*.lzh) lha e $1;;
-		*.tar.bz2|*.tbz) tar xjvf $1;;
-		*.tar.Z) tar zxvf $1;;
-		*.gz) gzip -dc $1;;
-		*.bz2) bzip2 -dc $1;;
-		*.Z) uncompress $1;;
-		*.tar) tar xvf $1;;
-		*.arj) unarj $1;;
-	  esac
+		# ./で圧縮ファイルを展開する
+		function extract() {
+		  case $1 in
+			*.tar.gz|*.tgz) tar xzvf $1;;
+			*.tar.xz) tar Jxvf $1;;
+			*.zip) unzip $1;;
+			*.lzh) lha e $1;;
+			*.tar.bz2|*.tbz) tar xjvf $1;;
+			*.tar.Z) tar zxvf $1;;
+			*.gz) gzip -dc $1;;
+			*.bz2) bzip2 -dc $1;;
+			*.Z) uncompress $1;;
+			*.tar) tar xvf $1;;
+			*.arj) unarj $1;;
+		  esac
+		}
+		alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+
+		# ./でC言語の実行
+		function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
+		function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
+		function runcpp2 () { g++ $1 && shift && ./a.out $@}
+		function runocaml () { ocaml $1 }
+
+		alias -s c=runc
+		alias -s cpp=runcpp
+		alias -s ml=runocaml
+
+		# .appの起動
+		if [[ ! -e ~/.zsh/app ]]; then
+			for i in /Applications/*.app; do
+			file=$(basename "$i" .app)
+			name=$(echo $file | tr '[ A-Z]' '[_a-z]')
+			echo alias $name="\"open -a '$file'\"" >> ~/.zsh/app
+			done
+		fi
+		source ~/.zsh/app
 	}
-	alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+	myAliasSettings
 
-	# ./でC言語の実行
-	function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
-	function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
-	function runocaml () { ocaml $1 }
-
-	alias -s c=runc
-	alias -s cpp=runcpp
-	alias -s ml=runocaml
-
-	# .appの起動
-	if [[ ! -e ~/.zsh/app ]]; then
-		for i in /Applications/*.app; do
-		file=$(basename "$i" .app)
-		name=$(echo $file | tr '[ A-Z]' '[_a-z]')
-		echo alias $name="\"open -a '$file'\"" >> ~/.zsh/app
-		done
-	fi
-	source ~/.zsh/app
-#--------------------********--------------------
-
-#------------------- function -------------------
+#------------------- functions -------------------
 	function d(){
 		open dict://$1
 	}
@@ -385,81 +557,77 @@
 	zle -N peco_cd_history
 	# }}}
 	bindkey '^s' peco_cd_history
-#------------------- function -------------------
-
 
 #-------------------- その他 --------------------
-	# ディレクトリ名だけでcdする
-	setopt auto_cd
+	function myOtherSettings {
+		# ディレクトリ名だけでcdする
+		setopt auto_cd
 
-	## バックグラウンドジョブが終了したらすぐに知らせる。
-	setopt no_tify
+		## バックグラウンドジョブが終了したらすぐに知らせる。
+		setopt no_tify
 
-	# cd後に自動でls
-	# function chpwd() { ls }
+		# cd後に自動でls
+		# function chpwd() { ls }
 
-	# 自動修正機能 ex.lls →  ls?
-	setopt correct
+		# 自動修正機能 ex.lls →  ls?
+		setopt correct
 
-	# 日本語ファイル名を表示可能にする
-	setopt print_eight_bit
-	 
-	# フローコントロールを無効にする
-	setopt no_flow_control
-	 
-	# '#' 以降をコメントとして扱う
-	setopt interactive_comments
-	 
-	# ビープ音を鳴らないようにする
-	setopt nolistbeep
+		# 日本語ファイル名を表示可能にする
+		setopt print_eight_bit
+		 
+		# フローコントロールを無効にする
+		setopt no_flow_control
+		 
+		# ビープ音を鳴らないようにする
+		setopt nolistbeep
 
-	# 明確なドットの指定なしで.から始まるファイルをマッチ
-	setopt globdots
+		# 明確なドットの指定なしで.から始まるファイルをマッチ
+		setopt globdots
 
-	# Node.jsのバージョン管理
-	#source ~/Dropbox/Backup/Export/nvm/bash_completion
+		# Node.jsのバージョン管理
+		#source ~/Dropbox/Backup/Export/nvm/bash_completion
 
-	# nvmの自動起動
-	#. ~/Dropbox/Backup/Export/nvm/nvm.sh 
-	#nvm use v0.8.9
-	# nvm alias default v0.x.x としてエイリアスを作成し、
-	# nvm use default とするのもあり
+		# nvmの自動起動
+		#. ~/Dropbox/Backup/Export/nvm/nvm.sh 
+		#nvm use v0.8.9
+		# nvm alias default v0.x.x としてエイリアスを作成し、
+		# nvm use default とするのもあり
 
-	# 濁点・半濁点の入ったファイルの表示
-	setopt COMBINING_CHARS
+		# 濁点・半濁点の入ったファイルの表示
+		setopt COMBINING_CHARS
 
-	# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-	# setopt auto_param_slash      
+		# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+		setopt auto_param_slash      
 
-	# 他の設定ファイルを読み込む
-	[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+		# 他の設定ファイルを読み込む
+		[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
-	## 言語環境を日本語、UTF-8 にそろえておく
-	export LANG=ja_JP.UTF-8
-	export LESSCHARSET=utf-8 
-# -------------------- その他 --------------------
-
+		## 言語環境を日本語、UTF-8 にそろえておく
+		export LANG=ja_JP.UTF-8
+		export LESSCHARSET=utf-8 
+	}
+	myOtherSettings
 
 # ---------------- Cocos2d-x 3.2 ---------------- #
-	# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-	export COCOS_CONSOLE_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/cocos2d-x-3.2/tools/cocos2d-console/bin
-	export PATH=$COCOS_CONSOLE_ROOT:$PATH
+	function myCocos2d-xSettings {
+		# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+		export COCOS_CONSOLE_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/cocos2d-x-3.2/tools/cocos2d-console/bin
+		export PATH=$COCOS_CONSOLE_ROOT:$PATH
 
-	# Add environment variable ANT_ROOT for cocos2d-x
-	export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
-	export PATH=$ANT_ROOT:$PATH
+		# Add environment variable ANT_ROOT for cocos2d-x
+		export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
+		export PATH=$ANT_ROOT:$PATH
 
-	# Add environment variable NDK_ROOT for cocos2d-x
-	export NDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/ndk/
-	export PATH=$NDK_ROOT:$PATH
+		# Add environment variable NDK_ROOT for cocos2d-x
+		export NDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/ndk/
+		export PATH=$NDK_ROOT:$PATH
 
-	# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-	export ANDROID_SDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/sdk/
-	export PATH=$ANDROID_SDK_ROOT:$PATH
-	export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
+		# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
+		export ANDROID_SDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/sdk/
+		export PATH=$ANDROID_SDK_ROOT:$PATH
+		export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
-	alias androidEmulator='emulator -avd cocos'
-	alias cocosAndroid='cocos run -p android --ap 19'
-	alias cocosAndroidClean='sh ~/Dropbox/code/RepeaterGame/RepeaterGameProject/proj.android/build_native.sh'
-# ---------------- Cocos2d-x 3.2 ---------------- #
-
+		alias androidEmulator='emulator -avd cocos'
+		alias cocosAndroid='cocos run -p android --ap 19'
+	}
+	myCocos2d-xSettings

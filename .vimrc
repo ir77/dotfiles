@@ -32,6 +32,15 @@
 		\       "outputter/buffer/close_on_empty" : 1
 		\   },
 		\}
+	NeoBundle 'davidhalter/jedi-vim'
+
+"--------------------jedi-vim--------------------"
+	let g:jedi#completions_enabled = 0
+	let g:jedi#auto_vim_configuration = 0
+	let g:jedi#show_call_signatures = 0
+	let g:pymode_rope = 0
+
+	autocmd FileType python setlocal completeopt-=preview
 
 "--------------------neosnippet--------------------"
 	" <TAB>: completion.
@@ -93,7 +102,6 @@
 	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 "-------------------- over.vim --------------------"
-	"" over.vim {{{
 	" over.vimの起動
 	nnoremap <silent> <Leader>m :OverCommandLine<CR>
 
@@ -102,22 +110,19 @@
 
 	" コピーした文字列をハイライト付きで置換
 	nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
-	" }}}
 
 "--------------------View設定--------------------"
 	"colorscheme desert
-	"colorscheme molokai
-	colorscheme zenburn
+	colorscheme molokai
+	"colorscheme zenburn
 	
-	"カラー設定"
-	syntax on
-
 	highlight Normal ctermbg=black ctermfg=grey
-	"highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
+	highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
 	"highlight CursorLine term=none cterm=none ctermfg=none ctermbg=darkgray
 
 	"カーソル行の強調"
 	set cursorline
+	
 	"行数を表示"
 	set number
 
@@ -143,8 +148,6 @@
 	"U・・・戻ったディレクトリにまた戻る
 	"c・・・開いているバッファ（%a）をカレントディレクトリに変更
 	
-	"vimのすごい便利なのにあまり使われていない「タブページ」機能 - Qiita
-	"http://qiita.com/wadako111/items/755e753677dd72d8036d
 	" Anywhere SID.
 	function! s:SID_PREFIX()
 	  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -172,24 +175,6 @@
 
 	let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
-	" The prefix key.
-	nnoremap    [Tag]   <Nop>
-	nmap    t [Tag]
-	" Tab jump
-	" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
-	for n in range(1, 9)
-	  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
-	endfor
-
-	" tc 新しいタブを一番右に作る
-	map <silent> [Tag]c :tablast <bar> tabnew<CR>
-	" tx タブを閉じる
-	map <silent> [Tag]x :tabclose<CR>
-	" tn 次のタブ
-	map <silent> [Tag]n :tabnext<CR>
-	" tp 前のタブ
-	map <silent> [Tag]p :tabprevious<CR>
-
 "--------------------Normalモード--------------------"
 	noremap f           za
 	noremap F           zA
@@ -209,6 +194,9 @@
 	" 置換
     noremap S           :%s///g<LEFT><LEFT><LEFT>
 
+	" タブの移動をemacs風に
+	nnoremap <C-b>  gT
+	nnoremap <C-f>  gt
 "--------------------Insertモード--------------------"
 	inoremap <C-A>     <HOME>
 	inoremap <C-E>     <END>
@@ -256,7 +244,7 @@
 	"すべての折り畳みを閉じる
 	set foldlevel=0 
 	" どのレベルの深さまで折りたたむか
-	set foldnestmax=2
+	set foldnestmax=3
 
 "--------------------encoding--------------------"
 	set termencoding	=utf-8
@@ -323,4 +311,12 @@
 	" scrollが遅いことを解決できる？
 	set lazyredraw
 
-	au BufRead,BufNewFile *.txt set syntax=desert.vim
+	" swp files
+	set directory=~/.vim/swp
+
+	" au BufRead,BufNewFile *.txt set syntax=desert.vim
+	au BufRead,BufNewFile *.txt set syntax=hybrid.vim
+	au BufRead,BufNewFile *.jinja2 set syntax=htmljinja.vim
+
+	"カラー設定 最後に設定する
+	syntax on

@@ -112,17 +112,19 @@
 	nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 
 "--------------------View設定--------------------"
+	set t_Co=256
+
 	"colorscheme desert
 	colorscheme molokai
 	"colorscheme zenburn
 	
 	highlight Normal ctermbg=black ctermfg=grey
 	highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
-	"highlight CursorLine term=none cterm=none ctermfg=none ctermbg=darkgray
-
 	"カーソル行の強調"
+	"highlight CursorLine term=reverse cterm=reverse ctermbg=black
+	highlight CursorLine term=reverse cterm=reverse
 	set cursorline
-	
+
 	"行数を表示"
 	set number
 

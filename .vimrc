@@ -199,6 +199,7 @@
 	" タブの移動をemacs風に
 	nnoremap <C-b>  gT
 	nnoremap <C-f>  gt
+
 "--------------------Insertモード--------------------"
 	inoremap <C-A>     <HOME>
 	inoremap <C-E>     <END>

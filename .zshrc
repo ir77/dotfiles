@@ -242,6 +242,9 @@
 		##=============================
 		if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 		  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+		else 
+		  mkdir ~/.zsh
+		  git clone git://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh
 		fi
 	}
 	myPromptSettings2

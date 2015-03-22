@@ -60,6 +60,9 @@
 			zstyle ':vcs_info:git:*' stagedstr "+"    # %c で表示する文字列
 			zstyle ':vcs_info:git:*' unstagedstr "-"  # %u で表示する文字列
 		fi
+
+		# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+		setopt prompt_subst
 	}
 	myPromptSettings
 
@@ -183,13 +186,13 @@
 
 	function _update_vcs_info_msg() {
 		local -a messages
-		local prompt
+		local m_prompt
 
 		LANG=en_US.UTF-8 vcs_info
 
 		if [[ -z ${vcs_info_msg_0_} ]]; then
 			# vcs_info で何も取得していない場合はプロンプトを表示しない
-			prompt="--------------------------"
+			m_prompt=$'[%B%F{white}%*%f%b]'
 		else
 			# vcs_info で情報を取得した場合
 			# $vcs_info_msg_0_ , $vcs_info_msg_1_ , $vcs_info_msg_2_ を
@@ -199,20 +202,17 @@
 			[[ -n "$vcs_info_msg_2_" ]] && messages+=( "%F{red}${vcs_info_msg_2_}%f" )
 
 			# 間にスペースを入れて連結する
-			prompt="${(j: :)messages}"
+			m_prompt="${(j: :)messages}"
 		fi
 
-		RPROMPT="$prompt"
+		PROMPT="$m_prompt => "
+		RPROMPT="[ %~ ]"
 	}
 	add-zsh-hook precmd _update_vcs_info_msg
 
 	function myPromptSettings2 {
-		# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-		setopt prompt_subst
-
-		#RPROMPT="$prompt"
-		PROMPT=$'[ %~ ]\n[%B%F{white}%*%f%b] => '
 		SPROMPT="correct: %R -> %r ? "
+		add-zsh-hook precmd _update_vcs_info_msg
 
 		# lsコマンドとzsh補完候補の色を揃える設定
 		unset LANG

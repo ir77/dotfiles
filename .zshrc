@@ -1,4 +1,4 @@
-# -------------------- 基本設定 -------------------- #
+# -------------------- 基本設定 ------------------
 	function basicSettings {
 		PATH=/usr/local/bin:$PATH
 		export PATH
@@ -25,7 +25,7 @@
 	}
 	basicSettings
 
-# -------------------- プロンプト表示設定 -------------------- #
+# -------------------- プロンプト表示設定 -------------
 	function myPromptSettings {
 		autoload colors
 		colors
@@ -299,6 +299,8 @@
 
 # --------------------エイリアス------------------
 	function myAliasSettings {
+		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
+
 		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
 		setopt complete_aliases # aliased ls needs if file/dir completions work

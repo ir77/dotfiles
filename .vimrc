@@ -281,11 +281,11 @@
 
 	" TABの幅を指定
 	" Tabを画面上の見た目で何文字分に展開するかを指定
-	set tabstop		=4
+	set tabstop		=2
 	" vimが自動で挿入する量
-	set shiftwidth	=4
+	set shiftwidth	=2
 	" キーボードで入力したTabで挿入される空白の量
-	set softtabstop =4
+	set softtabstop =2
 
 	" vim の自動文章折り返し機能を回避"
 	set formatoptions=q

@@ -1,4 +1,3 @@
-# memo: - need command line tools? 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
@@ -12,10 +11,9 @@ source ~/.bash_profile
 sudo tlmgr update --self --all
 sudo tlmgr install ptex ptex2pdf jfontmaps jsclasses japanese-otf boxedminipage epsf c
 
-# memo: - change texshop setting default to ptex(ptex2pdf)?
 brew cask install texshop
 
-echo "And add following function
+cat <<'_EOT_' >> ~/.bash_profile
 	function tex(){
 		FILESTRING=$1
 		FILENAME=${FILESTRING%.*}
@@ -37,5 +35,7 @@ echo "And add following function
 			open ${FILENAME}.pdf
 		fi
 		echo ${VAR}
-	}" >> ~/.bash_profile
+	}
+_EOT_
 source ~/.bash_profile
+echo "memo: you may need to change texshop setting default to ptex(ptex2pdf)"

@@ -1,4 +1,4 @@
-// memo: - need command line tools? 
+# memo: - need command line tools? 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
@@ -9,7 +9,7 @@ brew install nkf ghostscript
 sudo tlmgr update --self --all
 sudo tlmgr install ptex ptex2pdf jfontmaps jsclasses japanese-otf boxedminipage epsf c
 
-// memo: - change texshop setting default to ptex(ptex2pdf)?
+# memo: - change texshop setting default to ptex(ptex2pdf)?
 brew cask install texshop
 
 echo "add 'export PATH=/usr/texbin:$PATH' to shell profile"

@@ -205,7 +205,7 @@
 			m_prompt="${(j: :)messages}"
 		fi
 
-		PROMPT="$m_prompt => "
+		PROMPT="$m_prompt=> "
 		RPROMPT="[ %~ ]"
 	}
 	add-zsh-hook precmd _update_vcs_info_msg

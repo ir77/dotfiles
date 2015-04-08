@@ -26,198 +26,100 @@
 	basicSettings
 
 # -------------------- プロンプト表示設定 -------------
-	function myPromptSettings {
-		autoload colors
-		colors
-		autoload -Uz vcs_info
-		autoload -Uz add-zsh-hook
-		autoload -Uz is-at-least
-		autoload -Uz colors
+	CURRENT_BG='NONE'
+	SEGMENT_SEPARATOR='⮀'
 
-		# ${fg[...]} や $reset_color をロード
-		autoload -U colors; colors
-
-		# 以下の3つのメッセージをエクスポートする
-		#$vcs_info_msg_0_ : 通常メッセージ用 (緑)
-		#$vcs_info_msg_1_ : 警告メッセージ用 (黄色)
-		#$vcs_info_msg_2_ : エラーメッセージ用 (赤)
-		zstyle ':vcs_info:*' max-exports 3
-
-		zstyle ':vcs_info:*' enable git svn hg bzr
-		# 標準のフォーマット(git 以外で使用)
-		# misc(%m) は通常は空文字列に置き換えられる
-		zstyle ':vcs_info:*' formats '(%s)-[%b]'
-		zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
-		zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
-		zstyle ':vcs_info:bzr:*' use-simple true
-
-		if is-at-least 4.3.10; then
-			# git 用のフォーマット
-			# git のときはステージしているかどうかを表示
-			zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u %m'
-			zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
-			zstyle ':vcs_info:git:*' check-for-changes true
-			zstyle ':vcs_info:git:*' stagedstr "+"    # %c で表示する文字列
-			zstyle ':vcs_info:git:*' unstagedstr "-"  # %u で表示する文字列
-		fi
-
-		# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-		setopt prompt_subst
-	}
-	myPromptSettings
-
-	# hooks 設定
-	if is-at-least 4.3.11; then
-		# git のときはフック関数を設定する
-
-		# formats '(%s)-[%b]' '%c%u %m' , actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
-		# のメッセージを設定する直前のフック関数
-		# 今回の設定の場合はformat の時は2つ, actionformats の時は3つメッセージがあるので
-		# 各関数が最大3回呼び出される。
-		zstyle ':vcs_info:git+set-message:*' hooks \
-												git-hook-begin \
-												git-untracked \
-												git-push-status \
-												git-nomerge-branch \
-												git-stash-count
-
-		# フックの最初の関数
-		# git の作業コピーのあるディレクトリのみフック関数を呼び出すようにする
-		# (.git ディレクトリ内にいるときは呼び出さない)
-		# .git ディレクトリ内では git status --porcelain などがエラーになるため
-		function +vi-git-hook-begin() {
-			if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
-				# 0以外を返すとそれ以降のフック関数は呼び出されない
-				return 1
-			fi
-
-			return 0
-		}
-
-		# untracked ファイル表示
-		#
-		# untracked ファイル(バージョン管理されていないファイル)がある場合は
-		# unstaged (%u) に ? を表示
-		function +vi-git-untracked() {
-			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
-			if [[ "$1" != "1" ]]; then
-				return 0
-			fi
-
-			if command git status --porcelain 2> /dev/null \
-				| awk '{print $1}' \
-				| command grep -F '??' > /dev/null 2>&1 ; then
-
-				# unstaged (%u) に追加
-				hook_com[unstaged]+='?'
-			fi
-		}
-
-		# push していないコミットの件数表示
-		#
-		# リモートリポジトリに push していないコミットの件数を
-		# pN という形式で misc (%m) に表示する
-		function +vi-git-push-status() {
-			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
-			if [[ "$1" != "1" ]]; then
-				return 0
-			fi
-
-			if [[ "${hook_com[branch]}" != "master" ]]; then
-				# master ブランチでない場合は何もしない
-				return 0
-			fi
-
-			# push していないコミット数を取得する
-			local ahead
-			ahead=$(command git rev-list origin/master..master 2>/dev/null \
-				| wc -l \
-				| tr -d ' ')
-
-			if [[ "$ahead" -gt 0 ]]; then
-				# misc (%m) に追加
-				hook_com[misc]+="(p${ahead})"
-			fi
-		}
-
-		# マージしていない件数表示
-		#
-		# master 以外のブランチにいる場合に、
-		# 現在のブランチ上でまだ master にマージしていないコミットの件数を
-		# (mN) という形式で misc (%m) に表示
-		function +vi-git-nomerge-branch() {
-			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
-			if [[ "$1" != "1" ]]; then
-				return 0
-			fi
-
-			if [[ "${hook_com[branch]}" == "master" ]]; then
-				# master ブランチの場合は何もしない
-				return 0
-			fi
-
-			local nomerged
-			nomerged=$(command git rev-list master..${hook_com[branch]} 2>/dev/null | wc -l | tr -d ' ')
-
-			if [[ "$nomerged" -gt 0 ]] ; then
-				# misc (%m) に追加
-				hook_com[misc]+="(m${nomerged})"
-			fi
-		}
-
-
-		# stash 件数表示
-		#
-		# stash している場合は :SN という形式で misc (%m) に表示
-		function +vi-git-stash-count() {
-			# zstyle formats, actionformats の2番目のメッセージのみ対象にする
-			if [[ "$1" != "1" ]]; then
-				return 0
-			fi
-
-			local stash
-			stash=$(command git stash list 2>/dev/null | wc -l | tr -d ' ')
-			if [[ "${stash}" -gt 0 ]]; then
-				# misc (%m) に追加
-				hook_com[misc]+=":S${stash}"
-			fi
-		}
-	fi
-
-	function _update_vcs_info_msg() {
-		local -a messages
-		local m_prompt
-
-		LANG=en_US.UTF-8 vcs_info
-
-		if [[ -z ${vcs_info_msg_0_} ]]; then
-			# vcs_info で何も取得していない場合はプロンプトを表示しない
-			m_prompt=$'[%B%F{white}%*%f%b]'
+	# Begin a segment
+	# Takes two arguments, background and foreground. Both can be omitted,
+	# rendering default background/foreground.
+	prompt_segment() {
+		local bg fg
+		[[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+		[[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+		if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+			echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
 		else
-			# vcs_info で情報を取得した場合
-			# $vcs_info_msg_0_ , $vcs_info_msg_1_ , $vcs_info_msg_2_ を
-			# それぞれ緑、黄色、赤で表示する
-			[[ -n "$vcs_info_msg_0_" ]] && messages+=( "%F{green}${vcs_info_msg_0_}%f" )
-			[[ -n "$vcs_info_msg_1_" ]] && messages+=( "%F{yellow}${vcs_info_msg_1_}%f" )
-			[[ -n "$vcs_info_msg_2_" ]] && messages+=( "%F{red}${vcs_info_msg_2_}%f" )
-
-			# 間にスペースを入れて連結する
-			m_prompt="${(j: :)messages}"
+			echo -n "%{$bg%}%{$fg%} "
 		fi
-
-		PROMPT="$m_prompt=> "
-		RPROMPT="[ %~ ]"
+		CURRENT_BG=$1
+		[[ -n $3 ]] && echo -n $3
 	}
-	add-zsh-hook precmd _update_vcs_info_msg
+
+	# End the prompt, closing any open segments
+	prompt_end() {
+		if [[ -n $CURRENT_BG ]]; then
+			echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+		else
+			echo -n "%{%k%}"
+		fi
+		echo -n "%{%f%}"
+		CURRENT_BG=''
+	}
+
+	### Prompt components
+	# Each component will draw itself, and hide itself if no information needs to be shown
+
+	# Context: user@hostname (who am I and where am I)
+	prompt_context() {
+		local user=`whoami`
+
+		if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+			prompt_segment black default "%(!.%{%F{yellow}%}.)$user@%m"
+		fi
+	}
+
+	# Git: branch/detached head, dirty status
+	prompt_git() {
+		local ref dirty
+		if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+			ZSH_THEME_GIT_PROMPT_DIRTY='±'
+			dirty=$(parse_git_dirty)
+			ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
+			if [[ -n $dirty ]]; then
+				prompt_segment yellow black
+			else
+				prompt_segment green black
+			fi
+			echo -n "${ref/refs\/heads\//⭠ }$dirty"
+		fi
+	}
+
+	# Dir: current working directory
+	prompt_dir() {
+		prompt_segment blue black '%~'
+	}
+
+	# Status:
+	# - was there an error
+	# - am I root
+	# - are there background jobs?
+	prompt_status() {
+		local symbols
+		symbols=()
+		[[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
+		[[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
+		[[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+
+		[[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+	}
+
+	## Main prompt
+	build_prompt() {
+		RETVAL=$?
+		prompt_status
+		# prompt_context
+		prompt_dir
+		prompt_git
+		prompt_end
+	}
+
+	PROMPT='%{%f%b%k%}$(build_prompt) '
 
 	function myPromptSettings2 {
-		SPROMPT="correct: %R -> %r ? "
-		add-zsh-hook precmd _update_vcs_info_msg
-
 		# lsコマンドとzsh補完候補の色を揃える設定
-		unset LANG
-		export LSCOLORS=ExFxCxdxBxegedabagacad
-		export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+		# unset LANG
+		# export LSCOLORS=ExFxCxdxBxegedabagacad
+		# export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 		# 補完関数の表示を強化する
 		zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
@@ -336,7 +238,7 @@
 
 		alias memo="vim ~/Dropbox/Backup/memo.txt"
 		alias vimrc="vim ~/.vimrc"
-		alias zshrc="vim ~/.zshrc"
+		alias zshrc="vim ~/.zshrc.origin"
 
 		# 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
 		# ./でpythonを開く
@@ -526,7 +428,7 @@
 		else
 			tac="tail -r"
 		fi
-		BUFFER=$(history -n 1 | \
+		BUFFER=$(\history -n 1 | \
 			eval $tac | \
 			peco --query "$LBUFFER"
 		)

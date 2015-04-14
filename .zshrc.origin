@@ -372,8 +372,9 @@
 
 # --------------------エイリアス------------------
 	function myAliasSettings {
-		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
+		alias proxyr="source ~/.zshrc.proxy"
 
+		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
 		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
 		setopt complete_aliases # aliased ls needs if file/dir completions work
@@ -679,6 +680,7 @@
 
 		# 他の設定ファイルを読み込む
 		[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+		[ -f ~/.zshrc.proxy ] && source ~/.zshrc.proxy
 
 		## 言語環境を日本語、UTF-8 にそろえておく
 		export LANG=ja_JP.UTF-8

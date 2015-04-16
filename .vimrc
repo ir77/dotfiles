@@ -122,6 +122,8 @@
 	highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
 	"カーソル行の強調"
 	"highlight CursorLine term=reverse cterm=reverse
+	highlight LineNr ctermfg=white
+	highlight LineNr ctermbg=black
 	set cursorline
 
 	"行数を表示"

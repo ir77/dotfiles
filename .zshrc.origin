@@ -2,7 +2,7 @@
 	function basicSettings {
 		PATH=/usr/local/bin:$PATH
 		export PATH
-		export PATH="/Applications/UpTeX.app/teTeX/bin:$PATH"
+		export PATH=/usr/texbin:$PATH
 		
 		# pythonからSkypeをプログラムで操作する際に必要
 		#VERSIONER_PYTHON_PREFER_32_BIT=yes /usr/bin/python
@@ -491,7 +491,7 @@
 			platex -kanji=sjis ${FILENAME}.tex
 			jbibtex -kanji=sjis ${FILENAME}
 			platex -kanji=sjis ${FILENAME}.tex
-			#platex -kanji=sjis ${FILENAME}.tex
+			platex -kanji=sjis ${FILENAME}.tex
 			dvipdfmx ${FILENAME}.dvi
 			open ${FILENAME}.pdf
 		elif [ "${VAR}" = "EUC-JP" ]; then

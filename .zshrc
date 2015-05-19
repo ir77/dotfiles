@@ -410,7 +410,7 @@
 
 		alias memo="vim ~/Dropbox/Backup/memo.txt"
 		alias vimrc="vim ~/.vimrc"
-		alias zshrc="vim ~/.zshrc.origin"
+		alias zshrc="vim ~/.zshrc"
 
 		# 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
 		# ./でpythonを開く

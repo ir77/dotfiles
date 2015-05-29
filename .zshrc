@@ -8,6 +8,11 @@
 		#VERSIONER_PYTHON_PREFER_32_BIT=yes /usr/bin/python
 		export VERSIONER_PYTHON_PREFER_32_BIT=yes
 		
+		# setting pyenv
+		export PYENV_ROOT="$HOME/.pyenv"
+		export PATH="$PYENV_ROOT/bin:$PATH"
+		eval "$(pyenv init -)"
+
 		# emacs like keybind 
 		bindkey -e
 		
@@ -513,35 +518,13 @@
 	}
 	alias -s tex=tex
 
-	function texUTF8(){
-		platex -kanji=utf8 $1.tex
-		jbibtex -kanji=utf8 $1
-		platex -kanji=utf8 $1.tex
-		platex -kanji=utf8 $1.tex
-		dvipdfmx $1.dvi
-		open $1.pdf
-	}
-
-	# w3mでgoogle検索
-	function google() {
-		local str opt
-		if [ $ != 0 ]; then
-			for i in $*; do
-				str="$str+$i"
-			done
-			str=`echo $str | sed 's/^\+//'`
-			opt='search?num=50&hl=ja&lr=lang_ja'
-			opt="${opt}&q=${str}"
-		fi
-		w3m http://www.google.co.jp/$opt
-	}
-
-
 	# 一定時間以上かかる処理の場合は終了時に通知してくれる
-	local COMMAND=""
-	local COMMAND_TIME=""
+	# http://kazuph.hateblo.jp/entry/2013/10/23/005718
+	# 下のほうが楽かも
+	# http://qiita.com/takc923/items/75d67a08edfbaa5fd304
+	local COMMAND="0"
+	local COMMAND_TIME="0"
 
-	#--- cd 時の仕掛け ---
 	function precmd () {
 		#path 指定のみで cd 実行
 		pwd=`pwd`
@@ -566,6 +549,7 @@
 			COMMAND_TIME=`date +%s`
 		fi
 	}
+
 	# 端末を新規に開くと自動的に前回の pwd に移動して始める
 	cd `cat ~/.curdir`
 
@@ -577,13 +561,6 @@
 	function nkfdiff () {
 		diff $1 $2 | nkf -u
 	}
-
-	function saveworkspace() {
-		pwd=`pwd`
-		#実行の度に pwd 保存
-		echo $pwd > ~/.workspace
-	}
-	alias cdworkspace="cd `cat ~/.workspace`"
 
 	function command_not_found_handler() {
 		local str opt
@@ -649,11 +626,8 @@
 		# ディレクトリ名だけでcdする
 		setopt auto_cd
 
-		## バックグラウンドジョブが終了したらすぐに知らせる。
-		setopt no_tify
-
-		# cd後に自動でls
-		# function chpwd() { ls }
+		# バックグラウンドジョブが終了したらすぐに知らせる。
+		#setopt no_tify
 
 		# 自動修正機能 ex.lls →  ls?
 		setopt correct
@@ -718,3 +692,15 @@
 		alias cocosAndroid='cocos run -p android --ap 19'
 	}
 	myCocos2d-xSettings
+
+	#TOSROOT=~/w/rh/tinyos-main
+	#TOSDIR =$TOSROOT/tos
+	#MAKERULES=$TOSROOT/support/make/Makerules
+	#CLASSPATH=.:$TOSROOT/support/sdk/java/tinyos.jar
+	#export MAKERULES TOSDIR TOSROOT CLASSPATH
+
+	TOSROOT=~/w/rh/tinyos-main
+	TOSDIR=$TOSROOT/tos
+	MAKERULES=$TOSROOT/support/make/Makerules
+	CLASSPATH=.:$TOSROOT/support/sdk/java/tinyos.jar
+	export MAKERULES TOSDIR TOSROOT CLASSPATH

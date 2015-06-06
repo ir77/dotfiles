@@ -23,8 +23,8 @@
 	NeoBundle 'Shougo/neosnippet-snippets'
 	NeoBundle 'git://github.com/scrooloose/syntastic.git'
 	NeoBundle 'git://github.com/Yggdroot/indentLine.git'
-	NeoBundle 'osyo-manga/vim-over'
 	NeoBundle 'Align'
+	NeoBundle 'tomasr/molokai'
 	NeoBundle 'thinca/vim-quickrun'
 		let g:quickrun_config = {
 		\   "_" : {
@@ -33,14 +33,25 @@
 		\   },
 		\}
 	NeoBundle 'davidhalter/jedi-vim'
+		let g:jedi#completions_enabled = 0
+		let g:jedi#auto_vim_configuration = 0
+		let g:jedi#show_call_signatures = 0
+		let g:pymode_rope = 0
+		autocmd FileType python setlocal completeopt-=preview
+	NeoBundle 'mattn/emmet-vim'
+		autocmd FileType html imap <buffer><expr><tab>
+				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+				\ "\<tab>"
+		autocmd FileType css imap <buffer><expr><tab>
+				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+				\ "\<tab>"
 
-"--------------------jedi-vim--------------------"
-	let g:jedi#completions_enabled = 0
-	let g:jedi#auto_vim_configuration = 0
-	let g:jedi#show_call_signatures = 0
-	let g:pymode_rope = 0
-
-	autocmd FileType python setlocal completeopt-=preview
+	" Markdow setting
+	NeoBundle 'plasticboy/vim-markdown'
+	NeoBundle 'kannokanno/previm'
+	NeoBundle 'tyru/open-browser.vim'
+		au BufRead,BufNewFile *.md set filetype=markdown
+		let g:previm_open_cmd = 'open -a Safari'
 
 "--------------------neosnippet--------------------"
 	" <TAB>: completion.
@@ -100,16 +111,6 @@
 	endif
 
 	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-"-------------------- over.vim --------------------"
-	" over.vimの起動
-	nnoremap <silent> <Leader>m :OverCommandLine<CR>
-
-	" カーソル下の単語をハイライト付きで置換
-	nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-
-	" コピーした文字列をハイライト付きで置換
-	nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 
 "--------------------View設定--------------------"
 	set t_Co=256
@@ -248,7 +249,7 @@
 	"すべての折り畳みを閉じる
 	set foldlevel=0 
 	" どのレベルの深さまで折りたたむか
-	set foldnestmax=3
+	set foldnestmax=5
 
 "--------------------encoding--------------------"
 	set termencoding	=utf-8

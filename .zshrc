@@ -376,7 +376,14 @@
 	myHistorySettings
 
 # --------------------エイリアス------------------
+	function mkhtml() {
+			cp ~/Dropbox/Backup/index.html ./
+			cp ~/Dropbox/Backup/style.css ./
+	}
 	function myAliasSettings {
+		alias makeHTML=mkhtml
+
+
 		alias proxyr="source ~/.zshrc.proxy"
 
 		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
@@ -402,7 +409,7 @@
 		alias grep="grep -a --color"
 
 		# Python実行時に.pycファイルを作成しないようにする
-		alias python="python -B"
+		# alias python="python -B"
 		alias pyramid="~/env/bin/python"
 
 		# 画面クリア時にlsを行う
@@ -483,6 +490,19 @@
 	myAliasSettings
 
 #------------------- functions -------------------
+	# vimにctrl-zで戻る
+	fancy-ctrl-z () {
+		if [[ $#BUFFER -eq 0 ]]; then
+			BUFFER="fg"
+			zle accept-line
+		else
+			zle push-input
+			zle clear-screen
+		fi
+	}
+	zle -N fancy-ctrl-z
+	bindkey '^Z' fancy-ctrl-z
+
 	function d(){
 		open dict://$1
 	}
@@ -507,10 +527,10 @@
 			dvipdfmx ${FILENAME}.dvi
 			open ${FILENAME}.pdf
 		elif [ "${VAR}" = "UTF-8" ]; then
-			platex -kanji=utf ${FILENAME}.tex
-			jbibtex -kanji=uft ${FILENAME}
-			platex -kanji=uft ${FILENAME}.tex
-			platex -kanji=utf ${FILENAME}.tex
+			platex -kanji=utf8 ${FILENAME}.tex
+			jbibtex -kanji=utf8 ${FILENAME}
+			platex -kanji=utf8 ${FILENAME}.tex
+			platex -kanji=utf8 ${FILENAME}.tex
 			dvipdfmx ${FILENAME}.dvi
 			open ${FILENAME}.pdf
 		fi
@@ -562,18 +582,18 @@
 		diff $1 $2 | nkf -u
 	}
 
-	function command_not_found_handler() {
-		local str opt
-		if [ $# != 0 ]; then
-			for i in $*; do
-				# $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
-				str="$str${str:++}$i"
-			done
-			opt='search?num=100'
-			opt="${opt}&q=${str}"
-		fi
-		open -a Safari http://www.google.co.jp/$opt
-	}
+	#function command_not_found_handler() {
+	#	local str opt
+	#	if [ $# != 0 ]; then
+	#		for i in $*; do
+	#			# $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
+	#			str="$str${str:++}$i"
+	#		done
+	#		opt='search?num=100'
+	#		opt="${opt}&q=${str}"
+	#	fi
+	#	open -a Safari http://www.google.co.jp/$opt
+	#}
 
 	function history-all { history -E 1 }
 

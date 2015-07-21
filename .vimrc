@@ -2,13 +2,22 @@
 	scriptencoding utf-8
 
 "--------------------NeoBundle--------------------"
+	if 0 | endif
 	if has('vim_starting')
-		filetype plugin off
-		filetype indent off
-		execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
-		call neobundle#rc(expand('~/.vim/bundle'))
+		if &compatible
+		 set nocompatible               " Be iMproved
+		endif
+
+		" Required:
+		set runtimepath+=~/.vim/bundle/neobundle.vim/
 	endif
-	NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
+
+	" Required:
+	call neobundle#begin(expand('~/.vim/bundle/'))
+	" Required:
+	NeoBundleFetch 'Shougo/neobundle.vim'
+
+	" My Bundles here:
 	"after install, turn shell ~/.vim/bundle/vimproc, (n,g)make-f your_machines_makefile
 	NeoBundle 'Shougo/vimproc', {
 	  \ 'build' : {
@@ -18,20 +27,28 @@
 	    \ 'unix' : 'make -f make_unix.mak',
 	  \ },
 	  \ }
-	NeoBundle 'Shougo/neocomplcache'
+	" コード補完
+	NeoBundle 'Shougo/neocomplete'
+	NeoBundle 'marcus/rsense'
+	NeoBundle 'supermomonga/neocomplete-rsense.vim'
+		let g:rsenseHome = '/usr/local/lib/rsense-0.3'
+		let g:rsenseUseOmniFunc = 1
 	NeoBundle 'Shougo/neosnippet'
 	NeoBundle 'Shougo/neosnippet-snippets'
-	NeoBundle 'git://github.com/scrooloose/syntastic.git'
-	NeoBundle 'git://github.com/Yggdroot/indentLine.git'
+	NeoBundle 'scrooloose/syntastic'
+		set statusline+=%#warningmsg#
+		set statusline+=%{SyntasticStatuslineFlag()}
+		set statusline+=%*
+
+		let g:syntastic_always_populate_loc_list = 1
+		let g:syntastic_enable_signs = 1
+		let g:syntastic_auto_loc_list = 1
+		let g:syntastic_check_on_open = 1
+		let g:syntastic_check_on_wq = 0
+	NeoBundle 'Yggdroot/indentLine.git'
 	NeoBundle 'Align'
 	NeoBundle 'tomasr/molokai'
-	NeoBundle 'thinca/vim-quickrun'
-		let g:quickrun_config = {
-		\   "_" : {
-		\       "outputter/buffer/split" : ":botright",
-		\       "outputter/buffer/close_on_empty" : 1
-		\   },
-		\}
+	NeoBundle 'jaxbot/browserlink.vim.git'
 	NeoBundle 'davidhalter/jedi-vim'
 		let g:jedi#completions_enabled = 0
 		let g:jedi#auto_vim_configuration = 0
@@ -45,13 +62,18 @@
 		autocmd FileType css imap <buffer><expr><tab>
 				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
 				\ "\<tab>"
-
 	" Markdow setting
-	NeoBundle 'plasticboy/vim-markdown'
-	NeoBundle 'kannokanno/previm'
-	NeoBundle 'tyru/open-browser.vim'
-		au BufRead,BufNewFile *.md set filetype=markdown
-		let g:previm_open_cmd = 'open -a Safari'
+	" required:
+	" gem install redcarpet pygments.rb
+	" npm -g install instant-markdown-d
+	NeoBundle 'Markdown'
+	NeoBundle 'suan/vim-instant-markdown'
+	" ruby
+
+	" Required:
+	call neobundle#end()
+	filetype plugin indent on
+	NeoBundleCheck
 
 "--------------------neosnippet--------------------"
 	" <TAB>: completion.
@@ -71,46 +93,46 @@
 	smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 	" 前回行われた補完をキャンセルします
-	inoremap <expr><C-g> neocomplcache#undo_completion()
+	inoremap <expr><C-g> neocomplete#undo_completion()
 	" 補完候補のなかから、共通する部分を補完します
-	inoremap <expr><C-l> neocomplcache#complete_common_string()
+	inoremap <expr><C-l> neocomplete#complete_common_string()
 	" 改行で補完ウィンドウを閉じる
-	inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
+	inoremap <expr><CR> neocomplete#smart_close_popup() . "\<CR>"
 
 	" For snippet_complete marker.
 	if has('conceal')
 		set conceallevel=2 concealcursor=i
 	endif
 
+	" neocompete
 	" 補完ウィンドウの設定
 	set completeopt=menuone
-	 
-	" 起動時に有効化
-	let g:neocomplcache_enable_at_startup = 1
-	 
+
+	let g:acp_enableAtStartup = 0
+	let g:neocomplete#enable_at_startup = 1
 	" 大文字が入力されるまで大文字小文字の区別を無視する
-	let g:neocomplcache_enable_smart_case = 1
-	 
+	let g:neocomplete#enable_smart_case = 1
 	" _(アンダースコア)区切りの補完を有効化
-	let g:neocomplcache_enable_underbar_completion = 1
-	let g:neocomplcache_enable_camel_case_completion  =  1
-	 
+	let g:neocomplete_enable_underbar_completion = 1
+	let g:neocomplete_enable_camel_case_completion  =  1
 	" ポップアップメニューで表示される候補の数
-	let g:neocomplcache_max_list = 20
-	 
+	let g:neocomplete_max_list = 20
 	" シンタックスをキャッシュするときの最小文字長
-	let g:neocomplcache_min_syntax_length = 2
-	 
+	let g:neocomplete_min_syntax_length = 2
 	" ディクショナリ定義
-	let g:neocomplcache_dictionary_filetype_lists = {
+	let g:neocomplete_dictionary_filetype_lists = {
 		\ 'default' : ''
 		\ }
 	 
-	if !exists('g:neocomplcache_keyword_patterns')
-			let g:neocomplcache_keyword_patterns = {}
+	if !exists('g:neocomplete_keyword_patterns')
+			let g:neocomplete_keyword_patterns = {}
 	endif
 
-	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+	let g:neocomplete_keyword_patterns['default'] = '\h\w*'
+	if !exists('g:neocomplete#force_omni_input_patterns')
+		let g:neocomplete#force_omni_input_patterns = {}
+	endif
+	let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 
 "--------------------View設定--------------------"
 	set t_Co=256
@@ -122,7 +144,6 @@
 	highlight Normal ctermbg=black ctermfg=grey
 	highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
 	"カーソル行の強調"
-	"highlight CursorLine term=reverse cterm=reverse
 	highlight LineNr ctermfg=white
 	highlight LineNr ctermbg=black
 	set cursorline
@@ -181,7 +202,7 @@
 
 "--------------------Normalモード--------------------"
 	noremap f           za
-	noremap F           zA
+	" noremap F           zA
 
 	"カーソルキーで行末／行頭の移動可能に設定。
 	set whichwrap=b,s,[,],<,>
@@ -199,15 +220,18 @@
     noremap S           :%s///g<LEFT><LEFT><LEFT>
 
 	" タブの移動をemacs風に
-	nnoremap <C-b>  gT
-	nnoremap <C-f>  gt
+	" nnoremap <C-b>  gT
+	" nnoremap <C-f>  gt
+	" TODO リーダーキーバインドを考える
+	let mapleader = "\<Space>"
+	nnoremap <Leader>w :w<CR>
 
 "--------------------Insertモード--------------------"
 	inoremap <C-A>     <HOME>
 	inoremap <C-E>     <END>
 	inoremap <C-D>     <DEL>
-	inoremap <C-B>     <LEFT>
 	inoremap <C-H>     <BS>
+	inoremap <C-B>     <LEFT>
 	inoremap <C-F>     <RIGHt>
 	inoremap <C-N>	   <DOWN>
 	inoremap <C-P>	   <UP>
@@ -317,7 +341,8 @@
 	set lazyredraw
 
 	" swp files
-	set directory=~/.vim/swp
+	" set directory=~/.vim/swp
+	set noswapfile
 
 	" au BufRead,BufNewFile *.txt set syntax=desert.vim
 	au BufRead,BufNewFile *.txt set syntax=hybrid.vim

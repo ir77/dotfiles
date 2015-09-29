@@ -1,14 +1,14 @@
 # TODO
+## before
 # - iTunes認証解除
 # - iCloudサインアウト（Macを探すの解除）
 
-# Install by App Store
+## afeter
+# App Store
 # Xcode, Line
 
-# Install by Other Tool
+# Other
 # MSOffice, Adobe
-
-# copy from other device
 # .ssh, photos, iTunes
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

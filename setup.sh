@@ -1,3 +1,8 @@
+# TODO
+# - iTunes認証解除
+# - iCloudサインアウト（Macを探すの解除）
+
+
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 brew update
 brew doctor

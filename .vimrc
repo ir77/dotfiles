@@ -162,6 +162,7 @@
 	let g:netrw_altv = 1
 	" 'o'でファイルを開くときは下側に開く。(デフォルトが上側なので入れ替え)
 	let g:netrw_alto = 1
+	let g:netrw_keepdir = 0
 
 	"Enter・・・ファイルを開く | ディレクトリを移動する
 	"o・・・水平方向で開く（画面分割）
@@ -292,8 +293,8 @@
 	set wrapscan "検索時に最後まで行ったら最初に戻る
 
 "-------------------- その他 --------------------"
-	filetype plugin on
-	filetype indent on
+	" 現在のディレクトリに自動的に移動する
+	set autochdir
 
 	" マウスの設定
 	set mouse=a

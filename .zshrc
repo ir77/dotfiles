@@ -1,32 +1,10 @@
 # -------------------- 基本設定 ------------------
 	function basicSettings {
-		PATH=/usr/local/bin:$PATH
-		export PATH
+		export PATH=/usr/local/bin:$PATH
 		export PATH=/usr/texbin:$PATH
 		
-		# pythonからSkypeをプログラムで操作する際に必要
-		#VERSIONER_PYTHON_PREFER_32_BIT=yes /usr/bin/python
-		export VERSIONER_PYTHON_PREFER_32_BIT=yes
-		
-		# setting pyenv
-		export PYENV_ROOT="$HOME/.pyenv"
-		export PATH="$PYENV_ROOT/bin:$PATH"
-		eval "$(pyenv init -)"
-
 		# emacs like keybind 
 		bindkey -e
-		
-		# Added by the Heroku Toolbelt
-		export PATH="/usr/local/heroku/bin:$PATH"
-		
-		eval "$(rbenv init -)"
-		export PATH="$HOME/.rbenv/shims:$PATH"
-
-		### Virtualenvwrapper
-		if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-			export WORKON_HOME=$HOME/.virtualenvs
-			source /usr/local/bin/virtualenvwrapper.sh
-		fi
 	}
 	basicSettings
 
@@ -318,8 +296,8 @@
 		#=============================
 		## source zsh-syntax-highlighting
 		##=============================
-		if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-		  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+		if [ -f ~/.zsh/zsh-syntax-highlighting.zsh ]; then
+		  source ~/.zsh/zsh-syntax-highlighting.zsh
 		else 
 		  mkdir ~/.zsh
 		  git clone git://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh
@@ -395,8 +373,7 @@
 		alias javac='javac -J-Dfile.encoding=UTF-8'
 
 		# rmコマンドでゴミ箱に送る
-		alias trashClean='rm ~/.trash/*'
-		alias rm='gmv -f --backup=numbered --target-directory ~/.trash'
+		alias rm='trash'
 
 		# Dropbox以下の容量を調べるときに使うコマンド
 		# sudo du -hxd 1 ~/Dropbox/    

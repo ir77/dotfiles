@@ -2,29 +2,53 @@
 # - iTunes認証解除
 # - iCloudサインアウト（Macを探すの解除）
 
+# Install by App Store
+# Xcode, Line
 
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+# Install by Other Tool
+# MSOffice, Adobe
+
+# copy from other device
+# .ssh, photos, iTunes
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
 brew install caskroom/cask/brew-cask
-defaults write com.apple.dock no-bouncing -bool true
 
 brew tap sanemat/font
 brew install ricty
 cp -f /usr/local/Cellar/ricty/3.2.3/share/fonts/Ricty*.ttf ~/Library/Fonts/
+brew reinstall --powerline --vim-powerline ricty
+cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
 mkdir -p ~/.vim/bundle
 git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-git clone https://github.com/ir77/dotfiles.git ~/Desktop/
 
-ln -snf ~/Desktop/dotfiles/.zshrc ~/
-ln -snf ~/Desktop/dotfiles/.zshrc.private ~/
-ln -snf ~/Desktop/dotfiles/.vimrc ~/
+# Packages for development
+brew install zsh
+brew install git
+brew install nkf
+brew install tig
+brew install lua
+brew install vim --with-lua
+brew install trash
+# brew install coreutils
+
+# .dmg from brew-cask
+brew-cask install google-chrome
+brew-cask install dropbox
+brew-cask install iterm2
+brew-cask install xquartz
+brew-cask install caffeine
+brew-cask install karabiner
+brew-cask install google-japanese-ime
+brew-cask install skype
+
+ln -snf ~/Dropbox/Backup/SymbolicLink/dotfiles/.zshrc ~/
+ln -snf ~/Dropbox/Backup/SymbolicLink/dotfiles/.zshrc.private ~/
+ln -snf ~/Dropbox/Backup/SymbolicLink/dotfiles/.vimrc ~/
 
 brew tap peco/peco
 brew install peco
-
-brew tap caskroom/versions
-brew cask search java
-brew cask install java7

@@ -384,8 +384,6 @@
 		alias makeHTML=mkhtml
 
 
-		alias proxyr="source ~/.zshrc.proxy"
-
 		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
 		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
@@ -680,8 +678,7 @@
 		setopt auto_param_slash      
 
 		# 他の設定ファイルを読み込む
-		[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
-		[ -f ~/.zshrc.proxy ] && source ~/.zshrc.proxy
+		[ -f ~/.zshrc.mine ] && source ~/.zshrc.private
 
 		## 言語環境を日本語、UTF-8 にそろえておく
 		export LANG=ja_JP.UTF-8

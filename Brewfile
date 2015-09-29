@@ -23,7 +23,6 @@ cask install xquartz
 cask install caffeine
 cask install Karabiner
 cask install appcleaner
-cask install bettertouchtool
 cask install google-japanese-ime
 
 

@@ -14,6 +14,7 @@ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 git clone https://github.com/ir77/dotfiles.git ~/Desktop/
 
 ln -snf ~/Desktop/dotfiles/.zshrc ~/
+ln -snf ~/Desktop/dotfiles/.zshrc.private ~/
 ln -snf ~/Desktop/dotfiles/.vimrc ~/
 
 brew tap peco/peco
@@ -22,11 +23,3 @@ brew install peco
 brew tap caskroom/versions
 brew cask search java
 brew cask install java7
-
-sudo gem install tw
-
-curl -fsSL https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh | sh
-
-# do
-# sudo mv /usr/bin/vim /usr/bin/old_vim
-# sudo ln /usr/local/Cellar/vim/7.4.hoge/bin/vim /usr/bin/

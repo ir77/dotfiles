@@ -5,7 +5,8 @@ brew install caskroom/cask/brew-cask
 brew cask install basictex
 brew install nkf ghostscript
 
-echo "export PATH=/usr/texbin:$PATH" >> ~/.bash_profile
+# echo "export PATH=/usr/texbin:$PATH" >> ~/.bash_profile
+echo "export PATH=/Library/Tex/texbin:$PATH" >> ~/.bash_profile
 source ~/.bash_profile
 
 sudo tlmgr update --self --all

@@ -1,7 +1,7 @@
 # -------------------- 基本設定 ------------------
 	function basicSettings {
 		export PATH=/usr/local/bin:$PATH
-		export PATH=/usr/texbin:$PATH
+		export PATH=/Library/Tex/texbin:$PATH
 		
 		# emacs like keybind 
 		bindkey -e
@@ -359,8 +359,9 @@
 			cp ~/Dropbox/Backup/style.css ./
 	}
 	function myAliasSettings {
-		alias makeHTML=mkhtml
+		alias playground='open ~/Dropbox/code/XcodePlayground/MyPlayground.playground'
 
+		alias makeHTML=mkhtml
 
 		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
 		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"

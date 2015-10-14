@@ -6,10 +6,9 @@
 ## afeter
 # Xcode, Line
 # MSOffice, Adobe, Locamatic
-# .ssh, photos, iTunes
+# .ssh, Photos, iTunes
 
-# sudo xcodebuild -license
-# xcode-select --install
+xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
@@ -23,6 +22,7 @@ brew install tig
 brew install lua
 brew install vim --with-lua
 brew install trash
+brew install ffmpeg
 # brew install coreutils
 
 # .dmg from brew-cask
@@ -35,6 +35,12 @@ brew-cask install skype
 brew-cask install atom
 brew-cask install karabiner
 brew-cask install xquartz
+brew-cask install appcleaner
+brew-cask install caskroom/homebrew-versions/java6
+brew-cask install intellij-idea
+brew-cask install virtualbox 
+brew-cask install vagrant
+# brew-cask install cyberduck
 
 brew tap peco/peco
 brew install peco
@@ -50,3 +56,7 @@ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 sudo easy_install pip
 sudo pip install beautifulsoup4
+
+echo 'other settings'
+echo 'git config --global user.name "user"'
+echo 'git config --global user.email "email"'

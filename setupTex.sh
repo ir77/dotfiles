@@ -10,10 +10,12 @@ echo "export PATH=/Library/Tex/texbin:$PATH" >> ~/.bash_profile
 source ~/.bash_profile
 
 sudo tlmgr update --self --all
+# tlmgr install subfig
 sudo tlmgr install ptex ptex2pdf jfontmaps jsclasses japanese-otf boxedminipage epsf c
 
 brew cask install texshop
 
+# jbibtex -> pbibitex?
 cat <<'_EOT_' >> ~/.bash_profile
 	function tex(){
 		FILESTRING=$1

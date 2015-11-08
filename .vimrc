@@ -62,6 +62,9 @@
 		autocmd FileType css imap <buffer><expr><tab>
 				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
 				\ "\<tab>"
+		autocmd FileType php imap <buffer><expr><tab>
+				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+				\ "\<tab>"
 	" Markdow setting
 	" required:
 	" gem install redcarpet pygments.rb

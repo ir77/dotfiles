@@ -354,11 +354,8 @@
 	myHistorySettings
 
 # --------------------エイリアス------------------
-	function mkhtml() {
-			cp ~/Dropbox/Backup/index.html ./
-			cp ~/Dropbox/Backup/style.css ./
-	}
 	function myAliasSettings {
+		alias lgtm='sh ~/Dropbox/code/shellscript/lgtm.sh/lgtm.sh -m | pbcopy'
 		alias playground='open ~/Dropbox/code/XcodePlayground/MyPlayground.playground'
 
 		alias makeHTML=mkhtml
@@ -466,6 +463,9 @@
 	myAliasSettings
 
 #------------------- functions -------------------
+	function makeGifFromMov() {
+		ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
+	}
 	# vimにctrl-zで戻る
 	fancy-ctrl-z () {
 		if [[ $#BUFFER -eq 0 ]]; then
@@ -663,6 +663,21 @@
 		export LESSCHARSET=utf-8 
 	}
 	myOtherSettings
+
+
+#-------------------- tmux --------------------
+	function tmuxSettings {
+		# 既にtmuxを起動してないか
+		if [ "$TMUX" = "" ]; then
+				tmux attach;
+
+				# detachしてない場合
+				if [ $? ]; then
+						tmux;
+				fi
+		fi
+	}
+	tmuxSettings
 
 # ---------------- Cocos2d-x 3.2 ---------------- #
 	function myCocos2d-xSettings {

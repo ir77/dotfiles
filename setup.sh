@@ -23,6 +23,15 @@ brew install lua
 brew install vim --with-lua
 brew install trash
 brew install ffmpeg
+brew install gifsicle
+brew install node
+brew install mysql
+brew install tmux  
+brew install pup
+#brew install homebrew/dupes/bc
+#brew install libmpdclient
+#brew install https://raw.github.com/Homebrew/homebrew-dupes/master/grep.rb
+brew install reattach-to-user-namespace
 # brew install coreutils
 
 # .dmg from brew-cask
@@ -40,6 +49,7 @@ brew-cask install caskroom/homebrew-versions/java6
 brew-cask install intellij-idea
 brew-cask install virtualbox 
 brew-cask install vagrant
+brew-cask install dash    
 # brew-cask install cyberduck
 
 brew tap peco/peco
@@ -56,6 +66,8 @@ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 sudo easy_install pip
 sudo pip install beautifulsoup4
+
+sudo gem install cocoapods
 
 echo 'other settings'
 echo 'git config --global user.name "user"'

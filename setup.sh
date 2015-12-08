@@ -37,7 +37,6 @@ brew install reattach-to-user-namespace
 # .dmg from brew-cask
 brew-cask install google-chrome
 brew-cask install dropbox
-brew-cask install iterm2
 brew-cask install caffeine
 brew-cask install google-japanese-ime
 brew-cask install skype
@@ -50,6 +49,7 @@ brew-cask install intellij-idea
 brew-cask install virtualbox 
 brew-cask install vagrant
 brew-cask install dash    
+brew-cask install the-unarchiver
 # brew-cask install cyberduck
 
 brew tap peco/peco

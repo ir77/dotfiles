@@ -463,6 +463,19 @@
 	myAliasSettings
 
 #------------------- functions -------------------
+	function disable_git_push_origin_master() {
+			if [[ $2 = "git push origin master" ]]; then 
+					exit
+			fi
+	}
+
+	autoload -Uz add-zsh-hook
+	add-zsh-hook preexec disable_git_push_origin_master
+
+	function findText() {
+		find ./ -type f -print | xargs grep $1
+	}
+
 	function makeGifFromMov() {
 		ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
 	}
@@ -669,15 +682,21 @@
 	function tmuxSettings {
 		# 既にtmuxを起動してないか
 		if [ "$TMUX" = "" ]; then
-				tmux attach;
+				SHELL=/bin/zsh tmux attach;
 
 				# detachしてない場合
 				if [ $? ]; then
-						tmux;
+					SHELL=/bin/zsh tmux;
 				fi
 		fi
 	}
 	tmuxSettings
+
+
+#-------------------- pyenv --------------------
+	if which pyenv > /dev/null; then 
+		eval "$(pyenv init -)"; 
+	fi
 
 # ---------------- Cocos2d-x 3.2 ---------------- #
 	function myCocos2d-xSettings {

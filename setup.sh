@@ -35,22 +35,22 @@ brew install reattach-to-user-namespace
 # brew install coreutils
 
 # .dmg from brew-cask
-brew-cask install google-chrome
-brew-cask install dropbox
-brew-cask install caffeine
-brew-cask install google-japanese-ime
-brew-cask install skype
-brew-cask install atom
-brew-cask install karabiner
-brew-cask install xquartz
-brew-cask install appcleaner
-brew-cask install caskroom/homebrew-versions/java6
-brew-cask install intellij-idea
-brew-cask install virtualbox 
-brew-cask install vagrant
-brew-cask install dash    
-brew-cask install the-unarchiver
-# brew-cask install cyberduck
+brew cask install google-chrome
+brew cask install dropbox
+brew cask install caffeine
+brew cask install google-japanese-ime
+brew cask install skype
+brew cask install atom
+brew cask install karabiner
+brew cask install xquartz
+brew cask install appcleaner
+brew cask install caskroom/homebrew-versions/java6
+brew cask install intellij-idea
+brew cask install virtualbox 
+brew cask install vagrant
+brew cask install dash    
+brew cask install the-unarchiver
+brew cask install vlc
 
 brew tap peco/peco
 brew install peco
@@ -68,6 +68,7 @@ sudo easy_install pip
 sudo pip install beautifulsoup4
 
 sudo gem install cocoapods
+sudo gem install tldrb
 
 echo 'other settings'
 echo 'git config --global user.name "user"'

@@ -71,6 +71,11 @@
 	" npm -g install instant-markdown-d
 	NeoBundle 'Markdown'
 	NeoBundle 'suan/vim-instant-markdown'
+	" NeoBundle 'toyamarinyon/vim-swift'
+	NeoBundle 'kballard/vim-swift', {
+					\ 'filetypes': 'swift',
+					\ 'unite_sources': ['swift/device', 'swift/developer_dir']
+					\}
 	" ruby
 
 	" Required:

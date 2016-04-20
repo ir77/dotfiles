@@ -48,7 +48,7 @@
 	NeoBundle 'Yggdroot/indentLine.git'
 	NeoBundle 'Align'
 	NeoBundle 'tomasr/molokai'
-	NeoBundle 'jaxbot/browserlink.vim.git'
+	" NeoBundle 'jaxbot/browserlink.vim.git'
 	NeoBundle 'davidhalter/jedi-vim'
 		let g:jedi#completions_enabled = 0
 		let g:jedi#auto_vim_configuration = 0
@@ -63,6 +63,9 @@
 				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
 				\ "\<tab>"
 		autocmd FileType php imap <buffer><expr><tab>
+				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+				\ "\<tab>"
+		autocmd FileType erb imap <buffer><expr><tab>
 				\ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
 				\ "\<tab>"
 	" Markdow setting
@@ -335,7 +338,7 @@
 	set nobackup
 
 	" 閉じ括弧が入力されたとき対応する括弧を表示
-	set showmatch
+	" set showmatch
 
 	"インクリメンタル検索on"
 	set incsearch

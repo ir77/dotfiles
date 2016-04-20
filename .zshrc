@@ -2,6 +2,7 @@
 	function basicSettings {
 		export PATH=/usr/local/bin:$PATH
 		export PATH=/Library/Tex/texbin:$PATH
+		export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
 		
 		# emacs like keybind 
 		bindkey -e

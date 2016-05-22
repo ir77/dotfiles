@@ -324,6 +324,8 @@
 	set shiftwidth	=2
 	" キーボードで入力したTabで挿入される空白の量
 	set softtabstop =2
+	" タブをスペースに変更
+	set expandtab
 
 	" vim の自動文章折り返し機能を回避"
 	set formatoptions=q

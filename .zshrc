@@ -215,7 +215,8 @@
 		local user=`whoami`
 
 		if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-			prompt_segment black default "%(!.%{%F{yellow}%}.)$user@%m"
+			# prompt_segment black default "%(!.%{%F{yellow}%}.)$user@%m"
+			prompt_segment white black "%(!.%{%F{yellow}%}.)$user@%m"
 		fi
 	}
 
@@ -259,8 +260,7 @@
 
 	right_prompt() {
 		RETVAL=$?
-		prompt_status
-		# prompt_context
+		prompt_context
 		prompt_dir
 		prompt_end
 	}
@@ -324,6 +324,10 @@
 		#
 		# 補完候補にファイルの種類も表示
 		setopt list_types
+
+    setopt auto_list # 補完候補を一覧で表示する(d)
+
+    setopt list_packed # 補完候補をできるだけ詰めて表示する
 	}
 	myCompletionSettings
 
@@ -356,6 +360,10 @@
 
 # --------------------エイリアス------------------
 	function myAliasSettings {
+    
+    alias cp="cp -i" # 保険で警告
+    alias mv="mv -i" # 保険で警告
+
 		alias lgtm='sh ~/Dropbox/code/shellscript/lgtm.sh/lgtm.sh -m | pbcopy'
 		alias playground='open ~/Dropbox/code/XcodePlayground/MyPlayground.playground'
 
@@ -464,15 +472,6 @@
 	myAliasSettings
 
 #------------------- functions -------------------
-	function disable_git_push_origin_master() {
-			if [[ $2 = "git push origin master" ]]; then 
-					exit
-			fi
-	}
-
-	autoload -Uz add-zsh-hook
-	add-zsh-hook preexec disable_git_push_origin_master
-
 	function findText() {
 		find ./ -type f -print | xargs grep $1
 	}
@@ -633,6 +632,11 @@
 
 #-------------------- その他 --------------------
 	function myOtherSettings {
+
+    setopt notify # バックグラウンドジョブの状態変化を即時報告する
+
+    setopt no_beep # ビープ音を鳴らさないようにする
+
 		# ディレクトリ名だけでcdする
 		setopt auto_cd
 

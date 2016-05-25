@@ -381,6 +381,7 @@
 
 		# rmコマンドでゴミ箱に送る
 		alias rm='trash'
+    # alias rm='mv -i ~/.Trash' # 他のOS用
 
 		# Dropbox以下の容量を調べるときに使うコマンド
 		# sudo du -hxd 1 ~/Dropbox/    

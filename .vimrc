@@ -5,7 +5,7 @@
 	if 0 | endif
 	if has('vim_starting')
 		if &compatible
-		 set nocompatible               " Be iMproved
+      set nocompatible               " Be iMproved
 		endif
 
 		" Required:
@@ -47,7 +47,10 @@
 		let g:syntastic_check_on_wq = 0
 	NeoBundle 'Yggdroot/indentLine.git'
 	NeoBundle 'Align'
-	NeoBundle 'tomasr/molokai'
+  NeoBundle 'altercation/vim-colors-solarized'
+  syntax enable
+  set background=dark    "または light
+  " colorscheme solarized
 	" NeoBundle 'jaxbot/browserlink.vim.git'
 	NeoBundle 'davidhalter/jedi-vim'
 		let g:jedi#completions_enabled = 0
@@ -149,7 +152,7 @@
 	set t_Co=256
 
 	"colorscheme desert
-	colorscheme molokai
+	"colorscheme molokai
 	"colorscheme zenburn
 	
 	highlight Normal ctermbg=black ctermfg=grey
@@ -285,7 +288,7 @@
 	"すべての折り畳みを閉じる
 	set foldlevel=0 
 	" どのレベルの深さまで折りたたむか
-	set foldnestmax=5
+	set foldnestmax=2
 
 "--------------------encoding--------------------"
 	set termencoding	=utf-8

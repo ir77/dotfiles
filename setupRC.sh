@@ -1,5 +1,5 @@
-ln -snf ~/Downloads/dotfiles/.zshrc ~/
-ln -snf ~/Downloads/dotfiles/.zshrc.private ~/
-ln -snf ~/Downloads/dotfiles/.vimrc ~/
-ln -snf ~/Downloads/dotfiles/.tmux.conf ~/
+ln -snf ~/Dropbox/Backup/dotfiles/.zshrc ~/
+ln -snf ~/Dropbox/Backup/dotfiles/.zshrc.private ~/
+ln -snf ~/Dropbox/Backup/dotfiles/.vimrc ~/
+ln -snf ~/Dropbox/Backup/dotfiles/.tmux.conf ~/
 

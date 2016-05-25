@@ -51,6 +51,7 @@ brew cask install vagrant
 brew cask install dash    
 brew cask install the-unarchiver
 brew cask install vlc
+brew cask install alfred
 
 brew tap peco/peco
 brew install peco
@@ -69,6 +70,12 @@ sudo pip install beautifulsoup4
 
 sudo gem install cocoapods
 sudo gem install tldrb
+
+git clone https://github.com/tomislav/osx-terminal.app-colors-solarized
+echo 'set terminal colors to solarized'
+
+# スクリーンショットを英語に
+defaults write com.apple.screencapture name ""
 
 echo 'other settings'
 echo 'git config --global user.name "user"'

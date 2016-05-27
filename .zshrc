@@ -139,7 +139,8 @@
 	fi
 
 	CURRENT_BG='NONE'
-	SEGMENT_SEPARATOR='⮀'
+	SEGMENT_SEPARATOR=$'\UE0B0'$'\UE0B0'$'\UE0B0'
+	R_SEGMENT_SEPARATOR=$'\UE0B2'$'\UE0B2'$'\UE0B2'
 
 	declare m_prompt=""
 	declare m_prompt_color="0"
@@ -186,7 +187,7 @@
 		[[ -n $1 ]] && bg="%K{$1}" || bg="%k"
 		[[ -n $2 ]] && fg="%F{$2}" || fg="%f"
 		if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-			echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+      echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
 		else
 			echo -n "%{$bg%}%{$fg%} "
 		fi
@@ -197,12 +198,12 @@
 	# End the prompt, closing any open segments
 	prompt_end() {
 		if [[ -n $CURRENT_BG ]]; then
-			echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+      echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR "
 		else
 			echo -n "%{%k%}"
 		fi
 		echo -n "%{%f%}"
-		CURRENT_BG=''
+		# CURRENT_BG=''
 	}
 
 	### Prompt components
@@ -211,16 +212,15 @@
 	# Context: user@hostname (who am I and where am I)
 	prompt_context() {
 		local user=`whoami`
-
 		if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-			# prompt_segment black default "%(!.%{%F{yellow}%}.)$user@%m"
-			prompt_segment white black "%(!.%{%F{yellow}%}.)$user@%m"
+      echo -n "%{%K{white}%}%{%F{black}%} %(!.%{%F{yellow}%}.)$user@%m "
 		fi
 	}
 
 	# Dir: current working directory
 	prompt_dir() {
-		prompt_segment blue black '%~'
+    echo -n "%{%K{white}%}%{%F{blue}%} $R_SEGMENT_SEPARATOR"
+    echo -n "%{%K{blue}%}%{%F{black}%} %~ "
 	}
 
 	# Status:
@@ -253,18 +253,18 @@
 		RETVAL=$?
 		prompt_status
 		echo_message
-		prompt_end
+    prompt_end
 	}
 
 	right_prompt() {
 		RETVAL=$?
+    echo -n " %{%k%F{white}%}$R_SEGMENT_SEPARATOR"
 		prompt_context
 		prompt_dir
-		prompt_end
 	}
 
-	PROMPT='$(left_prompt)'
-	RPROMPT='$(right_prompt)'
+  PROMPT='$(left_prompt)'
+  RPROMPT='$(right_prompt)'
 
 	function myPromptSettings2 {
 		add-zsh-hook precmd _update_vcs_info_msg

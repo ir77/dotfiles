@@ -1,5 +1,4 @@
-ln -snf ~/Dropbox/Backup/dotfiles/.zshrc ~/
-ln -snf ~/Dropbox/Backup/dotfiles/.zshrc.private ~/
-ln -snf ~/Dropbox/Backup/dotfiles/.vimrc ~/
-ln -snf ~/Dropbox/Backup/dotfiles/.tmux.conf ~/
+ln -snf "$(cd $(dirname $0) && pwd)/.zshrc" ~/
+ln -snf "$(cd $(dirname $0) && pwd)/.vimrc" ~/
+ln -snf "$(cd $(dirname $0) && pwd)/.tmux.conf" ~/
 

@@ -1,8 +1,6 @@
 # -------------------- 基本設定 ------------------
 	function basicSettings {
 		export PATH=/usr/local/bin:$PATH
-		export PATH=/Library/Tex/texbin:$PATH
-		export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH
 		
 		# emacs like keybind 
 		bindkey -e
@@ -367,8 +365,6 @@
 		alias lgtm='sh ~/Dropbox/code/shellscript/lgtm.sh/lgtm.sh -m | pbcopy'
 		alias playground='open ~/Dropbox/code/XcodePlayground/MyPlayground.playground'
 
-		alias makeHTML=mkhtml
-
 		alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
 		alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
@@ -393,7 +389,6 @@
 
 		# Python実行時に.pycファイルを作成しないようにする
 		# alias python="python -B"
-		alias pyramid="~/env/bin/python"
 
 		# 画面クリア時にlsを行う
 		alias clear=clear
@@ -497,37 +492,6 @@
 		open dict://$1
 	}
 
-	function tex(){
-		FILESTRING=$1
-		FILENAME=${FILESTRING%.*}
-
-		VAR=`nkf -g ${FILENAME}.tex`
-		if [ "${VAR}" = "Shift_JIS" ]; then
-			platex -kanji=sjis ${FILENAME}.tex
-			jbibtex -kanji=sjis ${FILENAME}
-			platex -kanji=sjis ${FILENAME}.tex
-			platex -kanji=sjis ${FILENAME}.tex
-			dvipdfmx ${FILENAME}.dvi
-			open ${FILENAME}.pdf
-		elif [ "${VAR}" = "EUC-JP" ]; then
-			platex -kanji=euc ${FILENAME}.tex
-			jbibtex -kanji=euc ${FILENAME}
-			platex -kanji=euc ${FILENAME}.tex
-			platex -kanji=euc ${FILENAME}.tex
-			dvipdfmx ${FILENAME}.dvi
-			open ${FILENAME}.pdf
-		elif [ "${VAR}" = "UTF-8" ]; then
-			platex -kanji=utf8 ${FILENAME}.tex
-			jbibtex -kanji=utf8 ${FILENAME}
-			platex -kanji=utf8 ${FILENAME}.tex
-			platex -kanji=utf8 ${FILENAME}.tex
-			dvipdfmx ${FILENAME}.dvi
-			open ${FILENAME}.pdf
-		fi
-		echo ${VAR}
-	}
-	alias -s tex=tex
-
 	# 一定時間以上かかる処理の場合は終了時に通知してくれる
 	# http://kazuph.hateblo.jp/entry/2013/10/23/005718
 	# 下のほうが楽かも
@@ -571,19 +535,6 @@
 	function nkfdiff () {
 		diff $1 $2 | nkf -u
 	}
-
-	#function command_not_found_handler() {
-	#	local str opt
-	#	if [ $# != 0 ]; then
-	#		for i in $*; do
-	#			# $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
-	#			str="$str${str:++}$i"
-	#		done
-	#		opt='search?num=100'
-	#		opt="${opt}&q=${str}"
-	#	fi
-	#	open -a Safari http://www.google.co.jp/$opt
-	#}
 
 	function history-all { history -E 1 }
 
@@ -637,6 +588,7 @@
     setopt notify # バックグラウンドジョブの状態変化を即時報告する
 
     setopt no_beep # ビープ音を鳴らさないようにする
+		setopt nolistbeep # ビープ音を鳴らないようにする
 
 		# ディレクトリ名だけでcdする
 		setopt auto_cd
@@ -653,9 +605,6 @@
 		# フローコントロールを無効にする
 		setopt no_flow_control
 		 
-		# ビープ音を鳴らないようにする
-		setopt nolistbeep
-
 		# 明確なドットの指定なしで.から始まるファイルをマッチ
 		setopt globdots
 
@@ -687,14 +636,23 @@
 #-------------------- tmux --------------------
 	function tmuxSettings {
 		# 既にtmuxを起動してないか
-		if [ "$TMUX" = "" ]; then
-				SHELL=/bin/zsh tmux attach;
-
-				# detachしてない場合
-				if [ $? ]; then
-					SHELL=/bin/zsh tmux;
-				fi
-		fi
+    if [[ ! -n $TMUX ]]; then
+      # get the IDs
+      ID="`tmux list-sessions`"
+      if [[ -z "$ID" ]]; then
+        tmux new-session && exit
+      fi
+      create_new_session="Create New Session"
+      ID="$ID\n${create_new_session}:"
+      ID="`echo $ID | peco | cut -d: -f1`"
+      if [[ "$ID" = "${create_new_session}" ]]; then
+        tmux new-session && exit
+      elif [[ -n "$ID" ]]; then
+        tmux attach-session -t "$ID" && exit
+      else
+        echo 'Start terminal without tmux'
+      fi
+    fi
 	}
 	tmuxSettings
 
@@ -727,15 +685,3 @@
 		alias cocosAndroid='cocos run -p android --ap 19'
 	}
 	myCocos2d-xSettings
-
-	#TOSROOT=~/w/rh/tinyos-main
-	#TOSDIR =$TOSROOT/tos
-	#MAKERULES=$TOSROOT/support/make/Makerules
-	#CLASSPATH=.:$TOSROOT/support/sdk/java/tinyos.jar
-	#export MAKERULES TOSDIR TOSROOT CLASSPATH
-
-	TOSROOT=~/w/rh/tinyos-main
-	TOSDIR=$TOSROOT/tos
-	MAKERULES=$TOSROOT/support/make/Makerules
-	CLASSPATH=.:$TOSROOT/support/sdk/java/tinyos.jar
-	export MAKERULES TOSDIR TOSROOT CLASSPATH

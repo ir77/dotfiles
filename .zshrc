@@ -219,8 +219,10 @@
 
 	# Dir: current working directory
 	prompt_dir() {
-    echo -n "%{%K{white}%}%{%F{blue}%} $R_SEGMENT_SEPARATOR"
-    echo -n "%{%K{blue}%}%{%F{black}%} %~ "
+    echo -n "%{%K{white}%}%{%F{black}%} \UE0B2"
+    currentWD=${pwd/\//''}
+    # echo -n "%{%K{blue}%}%{%F{black}%} ${currentWD//\// \UE0B3 } "
+    echo -n "%{%K{blue}%}%{%F{black}%} ${currentWD//\// \UE0B1 } "
 	}
 
 	# Status:

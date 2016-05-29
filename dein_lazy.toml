@@ -1,0 +1,21 @@
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1 # インサートモードに入ったら読み込む
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'css', 'php', 'markdown']
+hook_add = """
+  autocmd FileType html imap <buffer><expr><tab>
+      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+      \ "\<tab>"
+  autocmd FileType css imap <buffer><expr><tab>
+      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+      \ "\<tab>"
+  autocmd FileType php imap <buffer><expr><tab>
+      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+      \ "\<tab>"
+  autocmd FileType erb imap <buffer><expr><tab>
+      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
+      \ "\<tab>
+"""

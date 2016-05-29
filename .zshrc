@@ -220,9 +220,13 @@
 	# Dir: current working directory
 	prompt_dir() {
     echo -n "%{%K{white}%}%{%F{black}%} \UE0B2"
-    currentWD=${pwd/\//''}
-    # echo -n "%{%K{blue}%}%{%F{black}%} ${currentWD//\// \UE0B3 } "
-    echo -n "%{%K{blue}%}%{%F{black}%} ${currentWD//\// \UE0B1 } "
+    wd=${pwd/\//''}
+    wdArray=( `echo $wd | tr -s '/' ' '`)
+		if [[ ${#wdArray[@]} -ge '4' ]]; then
+      echo -n "%{%K{blue}%}%{%F{black}%} ... \UE0B1 ${wdArray[${#wdArray[@]}-2]} \UE0B1 ${wdArray[${#wdArray[@]}-1]} \UE0B1 ${wdArray[${#wdArray[@]}]} \UE0B1 "
+    else
+      echo -n "%{%K{blue}%}%{%F{black}%} ${wd//\// \UE0B1 } "
+    fi
 	}
 
 	# Status:
@@ -245,7 +249,8 @@
 		elif [[ "$m_prompt_color" == "1" ]]; then
 			prompt_segment yellow black
 		else
-			prompt_segment green black
+			# prompt_segment green black
+			prompt_segment cyan black
 		fi
 		echo -n "$m_prompt"
 	}

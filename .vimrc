@@ -45,6 +45,7 @@
   syntax enable
   set background=dark    "または light
 
+"--------------------View設定--------------------"
   set t_Co=256
 
   "colorscheme desert

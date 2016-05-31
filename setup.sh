@@ -14,7 +14,6 @@ brew update
 brew doctor
 brew install caskroom/cask/brew-cask
 
-# Packages for development
 brew install zsh
 brew install git
 brew install nkf
@@ -28,13 +27,9 @@ brew install node
 brew install mysql
 brew install tmux  
 brew install pup
-#brew install homebrew/dupes/bc
-#brew install libmpdclient
-#brew install https://raw.github.com/Homebrew/homebrew-dupes/master/grep.rb
 brew install reattach-to-user-namespace
-# brew install coreutils
+brew install ctags
 
-# .dmg from brew-cask
 brew cask install google-chrome
 brew cask install dropbox
 brew cask install caffeine

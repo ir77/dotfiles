@@ -41,11 +41,8 @@
 
 "--------------------View設定--------------------"
   " filetype plugin indent on
+  " syntax enable
 
-  syntax enable
-  set background=dark    "または light
-
-"--------------------View設定--------------------"
   set t_Co=256
 
   "colorscheme desert
@@ -110,6 +107,9 @@
   let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
 "--------------------Normalモード--------------------"
+  nnoremap <C-[> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR> " ctagsジャンプ
+  nnoremap <C-]> g<C-]>
+
   noremap f           za
   " noremap F           zA
 
@@ -201,6 +201,7 @@
   set wrapscan "検索時に最後まで行ったら最初に戻る
 
 "-------------------- その他 --------------------"
+  set tags=./tags; " tagsファイルの指定, ;は親ディレクトリを探していくという意味
   set modeline   " expand tabが効かなくなったので追加
   set autoread   " 他での変更を自動再読み込み
 

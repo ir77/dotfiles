@@ -41,7 +41,6 @@
 
 "--------------------View設定--------------------"
   " filetype plugin indent on
-  " syntax enable
 
   set t_Co=256
 
@@ -180,7 +179,7 @@
   "ウィンドウの端に確保される折り畳みを表示
   set foldcolumn=3
   "すべての折り畳みを閉じる
-  set foldlevel=0
+  set foldlevel=2
   " どのレベルの深さまで折りたたむか
   set foldnestmax=2
 
@@ -259,7 +258,8 @@
   set vb t_vb=
 
   " scrollが遅いことを解決できる？
-  " set lazyredraw
+  set lazyredraw
+  set ttyfast
 
   " swp files
   " set directory=~/.vim/swp

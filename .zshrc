@@ -365,7 +365,6 @@
 
 # --------------------エイリアス------------------
 	function myAliasSettings {
-    
     alias cp="cp -i" # 保険で警告
     alias mv="mv -i" # 保険で警告
 

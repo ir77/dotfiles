@@ -7,6 +7,18 @@
 # Xcode, Line
 # MSOffice, Adobe, Locamatic
 
+# AA by http://ascii.mastervb.net font xttyb.flf
+cat << EOS
+                             #### ####                         ##       
+####              ##           ##   ##     ##  #               ##       
+ ##  # ##   #### #####  ###    ##   ##     ##  #  ###  ###   ####  ###  
+ ##  ## ## ##     ##      ##   ##   ##      ###  ##   ## ## ## ## ## ## 
+ ##  ## ## ####   ##    ####   ##   ##       #   ##   ## ## ## ## ## ## 
+ ##  ## ##  ####  ##   ## ##   ##   ##      ###  ##   ## ## ## ## ##### 
+ ##  ## ##    ##  ##   ## ##   ##   ##     #  ## ##   ## ## ## ## ##    
+#### ## ## ####    ###  ## #   ##   ##     #  ##  ###  ###   ## #  #### 
+EOS
+
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update

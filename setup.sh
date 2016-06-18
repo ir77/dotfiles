@@ -1,5 +1,4 @@
-# TODO
-## before
+
 # - iTunes認証解除
 # - iCloudサインアウト（Macを探すの解除）
 # .ssh, Photos, iTunes
@@ -8,11 +7,23 @@
 # Xcode, Line
 # MSOffice, Adobe, Locamatic
 
+# AA by http://ascii.mastervb.net font xttyb.flf
+cat << EOS
+                             #### ####                         ##       
+####              ##           ##   ##     ##  #               ##       
+ ##  # ##   #### #####  ###    ##   ##     ##  #  ###  ###   ####  ###  
+ ##  ## ## ##     ##      ##   ##   ##      ###  ##   ## ## ## ## ## ## 
+ ##  ## ## ####   ##    ####   ##   ##       #   ##   ## ## ## ## ## ## 
+ ##  ## ##  ####  ##   ## ##   ##   ##      ###  ##   ## ## ## ## ##### 
+ ##  ## ##    ##  ##   ## ##   ##   ##     #  ## ##   ## ## ## ## ##    
+#### ## ## ####    ###  ## #   ##   ##     #  ##  ###  ###   ## #  #### 
+EOS
+
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
-brew install caskroom/cask/brew-cask
+brew tap caskroom/cask
 
 brew install zsh
 brew install git
@@ -23,33 +34,25 @@ brew install vim --with-lua
 brew install trash
 brew install ffmpeg
 brew install gifsicle
-brew install node
-brew install mysql
 brew install tmux  
-brew install pup
 brew install reattach-to-user-namespace
 brew install ctags
+brew install peco
 
 brew cask install google-chrome
-brew cask install dropbox
+# brew cask install dropbox
 brew cask install caffeine
 brew cask install google-japanese-ime
-brew cask install skype
-brew cask install atom
+# brew cask install atom
 brew cask install karabiner
 brew cask install xquartz
 brew cask install appcleaner
-brew cask install caskroom/homebrew-versions/java6
-brew cask install intellij-idea
-brew cask install virtualbox 
-brew cask install vagrant
+# brew cask install caskroom/homebrew-versions/java6
+# brew cask install intellij-idea
+# brew cask install virtualbox 
+# brew cask install vagrant
 brew cask install dash    
-brew cask install the-unarchiver
-brew cask install vlc
-brew cask install alfred
 
-brew tap peco/peco
-brew install peco
 
 brew tap sanemat/font
 brew install ricty
@@ -57,14 +60,8 @@ brew reinstall --powerline --vim-powerline ricty
 cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
-mkdir -p ~/.vim/bundle
-git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
-sudo easy_install pip
-sudo pip install beautifulsoup4
-
 sudo gem install cocoapods
-sudo gem install tldrb
+# sudo gem install tldrb
 
 git clone https://github.com/tomislav/osx-terminal.app-colors-solarized
 echo 'set terminal colors to solarized'

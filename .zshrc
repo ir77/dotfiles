@@ -383,6 +383,8 @@ EOS
 
 # --------------------エイリアス------------------
 	function myAliasSettings {
+    alias history="history -Di 1" # 実行時間とかかった時間を表示
+
     alias cp="cp -i" # 保険で警告
     alias mv="mv -i" # 保険で警告
 
@@ -470,14 +472,17 @@ EOS
 		alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 		# ./でC言語の実行
+    # shiftで引数をずらす
 		function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
 		function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
 		function runcpp2 () { g++ $1 && shift && ./a.out $@}
 		function runocaml () { ocaml $1 }
+		function runHaskell () { ghc -o a.out $1 && shift && ./a.out $@}
 
 		alias -s c=runc
 		alias -s cpp=runcpp
 		alias -s ml=runocaml
+		alias -s hs=runHaskell
 
 		# .appの起動
 		if [[ ! -e ~/.zsh/app ]]; then

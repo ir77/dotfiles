@@ -407,8 +407,7 @@ EOS
 
 		# Dropbox以下の容量を調べるときに使うコマンド
 		# sudo du -hxd 1 ~/Dropbox/    
-		alias duDropbox="du -hxd 1 ~/Dropbox/"
-		alias duHome="du -gxd 1 ~/ | awk '$1 > 1{print}'"
+		alias duHome="du -gxd 3 ~/ | sort -n"
 
 		# grep結果に色を点ける
 		alias grep="grep -a --color"

@@ -52,7 +52,7 @@ brew cask install appcleaner
 # brew cask install virtualbox 
 # brew cask install vagrant
 brew cask install dash    
-
+brew cask install iterm2
 
 brew tap sanemat/font
 brew install ricty

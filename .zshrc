@@ -662,27 +662,27 @@ EOS
 
 
 #-------------------- tmux --------------------
-	function tmuxSettings {
-		# 既にtmuxを起動してないか
-    if [[ ! -n $TMUX ]]; then
-      # get the IDs
-      ID="`tmux list-sessions`"
-      if [[ -z "$ID" ]]; then
-        tmux new-session && exit
-      fi
-      create_new_session="Create New Session"
-      ID="$ID\n${create_new_session}:"
-      ID="`echo $ID | peco | cut -d: -f1`"
-      if [[ "$ID" = "${create_new_session}" ]]; then
-        tmux new-session && exit
-      elif [[ -n "$ID" ]]; then
-        tmux attach-session -t "$ID" && exit
-      else
-        echo 'Start terminal without tmux'
-      fi
-    fi
-	}
-	tmuxSettings
+#	function tmuxSettings {
+#		# 既にtmuxを起動してないか
+#    if [[ ! -n $TMUX ]]; then
+#      # get the IDs
+#      ID="`tmux list-sessions`"
+#      if [[ -z "$ID" ]]; then
+#        tmux new-session && exit
+#      fi
+#      create_new_session="Create New Session"
+#      ID="$ID\n${create_new_session}:"
+#      ID="`echo $ID | peco | cut -d: -f1`"
+#      if [[ "$ID" = "${create_new_session}" ]]; then
+#        tmux new-session && exit
+#      elif [[ -n "$ID" ]]; then
+#        tmux attach-session -t "$ID" && exit
+#      else
+#        echo 'Start terminal without tmux'
+#      fi
+#    fi
+#	}
+#	tmuxSettings
 
 
 #-------------------- pyenv --------------------

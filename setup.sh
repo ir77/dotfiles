@@ -53,6 +53,7 @@ brew cask install appcleaner
 # brew cask install vagrant
 brew cask install dash    
 brew cask install iterm2
+# brew cask install rescuetime
 
 brew tap sanemat/font
 brew install ricty

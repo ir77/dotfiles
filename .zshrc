@@ -701,11 +701,11 @@ EOS
 		export PATH=$ANT_ROOT:$PATH
 
 		# Add environment variable NDK_ROOT for cocos2d-x
-		export NDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/ndk/
+		export NDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/ndk
 		export PATH=$NDK_ROOT:$PATH
 
 		# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-		export ANDROID_SDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/sdk/
+		export ANDROID_SDK_ROOT=/Users/ucucAir2/Downloads/cocos2d-x/android/sdk
 		export PATH=$ANDROID_SDK_ROOT:$PATH
 		export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 

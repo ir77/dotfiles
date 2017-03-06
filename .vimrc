@@ -240,7 +240,7 @@
   set formatoptions=q
 
   " vimのヤンクとOSのクリップボードを共有する
-  set clipboard=unnamed,autoselect
+  set clipboard+=unnamed
 
   " Don't keep a backup file
   set nobackup

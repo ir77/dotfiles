@@ -38,6 +38,7 @@ brew install tmux
 brew install reattach-to-user-namespace
 brew install ctags
 brew install peco
+brew install ack
 
 brew cask install google-chrome
 # brew cask install dropbox
@@ -66,6 +67,12 @@ sudo gem install cocoapods
 
 git clone https://github.com/tomislav/osx-terminal.app-colors-solarized
 echo 'set terminal colors to solarized'
+
+# defaults delete NSGlobalDomain KeyRepeat ＃Defaultに戻す
+defaults write NSGlobalDomain KeyRepeat -int 0.4
+# defaults delete NSGlobalDomain InitialKeyRepeat # Defaultに戻す
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
 
 # スクリーンショットを英語に
 defaults write com.apple.screencapture name ""

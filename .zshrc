@@ -566,6 +566,13 @@ EOS
 
 	function history-all { history -E 1 }
 
+	function peco-ack-search() {
+    ack "$@" . | peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less '
+	}
+	zle -N peco-ack-search
+	bindkey '^f' peco-ack-search
+
+
 	function peco-select-history() {
 		local tac
 		if which tac > /dev/null; then

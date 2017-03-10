@@ -1,13 +1,19 @@
-"--------------------基本設定--------------------"
+"--------------------encoding--------------------"
   scriptencoding utf-8
+  set termencoding	=utf-8
+  set encoding		=utf-8
+  set fileformats		=unix,dos,mac
+  set fileencoding	=utf-8
+  set fileencodings	=ucs-bom,utf-8,shift-jis,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932
+
+  if &encoding == 'utf-8'
+    set ambiwidth=double
+  endif
 
 "-------------------- dein.vim --------------------"
-  " プラグインが実際にインストールされるディレクトリ
-  let s:dein_dir = expand('~/.cache/dein')
-  " dein.vim 本体
+  let s:dein_dir = expand('~/.cache/dein') " プラグインが実際にインストールされるディレクトリ
   let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-  " dein.vim がなければ github から落としてくる
   if &runtimepath !~# '/dein.vim'
     if !isdirectory(s:dein_repo_dir)
       execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
@@ -15,7 +21,6 @@
     execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
   endif
 
-  " 設定開始
   if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
 
@@ -29,19 +34,16 @@
     call dein#load_toml(s:toml,      {'lazy': 0})
     call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-    " 設定終了
     call dein#end()
     call dein#save_state()
   endif
 
-  " もし、未インストールものものがあったらインストール
   if dein#check_install()
     call dein#install()
   endif
 
-"--------------------View設定--------------------"
-  " filetype plugin indent on
-
+"--------------------View--------------------"
+  set number
   set t_Co=256
 
   "colorscheme desert
@@ -55,8 +57,9 @@
   highlight LineNr ctermbg=black
   set cursorline
 
-  "行数を表示"
-  set number
+  " au BufRead,BufNewFile *.txt set syntax=desert.vim
+  au BufRead,BufNewFile *.txt set syntax=hybrid.vim
+  au BufRead,BufNewFile *.jinja2 set syntax=htmljinja.vim
 
   " ファイルエンコーディングや文字コードをステータス行に表示する
   set laststatus=2 "ステータスラインを常に表示
@@ -125,14 +128,11 @@
   noremap <C-L>	   :noh<C-L><CR>
 
   " 置換
-    noremap S           :%s///g<LEFT><LEFT><LEFT>
+  noremap S           :%s///g<LEFT><LEFT><LEFT>
 
   " タブの移動をemacs風に
   " nnoremap <C-b>  gT
   " nnoremap <C-f>  gt
-  " TODO リーダーキーバインドを考える
-  let mapleader = "\<Space>"
-  nnoremap <Leader>w :w<CR>
 
 "--------------------Insertモード--------------------"
   inoremap <C-A>     <HOME>
@@ -143,12 +143,6 @@
   inoremap <C-F>     <RIGHt>
   inoremap <C-N>	   <DOWN>
   inoremap <C-P>	   <UP>
-
-  "非補完時は行移動をj,kと同じ動作にして補完中は候補選択
-  "inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
-  "inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
-  "inoremap <silent> <expr> <Up>   pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
-  "inoremap <silent> <expr> <Down> pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
 
   "BSで削除できるものを指定する
   " indent  : 行頭の空白
@@ -183,32 +177,18 @@
   " どのレベルの深さまで折りたたむか
   set foldnestmax=2
 
-"--------------------encoding--------------------"
-  set termencoding	=utf-8
-  set encoding		=utf-8
-  set fileformats		=unix,dos,mac
-  set fileencoding	=utf-8
-  set fileencodings	=ucs-bom,utf-8,shift-jis,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932
-
-  if &encoding == 'utf-8'
-    set ambiwidth=double
-  endif
-
 "--------------------検索設定--------------------"
   set ignorecase "大文字/小文字の区別なく検索する
   set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
   set wrapscan "検索時に最後まで行ったら最初に戻る
 
 "-------------------- その他 --------------------"
-  set tags=./tags; " tagsファイルの指定, ;は親ディレクトリを探していくという意味
+  set synmaxcol=200 " Vimが長いテキストで重くなる現象を回避 - Qiita http://qiita.com/shotat/items/da0f42ea90610ca0dadb
   set modeline   " expand tabが効かなくなったので追加
   set autoread   " 他での変更を自動再読み込み
 
   set autoindent " 自動でインデント
   " set paste      " ペースト時にautoindentを無効に(onにするとC-PNBFなどが動かない)
-
-  " 末尾空白の保存時削除
-  " autocmd BufWritePre * :%s/\s\+$//ge
 
   " 現在のディレクトリに自動的に移動する
   set autochdir
@@ -244,9 +224,7 @@
 
   " Don't keep a backup file
   set nobackup
-
-  " 閉じ括弧が入力されたとき対応する括弧を表示
-  " set showmatch
+  set noswapfile
 
   "インクリメンタル検索on"
   set incsearch
@@ -260,14 +238,6 @@
   " scrollが遅いことを解決できる？
   set lazyredraw
   set ttyfast
-
-  " swp files
-  " set directory=~/.vim/swp
-  set noswapfile
-
-  " au BufRead,BufNewFile *.txt set syntax=desert.vim
-  au BufRead,BufNewFile *.txt set syntax=hybrid.vim
-  au BufRead,BufNewFile *.jinja2 set syntax=htmljinja.vim
 
   "カラー設定 最後に設定する
   syntax on

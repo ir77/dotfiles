@@ -1,85 +1,50 @@
-# 基本は github.com のレポジトリーを指定するだけ
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif dein#util#_is_cygwin()
-    let cmd = 'make -f make_cygwin.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
-'''
+build = 'make'
 
-[[plugins]]
-repo = 'Shougo/neosnippet'
-hook_add = """
-  " <TAB>: completion.
-  " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-  "tabで補完候補の選択を行う
-  "inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-  "inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-
-  " Plugin key-mappings.
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-
-  " SuperTab like snippets behavior.
-  " imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-  imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  " 前回行われた補完をキャンセルします
-  inoremap <expr><C-g> neocomplete#undo_completion()
-  " 補完候補のなかから、共通する部分を補完します
-  inoremap <expr><C-l> neocomplete#complete_common_string()
-  " 改行で補完ウィンドウを閉じる
-  inoremap <expr><CR> neocomplete#smart_close_popup() . "\<CR>"
-
-  " For snippet_complete marker.
-  if has('conceal')
-    set conceallevel=2 concealcursor=i
-  endif
-
-  " neocompete
-  " 補完ウィンドウの設定
-  set completeopt=menuone
-
-  let g:acp_enableAtStartup = 0
-  let g:neocomplete#enable_at_startup = 1
-  " 大文字が入力されるまで大文字小文字の区別を無視する
-  let g:neocomplete#enable_smart_case = 1
-  " _(アンダースコア)区切りの補完を有効化
-  let g:neocomplete_enable_underbar_completion = 1
-  let g:neocomplete_enable_camel_case_completion  =  1
-  " ポップアップメニューで表示される候補の数
-  let g:neocomplete_max_list = 20
-  " シンタックスをキャッシュするときの最小文字長
-  let g:neocomplete_min_syntax_length = 2
-  " ディクショナリ定義
-  let g:neocomplete_dictionary_filetype_lists = {
-    \ 'default' : ''
-    \ }
-
-  if !exists('g:neocomplete_keyword_patterns')
-      let g:neocomplete_keyword_patterns = {}
-  endif
-
-  let g:neocomplete_keyword_patterns['default'] = '\h\w*'
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
-  let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
-"""
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+hook_add = """
+  " Plugin key-mappings.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+  " SuperTab like snippets behavior.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  "imap <expr><TAB>
+  " \ pumvisible() ? "\<C-n>" :
+  " \ neosnippet#expandable_or_jumpable() ?
+  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+"""
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = """
+  " visualmode -> enter -> align char -> happy
+  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+  vmap <Enter> <Plug>(EasyAlign)
+  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+  nmap ga <Plug>(EasyAlign)
+"""
 
 [[plugins]]
 repo = 'scrooloose/syntastic'
@@ -94,42 +59,74 @@ hook_add = """
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 0
 """
-[[plugins]]
-repo = 'Yggdroot/indentLine'
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_add = """
-  let g:airline_left_sep = '⮀'
-  let g:airline_right_sep = '⮂'
-  let g:airline#extensions#tabline#left_sep = '⮀'
-  let g:airline#extensions#tabline#left_alt_sep = '⮀'
-  " let g:airline_section_a = airline#section#create(['mode','','branch'])
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#show_buffers = 0
-  let g:airline#extensions#tabline#tab_nr_type = 1
-  let g:airline#extensions#tabline#fnamemod = ':t'
-  set guifont=Ricty\ Regular\ for\ Powerline:h14
-  let g:Powerline_symbols = 'fancy'
-  set t_Co=256
-  " let g:airline_theme='molokai'
-  " let g:airline_theme='luna'
-  " let g:airline_theme='simple'
-  let g:airline_theme='jellybeans'
-"""
-
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-hook_add = """
-  " visualmode -> enter -> align char -> happy
-  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-  vmap <Enter> <Plug>(EasyAlign)
-  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-  nmap ga <Plug>(EasyAlign)
-"""
 
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = """
+  let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+        \ 'mode_map': { 'c': 'NORMAL' },
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'LightlineModified',
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive',
+        \   'filename': 'LightlineFilename',
+        \   'fileformat': 'LightlineFileformat',
+        \   'filetype': 'LightlineFiletype',
+        \   'fileencoding': 'LightlineFileencoding',
+        \   'mode': 'LightlineMode',
+        \ },
+        \ 'separator': { 'left': '⮀', 'right': '⮂' },
+        \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+        \ }
+
+  function! LightlineModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! LightlineReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  endfunction
+
+  function! LightlineFilename()
+    return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \  &ft == 'unite' ? unite#get_status_string() :
+          \  &ft == 'vimshell' ? vimshell#get_status_string() :
+          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+          \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+  endfunction
+
+  function! LightlineFugitive()
+    if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+      let branch = fugitive#head()
+      return branch !=# '' ? '⭠ '.branch : ''
+    endif
+    return ''
+  endfunction
+
+  function! LightlineFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+
+  function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! LightlineFileencoding()
+    return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  endfunction
+
+  function! LightlineMode()
+    return winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
+"""

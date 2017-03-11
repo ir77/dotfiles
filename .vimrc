@@ -1,7 +1,10 @@
+" vimの起動が遅いときの対策 - neovim/vim入門
+" http://kaworu.jpn.org/vim/vim%E3%81%AE%E8%B5%B7%E5%8B%95%E3%81%8C%E9%81%85%E3%81%84%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E7%AD%96
+" > vim --startuptime startuptime.txt
 "--------------------encoding--------------------"
   scriptencoding utf-8
   set termencoding	=utf-8
-  set encoding		=utf-8
+  set encoding		  =utf-8
   set fileformats		=unix,dos,mac
   set fileencoding	=utf-8
   set fileencodings	=ucs-bom,utf-8,shift-jis,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932
@@ -57,9 +60,26 @@
   highlight LineNr ctermbg=black
   set cursorline
 
-  " au BufRead,BufNewFile *.txt set syntax=desert.vim
-  au BufRead,BufNewFile *.txt set syntax=hybrid.vim
-  au BufRead,BufNewFile *.jinja2 set syntax=htmljinja.vim
+  autocmd BufNewFile,BufRead *.txt setlocal syntax=hybrid.vim
+  autocmd BufNewFile,BufRead *.jinja2 setlocal syntax=htmljinja.vim
+  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=bash
+  autocmd BufNewFile,BufRead *.c,*.h setlocal filetype=c
+  autocmd BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
+  autocmd BufNewFile,BufRead *.cs setlocal filetype=cs
+  autocmd BufNewFile,BufRead *.css setlocal filetype=css
+  autocmd BufNewFile,BufRead *.go setlocal filetype=go
+  autocmd BufNewFile,BufRead *.ino setlocal filetype=arduino
+  autocmd BufNewFile,BufRead *.java setlocal filetype=java
+  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
+  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+  autocmd BufNewFile,BufRead *.pu setlocal filetype=plantuml
+  autocmd BufNewFile,BufRead *.py setlocal filetype=python
+  autocmd BufNewFile,BufRead *.r setlocal filetype=r
+  autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
+  autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
+  autocmd BufNewFile,BufRead *.toml set filetype=toml
+  autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
+  autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
 
   " ファイルエンコーディングや文字コードをステータス行に表示する
   set laststatus=2 "ステータスラインを常に表示
@@ -141,8 +161,12 @@
   inoremap <C-H>     <BS>
   inoremap <C-B>     <LEFT>
   inoremap <C-F>     <RIGHt>
-  inoremap <C-N>	   <DOWN>
-  inoremap <C-P>	   <UP>
+  " inoremap <C-N>	   <DOWN>
+  " inoremap <C-P>	   <UP>
+
+  " チーズバーガー中毒: Vimで入力補完を常にオンにするvimrc
+  " http://io-fia.blogspot.jp/2012/11/vimvimrc.html
+  imap <expr> . pumvisible() ? "\<C-E>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
 
   "BSで削除できるものを指定する
   " indent  : 行頭の空白
@@ -228,9 +252,6 @@
 
   "インクリメンタル検索on"
   set incsearch
-
-  "スクロール開始行の設定 ex.5 => 下上5行目からスクロール開始"
-  " set scrolloff=5
 
   " vimのビープ音を殺す
   set vb t_vb=

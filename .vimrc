@@ -205,10 +205,20 @@
   set ignorecase "大文字/小文字の区別なく検索する
   set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
   set wrapscan "検索時に最後まで行ったら最初に戻る
+  set incsearch "インクリメンタル検索on"
+
+"-------------------- タブ設定 --------------------"
+  set tabstop=2 " Tabを画面上の見た目で何文字分に展開するかを指定
+  set shiftwidth=2 " vimが自動で挿入する量
+  set softtabstop=2 " キーボードで入力したTabで挿入される空白の量
+  set expandtab " タブをスペースに変更
 
 "-------------------- その他 --------------------"
+  " scrollが遅いことへの対策
+  set lazyredraw
+  set ttyfast
   set synmaxcol=200 " Vimが長いテキストで重くなる現象を回避 - Qiita http://qiita.com/shotat/items/da0f42ea90610ca0dadb
-  set modeline   " expand tabが効かなくなったので追加
+
   set autoread   " 他での変更を自動再読み込み
 
   set autoindent " 自動でインデント
@@ -220,25 +230,8 @@
   " マウスの設定
   set mouse=a
 
-  " Use Vim default instead of 100% vi compativility
   " viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
   set nocompatible
-
-  "日本語の全角文字を直す
-  set ambiwidth=double
-
-  " TABの幅を指定
-  " Tabを画面上の見た目で何文字分に展開するかを指定
-  set tabstop=2
-  " vimが自動で挿入する量
-  set shiftwidth=2
-  " キーボードで入力したTabで挿入される空白の量
-  set softtabstop=2
-  " タブをスペースに変更
-  set expandtab
-
-  "インデントラインを設定"
-  let g:indentLine_char = '|'
 
   " vim の自動文章折り返し機能を回避"
   set formatoptions=q
@@ -250,15 +243,8 @@
   set nobackup
   set noswapfile
 
-  "インクリメンタル検索on"
-  set incsearch
-
   " vimのビープ音を殺す
   set vb t_vb=
-
-  " scrollが遅いことを解決できる？
-  set lazyredraw
-  set ttyfast
 
   "カラー設定 最後に設定する
   syntax on

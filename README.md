@@ -9,11 +9,12 @@
 
 - vim(tabbar) 
 
-![2017-03-13 22 53 36](https://cloud.githubusercontent.com/assets/783878/23858265/39afe7e6-0843-11e7-9400-6a6cac4d6240.png)
+![2017-03-13 23 22 50](https://cloud.githubusercontent.com/assets/783878/23858536/15dee8f2-0844-11e7-9abf-2c31342e0cfb.png)
 
 - vim(statusbar)
 
-![2017-03-13 22 53 44](https://cloud.githubusercontent.com/assets/783878/23858266/3a2cca54-0843-11e7-8a17-74ffe82ea413.png)
+![2017-03-13 23 23 04](https://cloud.githubusercontent.com/assets/783878/23858537/1659c342-0844-11e7-8631-1109c068f121.png)
+
 
 
 # Setup

@@ -48,6 +48,7 @@
 "--------------------View--------------------"
   set number
   set t_Co=256
+  set showmatch "highlight matching [{()}]
 
   "colorscheme desert
   "colorscheme molokai
@@ -129,11 +130,19 @@
   let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
 "--------------------Normalモード--------------------"
+  " move vertically by visual line
+  nnoremap j gj
+  nnoremap k gk
+
+  " move to beginning/end of line
+  nnoremap B ^
+  nnoremap E $
+
   nnoremap <C-[> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR> " ctagsジャンプ
   nnoremap <C-]> g<C-]>
 
   noremap f           za
-  " noremap F           zA
+  noremap F           zA
 
   "カーソルキーで行末／行頭の移動可能に設定。
   set whichwrap=b,s,[,],<,>
@@ -149,10 +158,6 @@
 
   " 置換
   noremap S           :%s///g<LEFT><LEFT><LEFT>
-
-  " タブの移動をemacs風に
-  " nnoremap <C-b>  gT
-  " nnoremap <C-f>  gt
 
 "--------------------Insertモード--------------------"
   inoremap <C-A>     <HOME>
@@ -192,20 +197,17 @@
   vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 
 "--------------------折り畳み--------------------"
-  "インデントで折り畳みを自動作成
-  set foldmethod=indent
-  "ウィンドウの端に確保される折り畳みを表示
-  set foldcolumn=3
-  "すべての折り畳みを閉じる
-  set foldlevel=2
-  " どのレベルの深さまで折りたたむか
-  set foldnestmax=2
+  set foldmethod=indent "インデントで折り畳みを自動作成
+  set foldcolumn=3 "ウィンドウの端に確保される折り畳みを表示
+  set foldnestmax=2 " どのレベルの深さまで折りたたむか
+  set foldlevelstart=0 " close most folds by default
 
 "--------------------検索設定--------------------"
   set ignorecase "大文字/小文字の区別なく検索する
   set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
   set wrapscan "検索時に最後まで行ったら最初に戻る
   set incsearch "インクリメンタル検索on"
+  set hlsearch "highlight matches
 
 "-------------------- タブ設定 --------------------"
   set tabstop=2 " Tabを画面上の見た目で何文字分に展開するかを指定
@@ -215,7 +217,7 @@
 
 "-------------------- その他 --------------------"
   " scrollが遅いことへの対策
-  set lazyredraw
+  set lazyredraw " redraw only when we need to.
   set ttyfast
   set synmaxcol=200 " Vimが長いテキストで重くなる現象を回避 - Qiita http://qiita.com/shotat/items/da0f42ea90610ca0dadb
 

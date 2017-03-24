@@ -12,6 +12,8 @@
 	<string>69385C1B-85CC-4D30-9D4D-DE59AA80E33F</string>
 	<key>DimBackgroundWindows</key>
 	<false/>
+	<key>DimInactiveSplitPanes</key>
+	<false/>
 	<key>DimOnlyText</key>
 	<false/>
 	<key>Hotkey</key>
@@ -73,9 +75,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 364 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>520 313 796 473 0 0 1440 878 </string>
+	<string>289 250 796 473 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 564 0 0 1440 878 </string>
+	<string>0 4 1440 874 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -249,7 +251,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>0.40009014423076938</real>
+			<real>0.49684495192307698</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -264,7 +266,7 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>80</integer>
+			<integer>1000</integer>
 			<key>Command</key>
 			<string>/bin/zsh</string>
 			<key>Cursor Color</key>
@@ -621,7 +623,7 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>40</integer>
+			<integer>1000</integer>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
@@ -657,7 +659,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.28649223372781069</real>
+			<real>0.24045626849112428</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -673,7 +675,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>5</integer>
+			<integer>9</integer>
 			<key>Working Directory</key>
 			<string>/Users/yuchimur</string>
 		</dict>
@@ -746,11 +748,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-03-09T10:07:24Z</date>
+	<date>2017-03-16T00:06:15Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.41839693509615383</real>
+	<real>0.4556189903846154</real>
 	<key>UseBorder</key>
 	<false/>
 	<key>iTerm Version</key>

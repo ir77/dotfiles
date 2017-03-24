@@ -156,6 +156,11 @@
   " 画面の再描画時に検索結果のハイライトを消す
   noremap <C-L>	   :noh<C-L><CR>
 
+  "<ESC>2回でハイライト解除
+  nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
+
+
+
   " 置換
   noremap S           :%s///g<LEFT><LEFT><LEFT>
 
@@ -216,6 +221,11 @@
   set expandtab " タブをスペースに変更
 
 "-------------------- その他 --------------------"
+  " 最後に編集を行った位置から再開
+  " http://vimdoc.sourceforge.net/htmldoc/eval.html#last-position-jump
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+
   " scrollが遅いことへの対策
   set lazyredraw " redraw only when we need to.
   set ttyfast

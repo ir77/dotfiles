@@ -61,30 +61,7 @@
   highlight LineNr ctermbg=black
   set cursorline
 
-  autocmd BufNewFile,BufRead *.txt setlocal syntax=hybrid.vim
-  autocmd BufNewFile,BufRead *.jinja2 setlocal syntax=htmljinja.vim
-  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=bash
-  autocmd BufNewFile,BufRead *.c,*.h setlocal filetype=c
-  autocmd BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
-  autocmd BufNewFile,BufRead *.cs setlocal filetype=cs
-  autocmd BufNewFile,BufRead *.css setlocal filetype=css
-  autocmd BufNewFile,BufRead *.go setlocal filetype=go
-  autocmd BufNewFile,BufRead *.ino setlocal filetype=arduino
-  autocmd BufNewFile,BufRead *.java setlocal filetype=java
-  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
-  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-  autocmd BufNewFile,BufRead *.pu setlocal filetype=plantuml
-  autocmd BufNewFile,BufRead *.py setlocal filetype=python
-  autocmd BufNewFile,BufRead *.r setlocal filetype=r
-  autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
-  autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
-  autocmd BufNewFile,BufRead *.toml set filetype=toml
-  autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
-  autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
-
-  " ファイルエンコーディングや文字コードをステータス行に表示する
   set laststatus=2 "ステータスラインを常に表示
-  set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (%v,%l)/%L%8P\
 
   " 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)
   let g:netrw_altv = 1
@@ -198,6 +175,10 @@
   vnoremap =	:Align
   vnoremap J	gJ
 
+  " インデント変更時はvisulal modeから抜けないようにする
+  vnoremap > >gv
+  vnoremap < <gv
+
   " カーソル位置の単語をヤンクした単語に置換
   vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 
@@ -219,6 +200,30 @@
   set shiftwidth=2 " vimが自動で挿入する量
   set softtabstop=2 " キーボードで入力したTabで挿入される空白の量
   set expandtab " タブをスペースに変更
+
+"-------------------- ファイル設定 --------------------"
+  autocmd BufNewFile,BufRead *.txt setlocal syntax=hybrid.vim
+  autocmd BufNewFile,BufRead *.jinja2 setlocal syntax=htmljinja.vim
+  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=bash
+  autocmd BufNewFile,BufRead *.c,*.h setlocal filetype=c
+  autocmd BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
+  autocmd BufNewFile,BufRead *.cs setlocal filetype=cs
+  autocmd BufNewFile,BufRead *.css setlocal filetype=css
+  autocmd BufNewFile,BufRead *.go setlocal filetype=go
+  autocmd BufNewFile,BufRead *.ino setlocal filetype=arduino
+  autocmd BufNewFile,BufRead *.java setlocal filetype=java
+  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
+  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+  autocmd BufNewFile,BufRead *.pu setlocal filetype=plantuml
+  autocmd BufNewFile,BufRead *.py setlocal filetype=python
+  autocmd BufNewFile,BufRead *.r setlocal filetype=r
+  autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
+  autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
+  autocmd BufNewFile,BufRead *.toml set filetype=toml
+  autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
+  autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
+  " python編集時はtabのサイズを4に
+  autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
 "-------------------- その他 --------------------"
   " 最後に編集を行った位置から再開

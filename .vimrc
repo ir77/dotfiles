@@ -63,22 +63,6 @@
 
   set laststatus=2 "ステータスラインを常に表示
 
-  " 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)
-  let g:netrw_altv = 1
-  " 'o'でファイルを開くときは下側に開く。(デフォルトが上側なので入れ替え)
-  let g:netrw_alto = 1
-  let g:netrw_keepdir = 0
-
-  "Enter・・・ファイルを開く | ディレクトリを移動する
-  "o・・・水平方向で開く（画面分割）
-  "v・・・垂直方向で開く（画面分割）
-  "t・・・新しいタブで表示する
-  "p・・・プレビューウィンドウで表示する
-  "-・・・上の階層に移動
-  "u・・・前のディレクトリに戻る
-  "U・・・戻ったディレクトリにまた戻る
-  "c・・・開いているバッファ（%a）をカレントディレクトリに変更
-
   " Anywhere SID.
   function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -224,6 +208,25 @@
   autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
   " python編集時はtabのサイズを4に
   autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
+"-------------------- ファイラー設定 --------------------"
+  "Enter・・・ファイルを開く | ディレクトリを移動する
+  "o・・・水平方向で開く（画面分割）
+  "v・・・垂直方向で開く（画面分割）
+  "t・・・新しいタブで表示する
+  "p・・・プレビューウィンドウで表示する
+  "-・・・上の階層に移動
+  "u・・・前のディレクトリに戻る
+  "U・・・戻ったディレクトリにまた戻る
+  "c・・・開いているバッファ（%a）をカレントディレクトリに変更
+
+  let g:netrw_liststyle = 3 " tree style listing
+  let g:netrw_banner = 0
+  let g:netrw_winsize   = 70 " vで開くときにnetrwの領域を30%にする
+
+  let g:netrw_altv = 1 " 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)
+  let g:netrw_alto = 1 " 'o'でファイルを開くときは下側に開く。(デフォルトが上側なので入れ替え)
+  let g:netrw_keepdir = 0
 
 "-------------------- その他 --------------------"
   " 最後に編集を行った位置から再開

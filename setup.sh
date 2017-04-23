@@ -39,6 +39,8 @@ brew install reattach-to-user-namespace
 brew install ctags
 brew install peco
 brew install ack
+brew install ghq
+brew install hub
 
 brew cask install google-chrome
 # brew cask install dropbox

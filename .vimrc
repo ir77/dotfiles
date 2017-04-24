@@ -156,7 +156,7 @@
 
 "--------------------visualモード--------------------"
   vnoremap S	:s///g<LEFT><LEFT><LEFT>
-  vnoremap =	:Align
+  vnoremap =	:EasyAlign
   vnoremap J	gJ
 
   " インデント変更時はvisulal modeから抜けないようにする

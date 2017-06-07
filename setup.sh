@@ -40,7 +40,6 @@ brew install ctags
 brew install peco
 brew install ack
 brew install ghq
-brew install hub
 
 brew cask install google-chrome
 # brew cask install dropbox
@@ -79,6 +78,13 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 1
 # スクリーンショットを英語に
 defaults write com.apple.screencapture name ""
 
-echo 'other settings'
+echo 'git settings'
+git config --global push.default simple
+git config --global alias.glog "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+git config --global alias.cm "commit -m"
+git config --global alias.st "status --branch --short"
+git config --global alias.co "checkout"
+git config --global alias.fp "fetch --prune"
+
 echo 'git config --global user.name "user"'
 echo 'git config --global user.email "email"'

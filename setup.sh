@@ -79,7 +79,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 1
 defaults write com.apple.screencapture name ""
 
 echo 'git settings'
-git config --global push.default simple
+git config --global push.default matching
 git config --global alias.glog "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 git config --global alias.cm "commit -m"
 git config --global alias.st "status --branch --short"

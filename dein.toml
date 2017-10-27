@@ -133,3 +133,12 @@ hook_add = """
     return winwidth(0) > 60 ? lightline#mode() : ''
   endfunction
 """
+
+[[plugins]]
+repo = 'kballard/vim-swift'
+
+[[plugins]]
+repo = 'keith/swift.vim'
+hook_add = """
+  let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+"""

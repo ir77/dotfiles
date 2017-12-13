@@ -142,3 +142,7 @@ repo = 'keith/swift.vim'
 hook_add = """
   let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 """
+
+[[plugins]]
+repo = 'juvenn/mustache.vim'
+

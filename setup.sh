@@ -56,6 +56,7 @@ brew cask install appcleaner
 brew cask install dash    
 brew cask install iterm2
 # brew cask install rescuetime
+# brew cask install Cyberduck
 
 brew tap sanemat/font
 brew install ricty
@@ -74,6 +75,8 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 # defaults delete NSGlobalDomain InitialKeyRepeat # Defaultに戻す
 defaults write NSGlobalDomain InitialKeyRepeat -int 1
 
+# Xcodeにビルド時間を表示する
+defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 
 # スクリーンショットを英語に
 defaults write com.apple.screencapture name ""

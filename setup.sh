@@ -42,19 +42,20 @@ brew install ack
 brew install ghq
 
 brew cask install google-chrome
-# brew cask install dropbox
 brew cask install caffeine
 brew cask install google-japanese-ime
-# brew cask install atom
 brew cask install karabiner
 brew cask install xquartz
 brew cask install appcleaner
+brew cask install dash    
+brew cask install iterm2
+brew cask install shiftit
+# brew cask install dropbox
+# brew cask install atom
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install intellij-idea
 # brew cask install virtualbox 
 # brew cask install vagrant
-brew cask install dash    
-brew cask install iterm2
 # brew cask install rescuetime
 # brew cask install Cyberduck
 

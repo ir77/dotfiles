@@ -34,12 +34,12 @@ brew install vim --with-lua
 brew install trash
 brew install ffmpeg
 brew install gifsicle
-brew install tmux  
 brew install reattach-to-user-namespace
 brew install ctags
 brew install peco
 brew install ack
 brew install ghq
+# brew install tmux  
 
 brew cask install google-chrome
 brew cask install caffeine
@@ -68,6 +68,9 @@ fc-cache -vf
 sudo gem install cocoapods
 # sudo gem install tldrb
 
+git clone https://github.com/riywo/anyenv ~/.anyenv
+anyenv install rbenv
+
 git clone https://github.com/tomislav/osx-terminal.app-colors-solarized
 echo 'set terminal colors to solarized'
 
@@ -89,6 +92,7 @@ git config --global alias.cm "commit -m"
 git config --global alias.st "status --branch --short"
 git config --global alias.co "checkout"
 git config --global alias.fp "fetch --prune"
+git config --global alias.delete-branch-all "!f () { git branch | grep $1 | xargs git branch -D; }; f"
 
 echo 'git config --global user.name "user"'
 echo 'git config --global user.email "email"'

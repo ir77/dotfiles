@@ -1,5 +1,5 @@
 #!/bin/sh
-# 動作確認: 2018/02/26
+# 動作確認: 2018/02/26, Xcode9.2, macOS Sierra 10.12.6
 # [Xcode 8.2] 年末なので Xcode まわりの不要ファイルを一掃してみた ｜ Developers.IO
 # https://dev.classmethod.jp/smartphone/remove-xcode8-related-unnecessary-files/
 

@@ -44,12 +44,13 @@ brew install ghq
 brew cask install google-chrome
 brew cask install caffeine
 brew cask install google-japanese-ime
-brew cask install karabiner
+brew cask install karabiner-elements
 brew cask install xquartz
 brew cask install appcleaner
 brew cask install dash    
 brew cask install iterm2
 brew cask install shiftit
+brew cask install sketch
 # brew cask install dropbox
 # brew cask install atom
 # brew cask install caskroom/homebrew-versions/java6

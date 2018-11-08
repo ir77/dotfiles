@@ -206,8 +206,9 @@
   autocmd BufNewFile,BufRead *.toml set filetype=toml
   autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
   autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
-  " python編集時はtabのサイズを4に
+  autocmd BufNewFile,BufRead Makefile setlocal filetype=Makefile
   autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
+  autocmd FileType Makefile setl noexpandtab 
 
 "-------------------- ファイラー設定 --------------------"
   "Enter・・・ファイルを開く | ディレクトリを移動する

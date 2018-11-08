@@ -39,6 +39,7 @@ brew install ctags
 brew install peco
 brew install ack
 brew install ghq
+brew install haskell-stack
 # brew install tmux  
 
 brew cask install google-chrome
@@ -85,6 +86,9 @@ defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 
 # スクリーンショットを英語に
 defaults write com.apple.screencapture name ""
+
+# Haskell Setup
+stack setup
 
 echo 'git settings'
 git config --global push.default matching

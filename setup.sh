@@ -39,7 +39,7 @@ brew install ctags
 brew install peco
 brew install ack
 brew install ghq
-brew install haskell-stack
+brew install stack
 # brew install tmux  
 
 brew cask install google-chrome

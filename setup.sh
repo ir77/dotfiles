@@ -30,7 +30,7 @@ brew install git
 brew install nkf
 brew install tig
 brew install lua
-brew install vim --with-lua
+brew install vim
 brew install trash
 brew install ffmpeg
 brew install gifsicle
@@ -52,8 +52,8 @@ brew cask install dash
 brew cask install iterm2
 brew cask install shiftit
 brew cask install sketch
-# brew cask install dropbox
-# brew cask install atom
+brew cask install dropbox
+brew cask install atom
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install intellij-idea
 # brew cask install virtualbox 
@@ -63,8 +63,8 @@ brew cask install sketch
 
 brew tap sanemat/font
 brew install ricty
-brew reinstall --powerline --vim-powerline ricty
-cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
+brew reinstall ricty --with-powerline
+cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
 sudo gem install cocoapods

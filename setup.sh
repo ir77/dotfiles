@@ -56,6 +56,7 @@ brew cask install sketch
 brew cask install dropbox
 brew cask install atom
 brew cask install paste
+brew cask install slack
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install intellij-idea
 # brew cask install virtualbox 

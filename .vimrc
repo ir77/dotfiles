@@ -206,6 +206,7 @@
   autocmd BufNewFile,BufRead *.toml set filetype=toml
   autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
   autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
+  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=sh
   autocmd BufNewFile,BufRead Makefile setlocal filetype=Makefile
   autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
   autocmd FileType Makefile setl noexpandtab 

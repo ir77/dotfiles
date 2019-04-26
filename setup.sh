@@ -40,6 +40,7 @@ brew install peco
 brew install ack
 brew install ghq
 brew install stack
+brew install thefuck
 # brew install tmux  
 
 brew cask install google-chrome
@@ -56,6 +57,7 @@ brew cask install dropbox
 brew cask install atom
 brew cask install paste
 brew cask install kindle
+# brew cask install slack
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install intellij-idea
 # brew cask install virtualbox 
@@ -100,6 +102,7 @@ git config --global alias.st "status --branch --short"
 git config --global alias.co "checkout"
 git config --global alias.fp "fetch --prune"
 git config --global alias.delete-branch-all "!f () { git branch | grep $1 | xargs git branch -D; }; f"
+git config --global push.default simple # git pushでcurrentブランチだけアップデートする
 
 echo 'git config --global user.name "user"'
 echo 'git config --global user.email "email"'

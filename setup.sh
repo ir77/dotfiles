@@ -41,6 +41,7 @@ brew install ack
 brew install ghq
 brew install stack
 brew install thefuck
+brew install carthage
 # brew install tmux  
 
 brew cask install google-chrome

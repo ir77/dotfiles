@@ -105,6 +105,7 @@ git config --global alias.co "checkout"
 git config --global alias.fp "fetch --prune"
 git config --global alias.delete-branch-all "!f () { git branch | grep $1 | xargs git branch -D; }; f"
 git config --global push.default simple # git pushでcurrentブランチだけアップデートする
+git config --global core.editor vim
 
 echo 'git config --global user.name "user"'
 echo 'git config --global user.email "email"'

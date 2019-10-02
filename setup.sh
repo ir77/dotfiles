@@ -43,6 +43,7 @@ brew install stack
 brew install thefuck
 brew install carthage
 # brew install tmux  
+# brew install cloudfoundry/tap/cf-cli
 
 brew cask install google-chrome
 brew cask install caffeine

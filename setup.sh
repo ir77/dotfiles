@@ -60,12 +60,11 @@ brew cask install atom
 brew cask install paste
 brew cask install kindle
 brew cask install visual-studio-code
+brew cask install intellij-idea
 # brew cask install slack
 # brew cask install caskroom/homebrew-versions/java6
-# brew cask install intellij-idea
 # brew cask install virtualbox 
 # brew cask install vagrant
-# brew cask install rescuetime
 # brew cask install Cyberduck
 
 brew tap sanemat/font

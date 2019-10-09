@@ -67,6 +67,9 @@ brew cask install intellij-idea
 # brew cask install vagrant
 # brew cask install Cyberduck
 
+brew tap homebrew/cask-versions
+brew cask install java11
+
 brew tap sanemat/font
 brew install ricty
 brew reinstall ricty --with-powerline

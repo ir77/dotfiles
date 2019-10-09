@@ -63,8 +63,8 @@ hook_source = """
   let g:syntastic_check_on_wq = 0
 """
 
-[[plugins]]
-repo = 'altercation/vim-colors-solarized'
+#[[plugins]]
+#repo = 'altercation/vim-colors-solarized'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'

@@ -49,8 +49,12 @@
   set number
   set t_Co=256
   set showmatch "highlight matching [{()}]
+  
+  " vimの背景色とterminalの背景色を一致させる
+  autocmd ColorScheme * highlight Normal ctermbg=none
+  autocmd ColorScheme * highlight LineNr ctermbg=none
 
-  "colorscheme desert
+  colorscheme desert
   "colorscheme molokai
   "colorscheme zenburn
 

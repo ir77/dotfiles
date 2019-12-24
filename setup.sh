@@ -19,11 +19,10 @@ cat << EOS
 #### ## ## ####    ###  ## #   ##   ##     #  ##  ###  ###   ## #  #### 
 EOS
 
-xcode-select --install
+# xcode-select --install # リポジトリをcurlした時点でインストールしているはず
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
-brew tap caskroom/cask
 
 brew install zsh
 brew install git
@@ -61,7 +60,7 @@ brew cask install paste
 brew cask install kindle
 brew cask install visual-studio-code
 brew cask install intellij-idea
-# brew cask install slack
+brew cask install slack
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install virtualbox 
 # brew cask install vagrant

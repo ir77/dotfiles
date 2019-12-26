@@ -19,7 +19,7 @@ cat << EOS
 #### ## ## ####    ###  ## #   ##   ##     #  ##  ###  ###   ## #  #### 
 EOS
 
-# xcode-select --install # リポジトリをcurlした時点でインストールしているはず
+xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew doctor
@@ -69,17 +69,25 @@ brew cask install slack
 brew tap homebrew/cask-versions
 brew cask install java11
 
-brew tap sanemat/font
-brew install ricty
-brew reinstall ricty --with-powerline
-cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
-fc-cache -vf
+# brew tap sanemat/font
+# brew install ricty
+# brew reinstall ricty --with-powerline
+# cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
+# fc-cache -vf
+
+# brew search powerline 他のが気になったらこれで探す
+# brew install homebrew/cask-fonts/font-anonymice-powerline
+# brew install homebrew/cask-fonts/font-consolas-for-powerline
+# brew install homebrew/cask-fonts/font-fira-mono-for-powerline
+# brew install homebrew/cask-fonts/font-inconsolata-dz-for-powerline
+# brew install homebrew/cask-fonts/font-liberation-mono-for-powerline
+brew install homebrew/cask-fonts/font-roboto-mono-for-powerline
 
 sudo gem install cocoapods
 # sudo gem install tldrb
 
-git clone https://github.com/riywo/anyenv ~/.anyenv
-anyenv install rbenv
+# git clone https://github.com/riywo/anyenv ~/.anyenv
+# anyenv install rbenv
 
 git clone https://github.com/tomislav/osx-terminal.app-colors-solarized
 echo 'set terminal colors to solarized'

@@ -59,6 +59,7 @@ brew cask install paste
 brew cask install kindle
 brew cask install visual-studio-code
 brew cask install intellij-idea
+brew cask install android-studio
 brew cask install slack
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install virtualbox 

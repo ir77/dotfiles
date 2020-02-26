@@ -42,6 +42,7 @@ brew install stack
 brew install thefuck
 brew install carthage
 brew install fd
+brew install mysql
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 

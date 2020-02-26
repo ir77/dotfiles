@@ -41,6 +41,7 @@ brew install ghq
 brew install stack
 brew install thefuck
 brew install carthage
+brew install fd
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 

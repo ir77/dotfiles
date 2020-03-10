@@ -43,6 +43,7 @@ brew install thefuck
 brew install carthage
 brew install fd
 brew install mysql
+brew install nodebrew
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 
@@ -93,6 +94,10 @@ defaults write com.apple.screencapture name ""
 
 # Haskell Setup
 stack setup
+
+# Setup Node
+nodebrew install-binary stable
+nodebrew ls | xargs nodebrew use
 
 echo 'git settings'
 git config --global push.default matching

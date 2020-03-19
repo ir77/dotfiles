@@ -94,6 +94,19 @@ defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 # スクリーンショットを英語に
 defaults write com.apple.screencapture name ""
 
+# Dock
+defaults write com.apple.dock persistent-apps -array #Dock に標準で入っている全てのアプリを消す、Finder とごみ箱は消えない
+defaults write com.apple.dock autohide -bool true
+killall Dock
+
+# Enable `Tap to click` （タップでクリックを有効にする）
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# バッテリーのパーセントを表示する
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
 # Haskell Setup
 stack setup
 

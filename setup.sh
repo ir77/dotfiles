@@ -58,13 +58,13 @@ brew cask install iterm2
 brew cask install shiftit
 brew cask install sketch
 brew cask install dropbox
-brew cask install paste
 brew cask install kindle
 brew cask install visual-studio-code
 brew cask install intellij-idea
 brew cask install android-studio
 brew cask install slack
 brew cask install mobster
+# brew cask install paste
 # brew cask install caskroom/homebrew-versions/java6
 # brew cask install virtualbox 
 # brew cask install vagrant
@@ -96,6 +96,7 @@ defaults write com.apple.screencapture name ""
 stack setup
 
 # Setup Node
+mkdir -p ~/.nodebrew/src
 nodebrew install-binary stable
 nodebrew ls | xargs nodebrew use
 

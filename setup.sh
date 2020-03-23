@@ -99,6 +99,13 @@ defaults write com.apple.dock persistent-apps -array #Dock に標準で入って
 defaults write com.apple.dock autohide -bool true
 killall Dock
 
+# keyboard
+defaults write -g com.apple.keyboard.fnState -bool true
+
+# finder
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder ShowPathbar -bool true
+
 # Enable `Tap to click` （タップでクリックを有効にする）
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
@@ -106,6 +113,9 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # バッテリーのパーセントを表示する
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
+# Kill affected applications
+for app in Finder Dock SystemUIServer; do killall "$app" >/dev/null 2>&1; done
 
 # Haskell Setup
 stack setup

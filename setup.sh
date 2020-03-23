@@ -46,6 +46,7 @@ brew install mysql
 brew install nodebrew
 brew install jq
 brew install mas
+brew install anyenv
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 
@@ -85,8 +86,7 @@ brew install homebrew/cask-fonts/font-roboto-mono-for-powerline
 
 sudo gem install cocoapods
 
-# git clone https://github.com/riywo/anyenv ~/.anyenv
-# anyenv install rbenv
+anyenv init
 
 # Xcodeにビルド時間を表示する
 defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES

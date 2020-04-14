@@ -1,11 +1,3 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Customize to your needs...
 #-------------------- 全体 --------------------
 function myEnvironmentSettings {
   setopt notify # バックグラウンドジョブの状態変化を即時報告する

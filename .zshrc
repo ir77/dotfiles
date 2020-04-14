@@ -63,25 +63,16 @@ myHistorySettings
 
 # --------------------エイリアス------------------
 function myAliasSettings {
-  alias g='cd $(ghq root)/$(ghq list | peco)' # ローカルリポジトリへの移動
-  alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)' # リモートリポジトリへの移動
-
   alias history="history -Di 1" # 実行時間とかかった時間を表示
 
   alias cp="cp -i" # 保険で警告
   alias mv="mv -i" # 保険で警告
-
-  alias lgtm='sh ~/Dropbox/code/shellscript/lgtm.sh/lgtm.sh -m | pbcopy'
-  alias playground='open ~/Dropbox/code/XcodePlayground/MyPlayground.playground'
-
-  alias sl="/Users/ucucAir2/Dropbox/code/script/sl/sl"
 
   setopt complete_aliases # aliased ls needs if file/dir completions work
   bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 
   # rmコマンドでゴミ箱に送る
   alias rm='trash'
-  # alias rm='mv -i ~/.Trash' # 他のOS用
 
   # grep結果に色を点ける
   alias grep="grep -a --color"

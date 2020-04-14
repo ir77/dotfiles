@@ -25,6 +25,11 @@ brew update
 brew doctor
 
 brew install zsh
+brew install peco
+brew install zsh-completions
+brew install zsh-syntax-highlighting
+brew install thefuck
+brew install starship
 brew install git
 brew install nkf
 brew install tig
@@ -35,19 +40,15 @@ brew install ffmpeg
 brew install gifsicle
 brew install reattach-to-user-namespace
 brew install ctags
-brew install peco
 brew install ack
 brew install ghq
 brew install stack
-brew install thefuck
 brew install carthage
-brew install starship
 brew install fd
 brew install mysql
 brew install nodebrew
 brew install jq
 brew install anyenv
-brew install zsh-completions
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 

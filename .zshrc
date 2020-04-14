@@ -61,6 +61,30 @@ function myHistorySettings {
 }
 myHistorySettings
 
+#------------------- その他 -------------------
+function myOtherSettings {
+  cd `cat ~/.curdir` # 端末を新規に開くと自動的に前回の pwd に移動して始める
+
+  # 一定時間以上かかる処理の場合は終了時に通知してくれる
+  # http://kazuph.hateblo.jp/entry/2013/10/23/005718
+  # 下のほうが楽かも
+  # http://qiita.com/takc923/items/75d67a08edfbaa5fd304
+  local COMMAND="0"
+  local COMMAND_TIME="0"
+
+  # zsh-completions
+  fpath=(/usr/local/share/zsh-completions $fpath)
+  autoload -U compinit
+  compinit -u
+
+  # zsh-syntax-highlighting
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  # 補完時に大文字小文字を無視する
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+}
+myOtherSettings
+
 # --------------------エイリアス------------------
 function myAliasSettings {
   alias history="history -Di 1" # 実行時間とかかった時間を表示
@@ -128,32 +152,22 @@ function myAliasSettings {
   alias ghci='stack ghci'
   alias ghc='stack ghc --'
   alias runghc='stack runghc --'
+
+  # git
+  alias g="git"
+  alias gp='git push'
+  alias gd='git diff'
+  alias gds='git diff --staged'
+  alias gc='git commit -v'
+  alias gca='git commit -v -a'
+  alias gcm='git commit -v -m'
+  alias gb='git branch'
+  alias gba='git branch -a'
+  alias gcp='git cherry-pick'
+  alias gco='git checkout'
 }
 myAliasSettings
 
-#------------------- その他 -------------------
-function myOtherSettings {
-  cd `cat ~/.curdir` # 端末を新規に開くと自動的に前回の pwd に移動して始める
-
-  # 一定時間以上かかる処理の場合は終了時に通知してくれる
-  # http://kazuph.hateblo.jp/entry/2013/10/23/005718
-  # 下のほうが楽かも
-  # http://qiita.com/takc923/items/75d67a08edfbaa5fd304
-  local COMMAND="0"
-  local COMMAND_TIME="0"
-
-  # zsh-completions
-  fpath=(/usr/local/share/zsh-completions $fpath)
-  autoload -U compinit
-  compinit -u
-
-  # zsh-syntax-highlighting
-  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-  # 補完時に大文字小文字を無視する
-  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-}
-myOtherSettings
 
 #------------------- peco -------------------
   function peco-ack-search() {

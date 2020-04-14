@@ -140,27 +140,84 @@ function myAliasSettings {
 }
 myAliasSettings
 
-#------------------- functions -------------------
+#------------------- その他 -------------------
+function myOtherSettings {
+  cd `cat ~/.curdir` # 端末を新規に開くと自動的に前回の pwd に移動して始める
 
+  # 一定時間以上かかる処理の場合は終了時に通知してくれる
+  # http://kazuph.hateblo.jp/entry/2013/10/23/005718
+  # 下のほうが楽かも
+  # http://qiita.com/takc923/items/75d67a08edfbaa5fd304
+  local COMMAND="0"
+  local COMMAND_TIME="0"
+
+  # zsh-completions
+  fpath=(/usr/local/share/zsh-completions $fpath)
+  autoload -U compinit
+  compinit -u
+
+  # 補完時に大文字小文字を無視する
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+}
+myOtherSettings
+
+#------------------- peco -------------------
+  function peco-ack-search() {
+    ack "$@" . | peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less '
+  }
+  zle -N peco-ack-search
+  bindkey '^j' peco-ack-search
+
+  function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+      tac="tac"
+    else
+      tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+      eval $tac | \
+      peco --query "$LBUFFER"
+    )
+  }
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
+
+  # {{{
+  # cd 履歴を記録
+  typeset -U chpwd_functions
+  CD_HISTORY_FILE=${HOME}/.cd_history_file # cd 履歴の記録先ファイル
+  function chpwd_record_history() {
+    echo $PWD >> ${CD_HISTORY_FILE}
+  }
+  chpwd_functions=($chpwd_functions chpwd_record_history)
+
+  # peco を使って cd 履歴の中からディレクトリを選択
+  # 過去の訪問回数が多いほど選択候補の上に来る
+  function peco_get_destination_from_history() {
+    sort ${CD_HISTORY_FILE} | uniq -c | sort -r | \
+      sed -e 's/^[ ]*[0-9]*[ ]*//' | \
+      sed -e s"/^${HOME//\//\\/}/~/" | \
+      peco | xargs echo
+  }
+
+  # peco を使って cd 履歴の中からディレクトリを選択し cd するウィジェット
+  function peco_cd_history() {
+    local destination=$(peco_get_destination_from_history)
+    echo "cd "${destination/#\~/${HOME}}
+    [ -n $destination ] && cd ${destination/#\~/${HOME}}
+    zle reset-prompt
+  }
+  zle -N peco_cd_history
+  # }}}
+  bindkey '^s' peco_cd_history
+
+#------------------- functions -------------------
 function processFileWithCommand() { # args: filename command
   cat $1 | while read line
   do
     $2 $line
   done
-}
-
-
-function getPageTitle() {
-  wget -qO- $1 | perl -l -0777 -ne 'print $1 if /<title.*?>\s*(.*?)\s*<\/title/si'
-}
-
-function getPageTitleWithMarkDownStyle() {
-  title=`getPageTitle $1`
-  echo "[${title}](${1})"
-}
-
-function findText() {
-  find ./ -type f -print | xargs grep $1
 }
 
 function makeGifFromMov() {
@@ -179,13 +236,6 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
-
-# 一定時間以上かかる処理の場合は終了時に通知してくれる
-# http://kazuph.hateblo.jp/entry/2013/10/23/005718
-# 下のほうが楽かも
-# http://qiita.com/takc923/items/75d67a08edfbaa5fd304
-local COMMAND="0"
-local COMMAND_TIME="0"
 
 function precmd () {
   #path 指定のみで cd 実行
@@ -211,59 +261,5 @@ preexec () {
     COMMAND_TIME=`date +%s`
   fi
 }
-
-# 端末を新規に開くと自動的に前回の pwd に移動して始める
-cd `cat ~/.curdir`
-
-function peco-ack-search() {
-  ack "$@" . | peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less '
-}
-zle -N peco-ack-search
-bindkey '^j' peco-ack-search
-
-function peco-select-history() {
-  local tac
-  if which tac > /dev/null; then
-    tac="tac"
-  else
-    tac="tail -r"
-  fi
-  BUFFER=$(\history -n 1 | \
-    eval $tac | \
-    peco --query "$LBUFFER"
-  )
-}
-zle -N peco-select-history
-bindkey '^r' peco-select-history
-
-# {{{
-# cd 履歴を記録
-typeset -U chpwd_functions
-CD_HISTORY_FILE=${HOME}/.cd_history_file # cd 履歴の記録先ファイル
-function chpwd_record_history() {
-  echo $PWD >> ${CD_HISTORY_FILE}
-}
-chpwd_functions=($chpwd_functions chpwd_record_history)
-
-# peco を使って cd 履歴の中からディレクトリを選択
-# 過去の訪問回数が多いほど選択候補の上に来る
-function peco_get_destination_from_history() {
-  sort ${CD_HISTORY_FILE} | uniq -c | sort -r | \
-    sed -e 's/^[ ]*[0-9]*[ ]*//' | \
-    sed -e s"/^${HOME//\//\\/}/~/" | \
-    peco | xargs echo
-}
-
-# peco を使って cd 履歴の中からディレクトリを選択し cd するウィジェット
-function peco_cd_history() {
-  local destination=$(peco_get_destination_from_history)
-  echo "cd "${destination/#\~/${HOME}}
-  [ -n $destination ] && cd ${destination/#\~/${HOME}}
-  zle reset-prompt
-}
-zle -N peco_cd_history
-# }}}
-bindkey '^s' peco_cd_history
-
 
 eval "$(starship init zsh)"

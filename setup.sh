@@ -47,6 +47,7 @@ brew install mysql
 brew install nodebrew
 brew install jq
 brew install anyenv
+brew install zsh-completions
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
 

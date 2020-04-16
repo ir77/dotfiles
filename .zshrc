@@ -165,9 +165,9 @@ function myAliasSettings {
   alias gba='git branch -a'
   alias gcp='git cherry-pick'
   alias gco='git checkout'
+  alias gs='git status'
 }
 myAliasSettings
-
 
 #------------------- peco -------------------
   function peco-ack-search() {

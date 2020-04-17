@@ -270,4 +270,5 @@ preexec () {
   fi
 }
 
+eval $(thefuck --alias)
 eval "$(starship init zsh)"

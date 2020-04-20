@@ -1,5 +1,5 @@
 # ~/.config/starship.toml
 
 [directory]
-truncation_length = 3
-fish_style_pwd_dir_length = 3
+truncation_length = 1
+fish_style_pwd_dir_length = 2

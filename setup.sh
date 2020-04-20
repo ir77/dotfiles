@@ -69,6 +69,7 @@ brew cask install visual-studio-code
 brew cask install intellij-idea
 brew cask install android-studio
 brew cask install slack
+brew cask install deepl
 # brew cask install virtualbox 
 # brew cask install vagrant
 # brew cask install Cyberduck

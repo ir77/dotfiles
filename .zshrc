@@ -161,6 +161,7 @@ function myAliasSettings {
   alias gc='git commit -v'
   alias gca='git commit -v -a'
   alias gcm='git commit -v -m'
+  alias gcam='git commit -v -a -m'
   alias gb='git branch'
   alias gba='git branch -a'
   alias gcp='git cherry-pick'

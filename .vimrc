@@ -212,7 +212,9 @@
   autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
   autocmd BufNewFile,BufRead *.bashrc setlocal filetype=sh
   autocmd BufNewFile,BufRead Makefile setlocal filetype=Makefile
+  autocmd BufNewFile,BufRead *.rs setlocal filetype=rust
   autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
+  autocmd FileType rust setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
   autocmd FileType Makefile setl noexpandtab 
 
 "-------------------- ファイラー設定 --------------------"

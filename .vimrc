@@ -218,7 +218,7 @@
   autocmd FileType Makefile setl noexpandtab 
 
 "-------------------- ファイラー設定 --------------------"
-  "Explore・・・起動
+  "    Ex・・・・・起動
   "・Open
   "    Enter・・・・ファイルを開く | ディレクトリを移動する
   "    o・・・・・・水平方向で開く（画面分割）
@@ -226,7 +226,6 @@
   "    t・・・・・・新しいタブで表示する
   "    p・・・・・・プレビューウィンドウで表示する
   "・Move
-  "    -・・・・・・上の階層に移動
   "    u・・・・・・前のディレクトリに戻る
   "    U・・・・・・戻ったディレクトリにまた戻る
   "・Other
@@ -236,7 +235,7 @@
   "    D・・・・・・ファイル/ディレクトリを削除する
 
   let g:netrw_liststyle = 3 " tree style listing
-  let g:netrw_banner = 0
+  let g:netrw_banner = 1 " 上のバナーを見せない
   let g:netrw_winsize   = 70 " vで開くときにnetrwの領域を30%にする
 
   let g:netrw_altv = 1 " 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)

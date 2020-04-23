@@ -67,8 +67,6 @@ function myOtherSettings {
 
   # 一定時間以上かかる処理の場合は終了時に通知してくれる
   # http://kazuph.hateblo.jp/entry/2013/10/23/005718
-  # 下のほうが楽かも
-  # http://qiita.com/takc923/items/75d67a08edfbaa5fd304
   local COMMAND="0"
   local COMMAND_TIME="0"
 
@@ -222,13 +220,6 @@ myAliasSettings
   bindkey '^s' peco_cd_history
 
 #------------------- functions -------------------
-function processFileWithCommand() { # args: filename command
-  cat $1 | while read line
-  do
-    $2 $line
-  done
-}
-
 function makeGifFromMov() {
   ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=5 --delay=5 > out.gif
 }

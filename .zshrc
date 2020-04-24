@@ -153,17 +153,19 @@ function myAliasSettings {
 
   # git
   alias g="git"
-  alias gp='git push'
-  alias gd='git diff'
-  alias gds='git diff --staged'
-  alias gc='git commit -v'
-  alias gca='git commit -v -a'
-  alias gcm='git commit -v -m'
-  alias gcam='git commit -v -a -m'
   alias gb='git branch'
   alias gba='git branch -a'
-  alias gcp='git cherry-pick'
+  alias gc='git commit -v'
+  alias gca='git commit -v -a'
+  alias gcam='git commit -v -a -m'
+  alias gcm='git commit -v -m'
   alias gco='git checkout'
+  alias gcp='git cherry-pick'
+  alias gd='git diff'
+  alias gds='git diff --staged'
+  alias gl='git log'
+  alias glo='git log --oneline -10'
+  alias gp='git push'
   alias gs='git status'
 }
 myAliasSettings

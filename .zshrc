@@ -22,17 +22,17 @@ function myEnvironmentSettings {
 
   # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
   setopt auto_param_slash
+}
+myEnvironmentSettings
 
-  ## 言語環境を日本語、UTF-8 にそろえておく
+# --------------------export--------------------
+  # 言語環境を日本語、UTF-8 にそろえておく
   export LANG=ja_JP.UTF-8
   export LESSCHARSET=utf-8
 
   export GOPATH=${HOME}/go
   export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
-
   export XDG_CONFIG_HOME=~/.config
-}
-myEnvironmentSettings
 
 # --------------------ヒストリー--------------------
 function myHistorySettings {
@@ -265,4 +265,5 @@ preexec () {
 }
 
 eval $(thefuck --alias)
+eval "$(anyenv init -)"
 eval "$(starship init zsh)"

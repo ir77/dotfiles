@@ -264,9 +264,6 @@
   " マウスの設定
   set mouse=a
 
-  " viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
-  set nocompatible
-
   " vim の自動文章折り返し機能を回避"
   set formatoptions=q
 

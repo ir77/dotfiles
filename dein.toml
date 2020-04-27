@@ -63,9 +63,6 @@ hook_source = """
   let g:syntastic_check_on_wq = 0
 """
 
-#[[plugins]]
-#repo = 'altercation/vim-colors-solarized'
-
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
@@ -134,16 +131,3 @@ hook_add = """
     return winwidth(0) > 60 ? lightline#mode() : ''
   endfunction
 """
-
-[[plugins]]
-repo = 'kballard/vim-swift'
-
-[[plugins]]
-repo = 'keith/swift.vim'
-hook_add = """
-  let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
-"""
-
-[[plugins]]
-repo = 'juvenn/mustache.vim'
-

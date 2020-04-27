@@ -1,31 +1,4 @@
 [[plugins]]
-repo = 'fatih/vim-go'
-hook_post_source = """
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_structs = 1
-"""
-
-[[plugins]]
-repo = 'mattn/emmet-vim'
-on_i = 1 # インサートモードに入ったら読み込む
-on_ft = ['html', 'css', 'php', 'markdown']
-hook_post_source = """
-  autocmd FileType html imap <buffer><expr><tab>
-      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
-      \ "\<tab>"
-  autocmd FileType css imap <buffer><expr><tab>
-      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
-      \ "\<tab>"
-  autocmd FileType php imap <buffer><expr><tab>
-      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
-      \ "\<tab>"
-  autocmd FileType erb imap <buffer><expr><tab>
-      \ emmet#isExpandable() ? "\<plug>(emmet-expand-abbr)" :
-      \ "\<tab>
-"""
-
-[[plugins]]
 repo = 'Shougo/neocomplete.vim'
 hook_add = """
   "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!

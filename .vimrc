@@ -124,8 +124,6 @@
   "<ESC>2回でハイライト解除
   nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
 
-
-
   " 置換
   noremap S           :%s///g<LEFT><LEFT><LEFT>
 

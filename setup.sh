@@ -48,7 +48,7 @@ brew install fd
 brew install mysql
 brew install nodebrew
 brew install jq
-brew install rust
+brew install rustup-init
 brew install anyenv
 # brew install tmux  
 # brew install cloudfoundry/tap/cf-cli
@@ -153,6 +153,9 @@ for app in Finder Dock SystemUIServer; do killall "$app" >/dev/null 2>&1; done
 
 # Haskell Setup
 stack setup
+
+# rust Setup
+rustup-init
 
 # Setup Node
 mkdir -p ~/.nodebrew/src

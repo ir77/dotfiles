@@ -140,11 +140,13 @@ function myAliasSettings {
   function runcpp2 () { g++ $1 && shift && ./a.out $@}
   function runocaml () { ocaml $1 }
   function runHaskell () { ghc -o a.out $1 && shift && ./a.out $@}
+  function runRustc () { rustc -o a.out $1 && ./a.out && rm a.out }
 
   alias -s c=runc
   alias -s cpp=runcpp
   alias -s ml=runocaml
   alias -s hs=runHaskell
+  alias -s rs=runRustc
 
   # Haskell
   alias ghci='stack ghci'

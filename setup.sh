@@ -1,23 +1,7 @@
 
 # - iTunes認証解除
 # - iCloudサインアウト（Macを探すの解除）
-# .ssh, Photos, iTunes
-
-## afeter
-# Xcode, Line
-# MSOffice, Adobe, Locamatic
-
-# AA by http://ascii.mastervb.net font xttyb.flf
-cat << EOS
-                             #### ####                         ##       
-####              ##           ##   ##     ##  #               ##       
- ##  # ##   #### #####  ###    ##   ##     ##  #  ###  ###   ####  ###  
- ##  ## ## ##     ##      ##   ##   ##      ###  ##   ## ## ## ## ## ## 
- ##  ## ## ####   ##    ####   ##   ##       #   ##   ## ## ## ## ## ## 
- ##  ## ##  ####  ##   ## ##   ##   ##      ###  ##   ## ## ## ## ##### 
- ##  ## ##    ##  ##   ## ##   ##   ##     #  ## ##   ## ## ## ## ##    
-#### ## ## ####    ###  ## #   ##   ##     #  ##  ###  ###   ## #  #### 
-EOS
+# - .sshの確認
 
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

@@ -3,6 +3,8 @@ sudo apt-get install peco
 sudo apt-get install thefuck
 sudo apt-get install tig
 sudo apt-get install jq
+sudo apt-get install zsh-syntax-highlighting
+sudo apt-get install locales-all 
 
 sudo apt-get install dbus
 sudo timedatectl set-timezone Asia/Tokyo // timezoneの変更

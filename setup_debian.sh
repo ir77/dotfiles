@@ -1,3 +1,4 @@
+sudo apt-get install gcc
 sudo apt-get install dbus
 sudo timedatectl set-timezone Asia/Tokyo // timezoneの変更
 

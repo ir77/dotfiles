@@ -100,6 +100,9 @@
   " start   : 挿入モード開始位置より手前の文字
   set backspace=indent,eol,start
 
+  " 補完表示時のEnterで改行をしない
+  inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
+
 "--------------------commandモード--------------------"
   cnoremap <C-A>	   <HOME>
   cnoremap <C-E>     <END>

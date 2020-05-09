@@ -63,16 +63,15 @@
   nnoremap B ^
   nnoremap E $
 
-  nnoremap <C-[> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR> " ctagsジャンプ
-  nnoremap <C-]> g<C-]>
-
-  noremap f           za
-  noremap F           zA
-
   "カーソルキーで行末／行頭の移動可能に設定。
   set whichwrap=b,s,[,],<,>
   nnoremap h <Left>
   nnoremap l <Right>
+
+  " 折りたたみ
+  noremap f           za
+  noremap F           zA
+
   "l を <Right>に置き換えて、折りたたみを l で開くことができるようにする。
   if has('folding')
     nnoremap <expr> l foldlevel(line('.')) ? "\<Right>zo" : "\<Right>"

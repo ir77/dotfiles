@@ -25,7 +25,6 @@ brew install gifsicle
 brew install reattach-to-user-namespace
 brew install ctags
 brew install ack
-brew install ghq
 brew install stack
 brew install carthage
 brew install fd
@@ -34,8 +33,6 @@ brew install nodebrew
 brew install jq
 brew install rustup-init
 brew install anyenv
-# brew install tmux  
-# brew install cloudfoundry/tap/cf-cli
 
 brew cask install google-chrome
 brew cask install caffeine
@@ -54,9 +51,6 @@ brew cask install intellij-idea
 brew cask install android-studio
 brew cask install slack
 brew cask install deepl
-# brew cask install virtualbox 
-# brew cask install vagrant
-# brew cask install Cyberduck
 
 mas install 961632517 #Be Focused Pro (1.7.9)
 mas install 967805235 #Paste (2.6.2)
@@ -145,6 +139,7 @@ rustup-init
 mkdir -p ~/.nodebrew/src
 nodebrew install-binary stable
 nodebrew ls | xargs nodebrew use
+npm install -g yarn
 
 echo 'git settings'
 git config --global push.default matching

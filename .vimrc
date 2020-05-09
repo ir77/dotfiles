@@ -118,9 +118,6 @@
   " 画面の再描画時に検索結果のハイライトを消す
   noremap <C-L>	   :noh<C-L><CR>
 
-  "<ESC>2回でハイライト解除
-  nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
-
   " 置換
   noremap S           :%s///g<LEFT><LEFT><LEFT>
 
@@ -131,12 +128,6 @@
   inoremap <C-H>     <BS>
   inoremap <C-B>     <LEFT>
   inoremap <C-F>     <RIGHt>
-  " inoremap <C-N>	   <DOWN>
-  " inoremap <C-P>	   <UP>
-
-  " チーズバーガー中毒: Vimで入力補完を常にオンにするvimrc
-  " http://io-fia.blogspot.jp/2012/11/vimvimrc.html
-  imap <expr> . pumvisible() ? "\<C-E>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
 
   "BSで削除できるものを指定する
   " indent  : 行頭の空白
@@ -145,12 +136,12 @@
   set backspace=indent,eol,start
 
 "--------------------commandモード--------------------"
-  cnoremap <C-F>	   <RIGHT>
-  cnoremap <C-B>	   <LEFT>
   cnoremap <C-A>	   <HOME>
   cnoremap <C-E>     <END>
   cnoremap <C-D>	   <DEL>
   cnoremap <C-H>	   <BS>
+  cnoremap <C-B>	   <LEFT>
+  cnoremap <C-F>	   <RIGHT>
   cnoremap <C-K>     <ESC>lv$hda
 
 "--------------------visualモード--------------------"

@@ -1,9 +1,7 @@
 "--------------------encoding--------------------"
   scriptencoding utf-8
-  set termencoding	=utf-8
   set encoding		  =utf-8
   set fileformats		=unix,dos,mac
-  set fileencoding	=utf-8
   set fileencodings	=ucs-bom,utf-8,shift-jis,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932
 
   if &encoding == 'utf-8'
@@ -117,6 +115,9 @@
 
   " 画面の再描画時に検索結果のハイライトを消す
   noremap <C-L>	   :noh<C-L><CR>
+
+  "<ESC>2回でハイライト解除, この設定を入れておかないと起動時の挙動がおかしくなる...
+  nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
 
   " 置換
   noremap S           :%s///g<LEFT><LEFT><LEFT>

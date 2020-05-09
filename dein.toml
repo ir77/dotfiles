@@ -34,6 +34,11 @@ hook_add = """
 """
 
 [[plugins]]
+repo = "neoclide/coc.nvim"
+merge = 0
+rev = "release"
+
+[[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = """
   let g:indentLine_char = '|'

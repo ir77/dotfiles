@@ -1,6 +1,3 @@
-" vimの起動が遅いときの対策 - neovim/vim入門
-" http://kaworu.jpn.org/vim/vim%E3%81%AE%E8%B5%B7%E5%8B%95%E3%81%8C%E9%81%85%E3%81%84%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E7%AD%96
-" > vim --startuptime startuptime.txt
 "--------------------encoding--------------------"
   scriptencoding utf-8
   set termencoding	=utf-8
@@ -242,9 +239,7 @@
 
 "-------------------- その他 --------------------"
   " 最後に編集を行った位置から再開
-  " http://vimdoc.sourceforge.net/htmldoc/eval.html#last-position-jump
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
 
   " scrollが遅いことへの対策
   set lazyredraw " redraw only when we need to.
@@ -254,7 +249,6 @@
   set autoread   " 他での変更を自動再読み込み
 
   set autoindent " 自動でインデント
-  " set paste      " ペースト時にautoindentを無効に(onにするとC-PNBFなどが動かない)
 
   " 現在のディレクトリに自動的に移動する
   set autochdir

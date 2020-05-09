@@ -42,20 +42,12 @@
 
 "--------------------View--------------------"
   set number
-  set t_Co=256
-  set showmatch "highlight matching [{()}]
   
-  " vimの背景色とterminalの背景色を一致させる
-  autocmd ColorScheme * highlight Normal ctermbg=none
-  autocmd ColorScheme * highlight LineNr ctermbg=none
-
   colorscheme desert
   "colorscheme molokai
   "colorscheme zenburn
 
-  highlight Normal ctermbg=black ctermfg=grey
-  highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
-  "カーソル行の強調"
+  "カーソル行の設定"
   highlight LineNr ctermfg=white
   highlight LineNr ctermbg=black
   set cursorline

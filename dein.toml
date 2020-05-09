@@ -69,9 +69,6 @@ hook_source = """
 """
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = """
   let g:lightline = {
@@ -83,7 +80,6 @@ hook_add = """
         \ 'component_function': {
         \   'modified': 'LightlineModified',
         \   'readonly': 'LightlineReadonly',
-        \   'fugitive': 'LightlineFugitive',
         \   'filename': 'LightlineFilename',
         \   'fileformat': 'LightlineFileformat',
         \   'filetype': 'LightlineFiletype',
@@ -109,15 +105,6 @@ hook_add = """
           \  &ft == 'vimshell' ? vimshell#get_status_string() :
           \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
           \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-  endfunction
-
-  function! LightlineFugitive()
-    if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-      let branch = fugitive#head()
-      return branch !=# '' ? ''.branch : ''
-      
-    endif
-    return ''
   endfunction
 
   function! LightlineFileformat()

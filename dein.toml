@@ -171,10 +171,6 @@ hook_add = """
   " Remap keys for applying codeAction to the current line.
   nmap ca  <Plug>(coc-codeaction)
 
-  nmap cca <Plug>(coc-codelens-action) " まだよくわからん, codeactionに含まれるなら不要
-
-  " floatの色も変えてくれるcolor scheme欲しい
-
   " No Mappings using CoCList
 """
 

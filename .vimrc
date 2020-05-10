@@ -43,9 +43,8 @@
 "--------------------View--------------------"
   set number
   
-  colorscheme desert
-  "colorscheme molokai
-  "colorscheme zenburn
+  " show color scheme list -> colorscheme [tab]
+  colorscheme peachpuff
 
   "カーソル行の設定"
   highlight LineNr ctermfg=white

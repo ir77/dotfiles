@@ -12,6 +12,9 @@ hook_add = """
 """
 
 [[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = """
   let g:lightline = {

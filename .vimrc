@@ -44,7 +44,7 @@
   set number
   
   " show color scheme list -> colorscheme [tab]
-  colorscheme peachpuff
+  colorscheme desert
 
   "カーソル行の設定"
   highlight LineNr ctermfg=white

@@ -12,30 +12,6 @@ hook_add = """
 """
 
 [[plugins]]
-repo = 'junegunn/vim-easy-align'
-hook_add = """
-  " visualmode -> enter -> align char -> happy
-  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-  vmap <Enter> <Plug>(EasyAlign)
-  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-  nmap ga <Plug>(EasyAlign)
-"""
-
-[[plugins]]
-repo = 'scrooloose/syntastic'
-hook_source = """
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_enable_signs = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-"""
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = """
   let g:lightline = {

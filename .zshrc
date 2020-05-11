@@ -33,6 +33,7 @@ myEnvironmentSettings
   export GOPATH=${HOME}/go
   export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
   export XDG_CONFIG_HOME=~/.config
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # --------------------ヒストリー--------------------
 function myHistorySettings {

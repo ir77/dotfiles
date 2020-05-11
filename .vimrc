@@ -1,12 +1,7 @@
-" vimの起動が遅いときの対策 - neovim/vim入門
-" http://kaworu.jpn.org/vim/vim%E3%81%AE%E8%B5%B7%E5%8B%95%E3%81%8C%E9%81%85%E3%81%84%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E7%AD%96
-" > vim --startuptime startuptime.txt
 "--------------------encoding--------------------"
   scriptencoding utf-8
-  set termencoding	=utf-8
   set encoding		  =utf-8
   set fileformats		=unix,dos,mac
-  set fileencoding	=utf-8
   set fileencodings	=ucs-bom,utf-8,shift-jis,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932
 
   if &encoding == 'utf-8'
@@ -47,52 +42,16 @@
 
 "--------------------View--------------------"
   set number
-  set t_Co=256
-  set showmatch "highlight matching [{()}]
   
-  " vimの背景色とterminalの背景色を一致させる
-  autocmd ColorScheme * highlight Normal ctermbg=none
-  autocmd ColorScheme * highlight LineNr ctermbg=none
-
+  " show color scheme list -> colorscheme [tab]
   colorscheme desert
-  "colorscheme molokai
-  "colorscheme zenburn
 
-  highlight Normal ctermbg=black ctermfg=grey
-  highlight StatusLine term=none cterm=none ctermfg=black ctermbg=grey
-  "カーソル行の強調"
+  "カーソル行の設定"
   highlight LineNr ctermfg=white
   highlight LineNr ctermbg=black
   set cursorline
 
   set laststatus=2 "ステータスラインを常に表示
-
-  " Anywhere SID.
-  function! s:SID_PREFIX()
-    return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
-  endfunction
-
-  " Set tabline.
-  function! s:my_tabline()  "{{{
-    let s = ''
-    for i in range(1, tabpagenr('$'))
-    let bufnrs = tabpagebuflist(i)
-    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-    let no = i  " display 0-origin tabpagenr.
-    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-    let title = fnamemodify(bufname(bufnr), ':t')
-    let title = '[' . title . ']'
-    let s .= '%'.i.'T'
-    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-    let s .= no . ':' . title
-    let s .= mod
-    let s .= '%#TabLineFill# '
-    endfor
-    let s .= '%#TabLineFill#%T%=%#TabLine#'
-    return s
-  endfunction "}}}
-
-  let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
 "--------------------Normalモード--------------------"
   " move vertically by visual line
@@ -103,16 +62,15 @@
   nnoremap B ^
   nnoremap E $
 
-  nnoremap <C-[> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR> " ctagsジャンプ
-  nnoremap <C-]> g<C-]>
-
-  noremap f           za
-  noremap F           zA
-
   "カーソルキーで行末／行頭の移動可能に設定。
   set whichwrap=b,s,[,],<,>
   nnoremap h <Left>
   nnoremap l <Right>
+
+  " 折りたたみ
+  noremap f           za
+  noremap F           zA
+
   "l を <Right>に置き換えて、折りたたみを l で開くことができるようにする。
   if has('folding')
     nnoremap <expr> l foldlevel(line('.')) ? "\<Right>zo" : "\<Right>"
@@ -121,7 +79,7 @@
   " 画面の再描画時に検索結果のハイライトを消す
   noremap <C-L>	   :noh<C-L><CR>
 
-  "<ESC>2回でハイライト解除
+  "<ESC>2回でハイライト解除, この設定を入れておかないと起動時の挙動がおかしくなる...
   nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
 
   " 置換
@@ -134,12 +92,6 @@
   inoremap <C-H>     <BS>
   inoremap <C-B>     <LEFT>
   inoremap <C-F>     <RIGHt>
-  " inoremap <C-N>	   <DOWN>
-  " inoremap <C-P>	   <UP>
-
-  " チーズバーガー中毒: Vimで入力補完を常にオンにするvimrc
-  " http://io-fia.blogspot.jp/2012/11/vimvimrc.html
-  imap <expr> . pumvisible() ? "\<C-E>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
 
   "BSで削除できるものを指定する
   " indent  : 行頭の空白
@@ -148,12 +100,12 @@
   set backspace=indent,eol,start
 
 "--------------------commandモード--------------------"
-  cnoremap <C-F>	   <RIGHT>
-  cnoremap <C-B>	   <LEFT>
   cnoremap <C-A>	   <HOME>
   cnoremap <C-E>     <END>
   cnoremap <C-D>	   <DEL>
   cnoremap <C-H>	   <BS>
+  cnoremap <C-B>	   <LEFT>
+  cnoremap <C-F>	   <RIGHT>
   cnoremap <C-K>     <ESC>lv$hda
 
 "--------------------visualモード--------------------"
@@ -217,6 +169,7 @@
 
 "-------------------- ファイラー設定 --------------------"
   "    Ex・・・・・起動
+  "    gt・・・・・移動
   "・Open
   "    Enter・・・・ファイルを開く | ディレクトリを移動する
   "    o・・・・・・水平方向で開く（画面分割）
@@ -242,9 +195,7 @@
 
 "-------------------- その他 --------------------"
   " 最後に編集を行った位置から再開
-  " http://vimdoc.sourceforge.net/htmldoc/eval.html#last-position-jump
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
 
   " scrollが遅いことへの対策
   set lazyredraw " redraw only when we need to.
@@ -254,7 +205,6 @@
   set autoread   " 他での変更を自動再読み込み
 
   set autoindent " 自動でインデント
-  " set paste      " ペースト時にautoindentを無効に(onにするとC-PNBFなどが動かない)
 
   " 現在のディレクトリに自動的に移動する
   set autochdir

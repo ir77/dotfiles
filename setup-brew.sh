@@ -33,6 +33,7 @@ brew install nodebrew
 brew install jq
 brew install rustup-init
 brew install anyenv
+brew install deno
 
 brew cask install google-chrome
 brew cask install caffeine

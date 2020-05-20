@@ -34,6 +34,7 @@ brew install jq
 brew install rustup-init
 brew install anyenv
 brew install deno
+brew install git-duet/tap/git-duet
 
 brew cask install google-chrome
 brew cask install caffeine

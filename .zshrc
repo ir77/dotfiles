@@ -154,11 +154,20 @@ function myAliasSettings {
   alias ghc='stack ghc --'
   alias runghc='stack runghc --'
 
+  function gitCommit() {
+    authors=`git config --list | grep duet.env.git | grep initials | wc -l`
+    if [ ${authors} -eq 0 ] ; then
+      git commit -v
+    else 
+      git duet-commit
+    fi
+  }
+
   # git
   alias g="git"
   alias gb='git branch'
   alias gba='git branch -a'
-  alias gc='git commit -v'
+  alias gc='gitCommit'
   alias gca='git commit -v -a'
   alias gcam='git commit -v -a -m'
   alias gcm='git commit -v -m'

@@ -64,8 +64,6 @@ myHistorySettings
 
 #------------------- その他 -------------------
 function myOtherSettings {
-  cd `cat ~/.curdir` # 端末を新規に開くと自動的に前回の pwd に移動して始める
-
   # 一定時間以上かかる処理の場合は終了時に通知してくれる
   # http://kazuph.hateblo.jp/entry/2013/10/23/005718
   local COMMAND="0"
@@ -252,11 +250,6 @@ zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
 function precmd () {
-  #path 指定のみで cd 実行
-  pwd=`pwd`
-  #実行の度に pwd 保存
-  echo $pwd > ~/.curdir
-
   if [ "$COMMAND_TIME" -ne "0" ] ; then
     local d=`date +%s`
     d=`expr $d - $COMMAND_TIME`

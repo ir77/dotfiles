@@ -1615,7 +1615,7 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>SwitchPaneModifier</key>
 	<integer>6</integer>
 	<key>SwitchWindowModifier</key>

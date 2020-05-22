@@ -14,10 +14,12 @@
 	<string>manual</string>
 	<key>Default Bookmark Guid</key>
 	<string>2EBAC2A9-BA6F-4230-859F-979579741F45</string>
+	<key>EnableDivisionView</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideTab</key>
-	<false/>
+	<true/>
 	<key>Hotkey</key>
 	<true/>
 	<key>HotkeyChar</key>
@@ -850,7 +852,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>5A12BE22-9843-4253-80B5-4FDE16EF892B</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>104</integer>
+	<integer>107</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1605,7 +1607,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-05-21T14:14:25Z</date>
+	<date>2020-05-22T14:14:26Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SeparateStatusBarsPerPane</key>
@@ -1620,6 +1622,8 @@
 	<integer>9</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
+	<key>TabViewType</key>
+	<integer>2</integer>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>

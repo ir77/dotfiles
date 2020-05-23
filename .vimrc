@@ -113,16 +113,14 @@
   "カーソルキーで行末／行頭の移動可能に設定。
   set whichwrap=b,s,[,],<,>
   nnoremap h <Left>
-  nnoremap l <Right>
+  "l を <Right>に置き換えて、折りたたみを l で開くことができるようにする。
+  if has('folding')
+   nnoremap <expr> l foldlevel(line('.')) ? "\<Right>zo" : "\<Right>"
+  endif
 
   " 折りたたみ
   noremap f           za
   noremap F           zA
-
-  "l を <Right>に置き換えて、折りたたみを l で開くことができるようにする。
-  if has('folding')
-    nnoremap <expr> l foldlevel(line('.')) ? "\<Right>zo" : "\<Right>"
-  endif
 
   " 画面の再描画時に検索結果のハイライトを消す
   noremap <C-L>	   :noh<C-L><CR>

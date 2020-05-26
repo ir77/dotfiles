@@ -35,6 +35,10 @@ myEnvironmentSettings
   export XDG_CONFIG_HOME=~/.config
   export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+  # Github Personal access tokens管理用
+  # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
+  source ~/.zshrc_private
+
 # --------------------ヒストリー--------------------
 function myHistorySettings {
   HISTFILE=~/.zsh_history

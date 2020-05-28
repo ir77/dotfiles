@@ -173,6 +173,7 @@ function myAliasSettings {
   alias gca='git commit -v -a'
   alias gcam='git commit -v -a -m'
   alias gcm='git commit -v -m'
+  alias gdca='git duet-commit --amend'
   alias gco='git checkout'
   alias gcp='git cherry-pick'
   alias gd='git diff'

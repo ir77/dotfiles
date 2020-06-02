@@ -230,7 +230,7 @@ myAliasSettings
     local destination=$(peco_get_destination_from_history)
     echo "cd "${destination/#\~/${HOME}}
     [ -n $destination ] && cd ${destination/#\~/${HOME}}
-    zle reset-prompt
+    zle accept-line
   }
   zle -N peco_cd_history
   # }}}

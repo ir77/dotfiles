@@ -228,9 +228,11 @@ myAliasSettings
   # peco を使って cd 履歴の中からディレクトリを選択し cd するウィジェット
   function peco_cd_history() {
     local destination=$(peco_get_destination_from_history)
-    echo "cd "${destination/#\~/${HOME}}
-    [ -n $destination ] && cd ${destination/#\~/${HOME}}
-    zle accept-line
+    if [ -n "$destination" ]; then # 1文字以上あれば
+      echo "cd "${destination/#\~/${HOME}}
+      cd ${destination/#\~/${HOME}};  # 選択ディレクトリに移動
+      zle accept-line # 次のpromptを表示する
+    fi
   }
   zle -N peco_cd_history
   # }}}

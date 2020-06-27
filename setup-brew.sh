@@ -9,12 +9,12 @@ brew update
 brew doctor
 
 brew install zsh
-brew install peco
 brew install zsh-completions
 brew install zsh-syntax-highlighting
+brew install peco
 brew install thefuck
-brew install starship
 brew install git
+brew install git-duet/tap/git-duet
 brew install nkf
 brew install tig
 brew install lua
@@ -22,19 +22,18 @@ brew install vim
 brew install trash
 brew install ffmpeg
 brew install gifsicle
-brew install reattach-to-user-namespace
-brew install ctags
 brew install ack
+brew install fd
+brew install jq
+brew install tldr
+brew install anyenv
 brew install stack
 brew install carthage
-brew install fd
 brew install mysql
 brew install nodebrew
-brew install jq
 brew install rustup-init
-brew install anyenv
 brew install deno
-brew install git-duet/tap/git-duet
+brew install starship
 
 brew cask install google-chrome
 brew cask install caffeine

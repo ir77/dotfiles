@@ -217,16 +217,6 @@ myAliasSettings
   zle -N peco_cd_fd_from_home
   bindkey '^s' peco_cd_fd_from_home
 
-  function peco-cd() {
-    local DIR=$(fd . --full-path --type d --max-depth 1 | peco)
-    if [ -n "$DIR" ]; then
-      cd $DIR
-      zle accept-line # 次のpromptを表示する
-    fi
-  }
-  zle -N peco-cd
-  bindkey '^k' peco-cd
-
 #------------------- functions -------------------
 function makeGifFromMov() {
   ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=5 --delay=5 > out.gif

@@ -63,6 +63,7 @@ mas install 967805235 #Paste (2.6.2)
 # brew install homebrew/cask-fonts/font-fira-mono-for-powerline
 # brew install homebrew/cask-fonts/font-inconsolata-dz-for-powerline
 # brew install homebrew/cask-fonts/font-liberation-mono-for-powerline
+brew install svn
 brew install homebrew/cask-fonts/font-roboto-mono-for-powerline
 
 anyenv init
@@ -84,5 +85,3 @@ rustup-init
 mkdir -p ~/.nodebrew/src
 nodebrew install-binary stable
 nodebrew ls | xargs nodebrew use
-npm install -g yarn
-

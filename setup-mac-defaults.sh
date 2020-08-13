@@ -9,9 +9,6 @@ defaults write com.apple.dock persistent-apps -array #Dock に標準で入って
 defaults write com.apple.dock autohide -bool true
 killall Dock
 
-# keyboard
-defaults write -g com.apple.keyboard.fnState -bool true
-
 # finder
 defaults write com.apple.finder ShowStatusBar -bool true
 defaults write com.apple.finder ShowPathbar -bool true

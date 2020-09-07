@@ -34,6 +34,7 @@ myEnvironmentSettings
   export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
   export XDG_CONFIG_HOME=~/.config
   export PATH=$HOME/.nodebrew/current/bin:$PATH
+  export PATH="$PATH:`pwd`/flutter/bin"
 
   # Github Personal access tokens管理用
   # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private

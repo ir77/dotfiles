@@ -53,6 +53,7 @@ brew cask install android-studio
 brew cask install slack
 brew cask install deepl
 brew cask install flycut
+brew cask install flutter
 
 mas install 961632517 #Be Focused Pro (1.7.9)
 mas install 967805235 #Paste (2.6.2)

@@ -34,6 +34,7 @@ brew install nodebrew
 brew install rustup-init
 brew install deno
 brew install starship
+brew install swiftlint
 
 brew cask install google-chrome
 brew cask install caffeine

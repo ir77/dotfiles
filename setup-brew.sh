@@ -36,28 +36,25 @@ brew install deno
 brew install starship
 brew install swiftlint
 
-brew cask install google-chrome
-brew cask install caffeine
-brew cask install google-japanese-ime # 設定後に再起動の必要あり
-brew cask install karabiner-elements
-brew cask install xquartz
-brew cask install appcleaner
-brew cask install dash    
-brew cask install iterm2
-brew cask install shiftit
-brew cask install sketch
-brew cask install dropbox
-brew cask install kindle
-brew cask install visual-studio-code
-brew cask install intellij-idea
-brew cask install android-studio
-brew cask install slack
-brew cask install deepl
-brew cask install flycut
-brew cask install flutter
-
-mas install 961632517 #Be Focused Pro (1.7.9)
-mas install 967805235 #Paste (2.6.2)
+brew install --cask google-chrome
+brew install --cask caffeine
+brew install --cask google-japanese-ime # 設定後に再起動の必要あり
+brew install --cask karabiner-elements
+brew install --cask xquartz
+brew install --cask appcleaner
+brew install --cask dash    
+brew install --cask iterm2
+brew install --cask shiftit
+brew install --cask sketch
+brew install --cask dropbox
+brew install --cask kindle
+brew install --cask visual-studio-code
+brew install --cask intellij-idea
+brew install --cask android-studio
+brew install --cask slack
+brew install --cask deepl
+brew install --cask flycut
+brew install --cask flutter
 
 # brew search powerline 他のが気になったらこれで探す
 # brew install homebrew/cask-fonts/font-anonymice-powerline
@@ -72,7 +69,7 @@ anyenv init
 
 # Java Setup
 brew tap homebrew/cask-versions
-brew cask install java11
+brew install --cask java11
 
 # Xcode Setup
 sudo gem install cocoapods

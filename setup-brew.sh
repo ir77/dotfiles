@@ -35,6 +35,8 @@ brew install rustup-init
 brew install deno
 brew install starship
 brew install swiftlint
+brew install java11
+
 
 brew install --cask google-chrome
 brew install --cask caffeine
@@ -66,10 +68,6 @@ brew install svn
 brew install homebrew/cask-fonts/font-roboto-mono-for-powerline
 
 anyenv init
-
-# Java Setup
-brew tap homebrew/cask-versions
-brew install --cask java11
 
 # Xcode Setup
 sudo gem install cocoapods

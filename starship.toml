@@ -1,0 +1,4 @@
+[custom.git-duet]
+command = "git config --list | grep duet.env.git | grep initials | awk -F '=' '{print $2}' | tr '\n' ' '"
+symbol = "🧑‍🤝‍🧑"
+when = """ test 1 -eq 1 """

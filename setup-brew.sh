@@ -25,6 +25,7 @@ brew install gifsicle
 brew install ack
 brew install fd
 brew install dust
+brew install broot
 brew install jq
 brew install tldr
 brew install anyenv

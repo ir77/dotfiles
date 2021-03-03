@@ -200,15 +200,15 @@ myAliasSettings
   zle -N peco-select-history
   bindkey '^r' peco-select-history
 
-  function peco_cd_fd_from_home() {
-    local DIR=$(fd . ~ --full-path --type d --exclude debug --exclude Library | peco)
-    if [ -n "$DIR" ]; then
-      cd $DIR
+  function peco_any_search() {
+    local RESULT=$(fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /" | peco --query "$LBUFFER")
+    if [[ "$RESULT" =~ ^cd ]]; then
+      eval "$RESULT"
       zle accept-line # 次のpromptを表示する
     fi
   }
-  zle -N peco_cd_fd_from_home
-  bindkey '^s' peco_cd_fd_from_home
+  zle -N peco_any_search
+  bindkey '^s' peco_any_search
 
 #------------------- functions -------------------
 function makeGifFromMov() {

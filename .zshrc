@@ -194,14 +194,8 @@ myAliasSettings
   zle -N peco-ack-search
   bindkey '^j' peco-ack-search
 
-  function peco-select-history() {
-    BUFFER=$(\history -n 1 | tac | peco --query "$LBUFFER")
-  }
-  zle -N peco-select-history
-  bindkey '^r' peco-select-history
-
   function peco_any_search() {
-    local fdpath='fd . ~/Workspace/code --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
+    local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
     local history='\history -n 1 | tac'
     local result=$({ eval "$fdpath" ; eval "$history" ; } | peco --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then

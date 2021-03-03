@@ -201,9 +201,9 @@ myAliasSettings
   bindkey '^r' peco-select-history
 
   function peco_any_search() {
-    local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
+    local fdpath='fd . ~/Workspace/code --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
     local history='\history -n 1 | tac'
-    local result=$({ eval "$FDPATH" ; eval "$history" ; } | peco --query "$LBUFFER")
+    local result=$({ eval "$fdpath" ; eval "$history" ; } | peco --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"
       zle accept-line # 次のpromptを表示する

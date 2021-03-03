@@ -195,9 +195,7 @@ myAliasSettings
   bindkey '^j' peco-ack-search
 
   function peco-select-history() {
-    BUFFER=$(\history -n 1 | \
-      tac | peco --query "$LBUFFER"
-    )
+    BUFFER=$(\history -n 1 | tac | peco --query "$LBUFFER")
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history

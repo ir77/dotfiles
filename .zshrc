@@ -196,7 +196,7 @@ myAliasSettings
 
   function peco_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-    local history='\history -n 1 | tac'
+    local history='\history -n 1 | uniq | tail -r'
     local result=$({ eval "$fdpath" ; eval "$history" ; } | peco --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"

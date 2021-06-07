@@ -1,3 +1,5 @@
+# keyrepeatやtrackpadの速度をいじる行為はバグったときに面倒なことになるので手動で行う
+
 # Xcodeにビルド時間を表示する
 defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 

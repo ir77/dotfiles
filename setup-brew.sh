@@ -59,6 +59,7 @@ brew install --cask slack
 brew install --cask deepl
 brew install --cask flycut
 brew install --cask flutter
+brew install --cask blurred
 
 # brew search powerline 他のが気になったらこれで探す
 # brew install homebrew/cask-fonts/font-anonymice-powerline

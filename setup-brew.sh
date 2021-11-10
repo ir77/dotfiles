@@ -4,7 +4,8 @@
 # - .sshの確認
 
 xcode-select --install
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 brew update
 brew doctor
 
@@ -14,7 +15,6 @@ brew install zsh-syntax-highlighting
 brew install peco
 brew install thefuck
 brew install git
-brew install git-duet/tap/git-duet
 brew install nkf
 brew install tig
 brew install lua
@@ -36,30 +36,21 @@ brew install nodebrew
 brew install rustup-init
 brew install deno
 brew install starship
-brew install swiftlint
-brew install java11
 
 
 brew install --cask google-chrome
-brew install --cask caffeine
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり
+brew install --cask caffeine
 brew install --cask karabiner-elements
-brew install --cask xquartz
-brew install --cask appcleaner
-brew install --cask dash    
 brew install --cask iterm2
 brew install --cask shiftit
-brew install --cask sketch
-brew install --cask dropbox
 brew install --cask kindle
 brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
 brew install --cask slack
 brew install --cask deepl
-brew install --cask flycut
 brew install --cask flutter
-brew install --cask blurred
 
 # brew search powerline 他のが気になったらこれで探す
 # brew install homebrew/cask-fonts/font-anonymice-powerline

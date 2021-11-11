@@ -186,6 +186,8 @@ function myAliasSettings {
   alias glo='git log --oneline -10'
   alias gp='git push'
   alias gs='git status'
+
+  alias idea="open -na 'IntelliJ IDEA.app' --args"
 }
 myAliasSettings
 

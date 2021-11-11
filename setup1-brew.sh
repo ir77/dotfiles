@@ -49,7 +49,6 @@ brew install --cask slack
 brew install --cask deepl
 brew install --cask visual-studio-code
 brew install --cask intellij-idea
-brew install --cask jetbrains-toolbox
 brew install --cask android-studio
 brew install --cask flutter
 

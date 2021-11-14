@@ -9,7 +9,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew update
 brew doctor
 
-brew install zsh
 brew install zsh-completions
 brew install zsh-syntax-highlighting
 brew install peco

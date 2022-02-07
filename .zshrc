@@ -83,7 +83,9 @@ function myOtherSettings {
   compinit -u
 
   # zsh-syntax-highlighting
-  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  # M1 Macに移行したら消す
+  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
   # 補完時に大文字小文字を無視する
   zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

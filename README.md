@@ -23,6 +23,8 @@ vimのstatusline/tablineはlightlineを使って設定しています。
 
 # Setup
 ```
-$ sh setup.sh
-$ sh setupRC.sh
+$ sh setup1-brew.sh
+$ sh setup2-git.sh
+$ sh setup3-macdefaults.sh
+$ sh setup4-rc.sh
 ```

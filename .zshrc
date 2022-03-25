@@ -38,6 +38,7 @@ myEnvironmentSettings
   export PATH=$HOME/.nodebrew/current/bin:$PATH
   export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
   export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
+  export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0'
 
   # Github Personal access tokens管理用
   # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
@@ -193,17 +194,17 @@ function myAliasSettings {
 }
 myAliasSettings
 
-#------------------- peco -------------------
-  function peco-ack-search() {
-    ack "$@" . | peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less '
+#------------------- fzf -------------------
+  function fzf-ack-search() {
+    ack "$@" . | fzf | awk -F ":" '{print "+" $2 " " $1}' | xargs less
   }
-  zle -N peco-ack-search
-  bindkey '^j' peco-ack-search
+  zle -N fzf-ack-search
+  bindkey '^j' fzf-ack-search
 
-  function peco_any_search() {
+  function fzf_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
     local history='\history -n 1 | uniq | tail -r'
-    local result=$({ eval "$fdpath" ; eval "$history" ; } | peco --query "$LBUFFER")
+    local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --ansi --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"
       zle accept-line # 次のpromptを表示する
@@ -211,8 +212,8 @@ myAliasSettings
       BUFFER="$result"
     fi
   }
-  zle -N peco_any_search
-  bindkey '^s' peco_any_search
+  zle -N fzf_any_search
+  bindkey '^s' fzf_any_search
 
 #------------------- functions -------------------
 function makeGifFromMov() {

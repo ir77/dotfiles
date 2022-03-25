@@ -39,15 +39,15 @@ function myExportSettings {
   export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
   export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
   export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
-
-  # Github Personal access tokens管理用
-  # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
-  source ~/.zshrc_private
-
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   # zsh-syntax-highlighting
   # M1 Macに移行したら消す
   # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  # Github Personal access tokens管理用
+  # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
+  source ~/.zshrc_private
 }; myExportSettings
 
 # --------------------ヒストリー--------------------

@@ -196,7 +196,7 @@ myAliasSettings
 
 #------------------- fzf -------------------
   function fzf-ack-search() {
-    ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print "+" $2 " " $1}\' | xargs less'
+    ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print "+" $2 " " $1}\' | xargs less' | awk -F ":" '{print "+" $2 " " $1}' | xargs less
     zle accept-line # 次のpromptを表示する
   }
   zle -N fzf-ack-search

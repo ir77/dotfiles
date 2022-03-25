@@ -202,22 +202,19 @@ myAliasSettings
   zle -N fzf-ack-search
   bindkey '^j' fzf-ack-search
 
-  function fzf_fd_cd() {
+  function fzf_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-    local result=$(eval "$fdpath" | fzf --query "$LBUFFER")
-    eval "$result"
-    zle accept-line # 次のpromptを表示する
-  }
-  zle -N fzf_fd_cd
-  bindkey '^s' fzf_fd_cd
-
-  function fzf_history_search() {
     local history='\history -n 1 | uniq | tail -r'
-    local result=$(eval "$history"  | fzf --query "$LBUFFER")
-    LBUFFER="$result"
+    local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
+    if [[ "$result" =~ ^cd ]]; then
+      eval "$result"
+      zle accept-line # 次のpromptを表示する
+    else
+      BUFFER="$result"
+    fi
   }
-  zle -N fzf_history_search
-  bindkey '^r' fzf_history_search
+  zle -N fzf_any_search
+  bindkey '^s' fzf_any_search
 
 #------------------- functions -------------------
 function makeGifFromMov() {

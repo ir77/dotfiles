@@ -24,7 +24,7 @@ function myEnvironmentSettings {
   setopt auto_param_slash
 }; myEnvironmentSettings
 
-# --------------------export--------------------
+# --------------------export/source--------------------
 function myExportSettings {
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -43,6 +43,11 @@ function myExportSettings {
   # Github Personal access tokens管理用
   # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
   source ~/.zshrc_private
+
+  # zsh-syntax-highlighting
+  # M1 Macに移行したら消す
+  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 }; myExportSettings
 
 # --------------------ヒストリー--------------------
@@ -72,21 +77,16 @@ function myHistorySettings {
   bindkey "^N" history-beginning-search-forward-end
 }; myHistorySettings
 
-#------------------- その他 -------------------
-function myOtherSettings {
+#------------------- 補完  -------------------
+function myCompletionSettings {
   # zsh-completions
   fpath=(/usr/local/share/zsh-completions $fpath)
   autoload -U compinit
   compinit -u
 
-  # zsh-syntax-highlighting
-  # M1 Macに移行したら消す
-  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
   # 補完時に大文字小文字を無視する
   zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-}; myOtherSettings
+}; myCompletionSettings
 
 # --------------------エイリアス------------------
 function myAliasSettings {

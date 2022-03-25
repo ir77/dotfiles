@@ -25,6 +25,7 @@ function myEnvironmentSettings {
 }; myEnvironmentSettings
 
 # --------------------export--------------------
+function myExportSettings {
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # 言語環境を日本語、UTF-8 にそろえておく
@@ -42,6 +43,7 @@ function myEnvironmentSettings {
   # Github Personal access tokens管理用
   # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
   source ~/.zshrc_private
+}; myExportSettings
 
 # --------------------ヒストリー--------------------
 function myHistorySettings {

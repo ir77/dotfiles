@@ -38,7 +38,7 @@ myEnvironmentSettings
   export PATH=$HOME/.nodebrew/current/bin:$PATH
   export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
   export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
-  export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0'
+  export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
   # Github Personal access tokens管理用
   # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
@@ -196,7 +196,10 @@ myAliasSettings
 
 #------------------- fzf -------------------
   function fzf-ack-search() {
-    ack "$@" . | fzf | awk -F ":" '{print "+" $2 " " $1}' | xargs less
+    #ack "$@" . | fzf | awk -F ":" "({print "+" $2 " " $1})" | xargs less
+    #ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print "+" $2 " " $1}\' | xargs less'
+    ack "$@" . | fzf --bind $'p:execute(echo {} | awk -F ":" \'{print "+" $2 " " $1}\' | xargs less)' | > /dev/null 2>&1
+    zle accept-line # 次のpromptを表示する
   }
   zle -N fzf-ack-search
   bindkey '^j' fzf-ack-search
@@ -204,7 +207,7 @@ myAliasSettings
   function fzf_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
     local history='\history -n 1 | uniq | tail -r'
-    local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --ansi --query "$LBUFFER")
+    local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"
       zle accept-line # 次のpromptを表示する

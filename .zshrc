@@ -15,15 +15,14 @@ function myEnvironmentSettings {
   setopt no_flow_control
 
   # 明確なドットの指定なしで.から始まるファイルをマッチ
-   setopt globdots
+  setopt globdots
 
   # 濁点・半濁点の入ったファイルの表示
   setopt COMBINING_CHARS
 
   # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
   setopt auto_param_slash
-}
-myEnvironmentSettings
+}; myEnvironmentSettings
 
 # --------------------export--------------------
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -69,16 +68,10 @@ function myHistorySettings {
   zle -N history-beginning-search-forward-end history-search-end
   bindkey "^P" history-beginning-search-backward-end
   bindkey "^N" history-beginning-search-forward-end
-}
-myHistorySettings
+}; myHistorySettings
 
 #------------------- その他 -------------------
 function myOtherSettings {
-  # 一定時間以上かかる処理の場合は終了時に通知してくれる
-  # http://kazuph.hateblo.jp/entry/2013/10/23/005718
-  local COMMAND="0"
-  local COMMAND_TIME="0"
-
   # zsh-completions
   fpath=(/usr/local/share/zsh-completions $fpath)
   autoload -U compinit
@@ -91,8 +84,7 @@ function myOtherSettings {
 
   # 補完時に大文字小文字を無視する
   zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-}
-myOtherSettings
+}; myOtherSettings
 
 # --------------------エイリアス------------------
 function myAliasSettings {
@@ -146,8 +138,7 @@ function myAliasSettings {
   alias gs='git status'
 
   alias idea="open -na 'IntelliJ IDEA.app' --args"
-}
-myAliasSettings
+}; myAliasSettings
 
 #------------------- fzf -------------------
   function fzf-ack-search() {
@@ -172,25 +163,6 @@ myAliasSettings
   zle -N fzf_any_search
   bindkey '^s' fzf_any_search
 
-function precmd () {
-  if [ "$COMMAND_TIME" -ne "0" ] ; then
-    local d=`date +%s`
-    d=`expr $d - $COMMAND_TIME`
-    if [ "$d" -ge "10" ] ; then
-      COMMAND="$COMMAND "
-      which terminal-notifier > /dev/null 2>&1 && terminal-notifier -message "${${(s: :)COMMAND}[1]}" -m "$COMMAND";
-    fi
-  fi
-  COMMAND="0"
-  COMMAND_TIME="0"
-}
-
-preexec () {
-  COMMAND="${1}"
-  if [ "`perl -e 'print($ARGV[0]=~/ssh|^vi/)' $COMMAND`" -ne 1 ] ; then
-    COMMAND_TIME=`date +%s`
-  fi
-}
 
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"

@@ -63,6 +63,7 @@ function myHistorySettings {
   # 同じコマンドをヒストリに残さない
   setopt hist_ignore_all_dups
 
+  # コマンドを打った状態で上下キーを押すと履歴から補完する
   autoload history-search-end
   zle -N history-beginning-search-backward-end history-search-end
   zle -N history-beginning-search-forward-end history-search-end
@@ -109,9 +110,6 @@ function myAliasSettings {
   # grep結果に色を点ける
   alias grep="grep -a --color"
 
-  # 画面クリア時にlsを行う
-  alias clear=clear
-
   alias ls="ls -GFS"
   alias la="ls -aA"
   alias ll="ls -l"
@@ -119,49 +117,6 @@ function myAliasSettings {
 
   alias vimrc="vim ~/.vimrc"
   alias zshrc="vim ~/.zshrc"
-
-  # 打ったコマンドの後ろ(suffix)を見て, 適当に宜しくやってくれるやつ
-  # ./でpythonを開く
-  alias -s py=python
-  alias -s rb='ruby'
-
-  # ./で圧縮ファイルを展開する
-  function extract() {
-    case $1 in
-    *.tar.gz|*.tgz) tar xzvf $1;;
-    *.tar.xz) tar Jxvf $1;;
-    *.zip) unzip $1;;
-    *.lzh) lha e $1;;
-    *.tar.bz2|*.tbz) tar xjvf $1;;
-    *.tar.Z) tar zxvf $1;;
-    *.gz) gzip -dc $1;;
-    *.bz2) bzip2 -dc $1;;
-    *.Z) uncompress $1;;
-    *.tar) tar xvf $1;;
-    *.arj) unarj $1;;
-    esac
-  }
-  alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
-
-  # ./でC言語の実行
-  # shiftで引数をずらす
-  function runc () { gcc $1 && shift && ./a.out $@; rm a.out }
-  function runcpp () { g++ $1 && shift && ./a.out $@; rm a.out }
-  function runcpp2 () { g++ $1 && shift && ./a.out $@}
-  function runocaml () { ocaml $1 }
-  function runHaskell () { ghc -o a.out $1 && shift && ./a.out $@}
-  function runRustc () { rustc -o a.out $1 && ./a.out && rm a.out }
-
-  alias -s c=runc
-  alias -s cpp=runcpp
-  alias -s ml=runocaml
-  alias -s hs=runHaskell
-  alias -s rs=runRustc
-
-  # Haskell
-  alias ghci='stack ghci'
-  alias ghc='stack ghc --'
-  alias runghc='stack runghc --'
 
   function gitCommit() {
     authors=`git config --list | grep duet.env.git | grep initials | wc -l`
@@ -217,24 +172,6 @@ myAliasSettings
   zle -N fzf_any_search
   bindkey '^s' fzf_any_search
 
-#------------------- functions -------------------
-function makeGifFromMov() {
-  ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=5 --delay=5 > out.gif
-}
-
-# vimにctrl-zで戻る
-fancy-ctrl-z () {
-  if [[ $#BUFFER -eq 0 ]]; then
-    BUFFER="fg"
-    zle accept-line
-  else
-    zle push-input
-    zle clear-screen
-  fi
-}
-zle -N fancy-ctrl-z
-bindkey '^Z' fancy-ctrl-z
-
 function precmd () {
   if [ "$COMMAND_TIME" -ne "0" ] ; then
     local d=`date +%s`
@@ -255,6 +192,6 @@ preexec () {
   fi
 }
 
-eval $(thefuck --alias)
+eval "$(thefuck --alias)"
 eval "$(anyenv init -)"
 eval "$(starship init zsh)"

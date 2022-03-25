@@ -195,7 +195,7 @@ myAliasSettings
 
 #------------------- peco -------------------
   function peco-ack-search() {
-    ack "$@" . | peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | xargs less '
+    ack "$@" . | peco --exec 'awk -F : "{print \"+\" $2 \" \" $1}" | xargs less '
   }
   zle -N peco-ack-search
   bindkey '^j' peco-ack-search

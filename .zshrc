@@ -144,7 +144,7 @@ function myAliasSettings {
 
 #------------------- fzf -------------------
   function fzf-ack-search() {
-    ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print "+" $2 " " $1}\' | xargs less' | awk -F ":" '{print "+" $2 " " $1}' | xargs less
+    ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' | awk -F ":" '{print $1 " -H " $2}' | xargs bat --color=always
     zle clear-screen
   }
   zle -N fzf-ack-search

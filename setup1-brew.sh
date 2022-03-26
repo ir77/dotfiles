@@ -24,6 +24,7 @@ brew install ffmpeg
 brew install gifsicle
 brew install ack
 brew install fd
+brew install bat
 brew install jq
 brew install tldr
 brew install anyenv

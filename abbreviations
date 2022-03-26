@@ -11,3 +11,9 @@ abbr gds="git diff --staged"
 abbr gcm="git commit -v -m"
 abbr gba="git branch -a"
 
+abbr ls="ls -GFS"
+abbr la="ls -aA"
+abbr lal="ls -a -lA"
+
+abbr cp="cp -i"
+abbr mv="mv -i"

@@ -87,40 +87,22 @@ function myCompletionSettings {
 
   # 補完時に大文字小文字を無視する
   zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-}; myCompletionSettings
-
-# --------------------エイリアス------------------
-function myAliasSettings {
-  alias history="history -Di 1" # 実行時間とかかった時間を表示
-
-  alias cp="cp -i" # 保険で警告
-  alias mv="mv -i" # 保険で警告
 
   setopt complete_aliases # aliased ls needs if file/dir completions work
   bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 
+}; myCompletionSettings
+
+# --------------------エイリアス------------------
+function myAliasSettings {
   # rmコマンドでゴミ箱に送る
   alias rm='trash'
 
   # grep結果に色を点ける
   alias grep="grep -a --color"
 
-  alias ls="ls -GFS"
-  alias la="ls -aA"
-  alias ll="ls -l"
-  alias lal="ls -a -lA"
-
   alias vimrc="vim ~/.vimrc"
   alias zshrc="vim ~/.zshrc"
-
-  function gitCommit() {
-    authors=`git config --list | grep duet.env.git | grep initials | wc -l`
-    if [ ${authors} -eq 0 ] ; then
-      git commit -v
-    else 
-      git duet-commit
-    fi
-  }
 
   alias idea="open -na 'IntelliJ IDEA.app' --args"
 }; myAliasSettings
@@ -147,7 +129,6 @@ function myAliasSettings {
   }
   zle -N fzf_any_search
   bindkey '^s' fzf_any_search
-
 
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"

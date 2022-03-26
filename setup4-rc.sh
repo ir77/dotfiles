@@ -2,6 +2,7 @@
 
 # Setup Zsh
 ln -snf "$(cd $(dirname $0) && pwd)/.zshrc" ~/
+ln -snf "$(cd $(dirname $0) && pwd)/abbreviations" ~/.config/zsh/abbreviations
 
 mkdir -p ~/.vim/rc
 ln -snf "$(cd $(dirname $0) && pwd)/dein.toml" ~/.vim/rc

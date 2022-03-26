@@ -1,0 +1,13 @@
+abbr g="git"
+abbr gp="git push"
+abbr gb="git branch"
+abbr gs="git status"
+abbr gd="git diff"
+abbr gl="git log"
+abbr gc="git commit -v"
+abbr gco="git checkout"
+abbr glo="git log --oneline -10"
+abbr gds="git diff --staged"
+abbr gcm="git commit -v -m"
+abbr gba="git branch -a"
+

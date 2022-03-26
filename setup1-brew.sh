@@ -11,7 +11,6 @@ brew doctor
 
 brew install zsh-completions
 brew install zsh-syntax-highlighting
-brew install zsh-autosuggestions
 brew install fzf
 brew install thefuck
 brew install git

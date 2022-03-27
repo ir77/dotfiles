@@ -117,7 +117,7 @@ function myAliasSettings {
 
   function fzf_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-    local history='\history -n 1 | uniq | grep -v "cd" | tail -r'
+    local history='\history -n 1 | sort | uniq | grep -v "cd" | tail -r'
     local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"

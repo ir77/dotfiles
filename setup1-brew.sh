@@ -50,7 +50,7 @@ brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
 brew install --cask flutter
-
+brew install --cask fig
 
 anyenv init
 

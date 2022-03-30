@@ -1,5 +1,10 @@
+
 #-------------------- 全体 --------------------
 function myEnvironmentSettings {
+  # Fig pre block. Keep at the top of this file.
+  export PATH="${PATH}:${HOME}/.local/bin"
+  eval "$(fig init zsh pre)"
+
   setopt notify # バックグラウンドジョブの状態変化を即時報告する
 
   setopt no_beep # ビープ音を鳴らさないようにする
@@ -80,17 +85,17 @@ function myHistorySettings {
 
 #------------------- 補完  -------------------
 function myCompletionSettings {
-  # zsh-completions
-  fpath=(/usr/local/share/zsh-completions $fpath)
-  autoload -U compinit
-  compinit -u
+  # figお試し中
+  ## zsh-completions
+  #fpath=(/usr/local/share/zsh-completions $fpath)
+  #autoload -U compinit
+  #compinit -u
 
-  # 補完時に大文字小文字を無視する
-  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+  ## 補完時に大文字小文字を無視する
+  #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-  setopt complete_aliases # aliased ls needs if file/dir completions work
-  bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
-
+  #setopt complete_aliases # aliased ls needs if file/dir completions work
+  #bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 }; myCompletionSettings
 
 # --------------------エイリアス------------------
@@ -110,7 +115,7 @@ function myAliasSettings {
 #------------------- fzf -------------------
   function fzf-ack-search() {
     ack "$@" . --ignore-dir=debug | fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' | awk -F ":" '{print $1 " -H " $2}' | xargs bat --color=always
-    zle clear-screen
+    zle accept-line
   }
   zle -N fzf-ack-search
   bindkey '^j' fzf-ack-search
@@ -121,7 +126,7 @@ function myAliasSettings {
     local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
     if [[ "$result" =~ ^cd ]]; then
       eval "$result"
-      zle clear-screen
+      zle accept-line
     else
       BUFFER="$result"
       zle clear-screen
@@ -133,3 +138,6 @@ function myAliasSettings {
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"
 eval "$(starship init zsh)"
+# Fig post block. Keep at the bottom of this file.
+eval "$(fig init zsh post)"
+

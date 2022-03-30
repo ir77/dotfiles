@@ -118,7 +118,7 @@ function myAliasSettings {
     zle accept-line
   }
   zle -N fzf-ack-search
-  bindkey '^j' fzf-ack-search
+  bindkey '^h' fzf-ack-search
 
   function fzf_any_search() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'

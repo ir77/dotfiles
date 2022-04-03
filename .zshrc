@@ -1,10 +1,5 @@
-
 #-------------------- 全体 --------------------
 function myEnvironmentSettings {
-  # Fig pre block. Keep at the top of this file.
-  export PATH="${PATH}:${HOME}/.local/bin"
-  eval "$(fig init zsh pre)"
-
   setopt notify # バックグラウンドジョブの状態変化を即時報告する
 
   setopt no_beep # ビープ音を鳴らさないようにする
@@ -85,17 +80,16 @@ function myHistorySettings {
 
 #------------------- 補完  -------------------
 function myCompletionSettings {
-  # figお試し中
-  ## zsh-completions
-  #fpath=(/usr/local/share/zsh-completions $fpath)
-  #autoload -U compinit
-  #compinit -u
+  # zsh-completions
+  fpath=(/usr/local/share/zsh-completions $fpath)
+  autoload -U compinit
+  compinit -u
 
-  ## 補完時に大文字小文字を無視する
-  #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+  # 補完時に大文字小文字を無視する
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-  #setopt complete_aliases # aliased ls needs if file/dir completions work
-  #bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+  setopt complete_aliases # aliased ls needs if file/dir completions work
+  bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 }; myCompletionSettings
 
 # --------------------エイリアス------------------
@@ -138,6 +132,3 @@ function myAliasSettings {
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"
 eval "$(starship init zsh)"
-# Fig post block. Keep at the bottom of this file.
-eval "$(fig init zsh post)"
-

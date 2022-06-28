@@ -42,6 +42,7 @@ brew install --cask google-japanese-ime # 設定後に再起動の必要あり
 brew install --cask caffeine
 brew install --cask karabiner-elements
 brew install --cask shiftit
+brew install --cask spectacle
 brew install --cask kindle
 brew install --cask iterm2
 brew install --cask slack
@@ -50,6 +51,7 @@ brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
 brew install --cask flutter
+brew install --cask xcodes
 
 anyenv init
 

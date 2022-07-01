@@ -34,9 +34,7 @@ brew install nodebrew
 brew install rustup-init
 brew install deno
 brew install swift-format
-
 brew install starship
-brew install font-roboto-mono-nerd-font
 
 brew install --cask google-chrome
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり
@@ -53,6 +51,9 @@ brew install --cask intellij-idea
 brew install --cask android-studio
 brew install --cask flutter
 brew install --cask xcodes
+
+brew install svn # for font install
+brew install --cask homebrew/cask-fonts/font-roboto-mono-for-powerline
 
 anyenv init
 

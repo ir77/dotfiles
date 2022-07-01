@@ -35,6 +35,7 @@ brew install rustup-init
 brew install deno
 brew install swift-format
 brew install starship
+brew install olets/tap/zsh-abbr
 
 brew install --cask google-chrome
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり

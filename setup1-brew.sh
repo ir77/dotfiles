@@ -41,7 +41,6 @@ brew install --cask google-chrome
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり
 brew install --cask caffeine
 brew install --cask karabiner-elements
-brew install --cask shiftit # spectacleで良ければ消すかも
 brew install --cask spectacle
 brew install --cask kindle
 brew install --cask iterm2

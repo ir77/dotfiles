@@ -33,7 +33,7 @@ brew install mysql
 brew install nodebrew
 brew install rustup-init
 brew install deno
-brew install swift-format
+brew install swiftformat
 brew install starship
 brew install olets/tap/zsh-abbr
 

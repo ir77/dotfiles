@@ -1,27 +1,14 @@
 #-------------------- 全体 --------------------
 function myEnvironmentSettings {
   setopt notify # バックグラウンドジョブの状態変化を即時報告する
-
   setopt no_beep # ビープ音を鳴らさないようにする
   setopt nolistbeep # ビープ音を鳴らないようにする
-
-  # 自動修正機能 ex.lls →  ls?
-  setopt correct
-
-  # 日本語ファイル名を表示可能にする
-  setopt print_eight_bit
-
-  # フローコントロールを無効にする
-  setopt no_flow_control
-
-  # 明確なドットの指定なしで.から始まるファイルをマッチ
-  setopt globdots
-
-  # 濁点・半濁点の入ったファイルの表示
-  setopt COMBINING_CHARS
-
-  # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-  setopt auto_param_slash
+  setopt correct # 自動修正機能 ex.lls →  ls?
+  setopt print_eight_bit # 日本語ファイル名を表示可能にする
+  setopt no_flow_control # フローコントロールを無効にする
+  setopt globdots # 明確なドットの指定なしで.から始まるファイルをマッチ
+  setopt COMBINING_CHARS # 濁点・半濁点の入ったファイルの表示
+  setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 }; myEnvironmentSettings
 
 # --------------------export/source--------------------
@@ -32,18 +19,15 @@ function myExportSettings {
   export LANG=ja_JP.UTF-8
   export LESSCHARSET=utf-8
 
-  export GOPATH=${HOME}/go
   export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
-  export XDG_CONFIG_HOME=~/.config
   export PATH=$HOME/.nodebrew/current/bin:$PATH
   export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+  export GOPATH=${HOME}/go
+  export XDG_CONFIG_HOME=~/.config
   export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
   export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
   source /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh
-  # zsh-syntax-highlighting
-  # M1 Macに移行したら消す
-  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
   # Github Personal access tokens管理用
@@ -85,8 +69,7 @@ function myCompletionSettings {
   autoload -U compinit
   compinit -u
 
-  # 補完時に大文字小文字を無視する
-  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
 
   setopt complete_aliases # aliased ls needs if file/dir completions work
   bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
@@ -94,15 +77,8 @@ function myCompletionSettings {
 
 # --------------------エイリアス------------------
 function myAliasSettings {
-  # rmコマンドでゴミ箱に送る
-  alias rm='trash'
-
-  # grep結果に色を点ける
-  alias grep="grep -a --color"
-
-  alias vimrc="vim ~/.vimrc"
-  alias zshrc="vim ~/.zshrc"
-
+  alias rm='trash' # rmコマンドでゴミ箱に送る
+  alias grep="grep -a --color" # grep結果に色を点ける
   alias idea="open -na 'IntelliJ IDEA.app' --args"
 }; myAliasSettings
 

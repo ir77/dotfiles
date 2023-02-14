@@ -90,28 +90,31 @@ function myAliasSettings {
   zle -N fzf-ack-search
   bindkey '^j' fzf-ack-search
 
-  function fzf_any_search() {
+  function fzf_cd() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-    local history='\history -n 1 | sort | uniq | grep -v "cd" | tail -r'
-    local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
-    if [[ "$result" =~ ^cd ]]; then
-      eval "$result"
-      zle accept-line
-    else
-      BUFFER="$result"
-      zle clear-screen
-    fi
+    local result=$({ eval "$fdpath"; } | fzf --query "$LBUFFER")
+    eval "$result"
+    zle accept-line
   }
-  zle -N fzf_any_search
-  bindkey '^s' fzf_any_search
+  zle -N fzf_cd
+  bindkey '^s' fzf_cd
 
-  function fzf_git_worktree_cd() {
+  function fzf_history() {
+    local history='\history -n 1 | sort | uniq | grep -v "cd" | tail -r'
+    local result=$({ eval "$history"; } | fzf --query "$LBUFFER")
+    BUFFER="$result"
+    zle clear-screen
+  }
+  zle -N fzf_history
+  bindkey '^r' fzf_history
+
+  function fzf_git_worktree() {
     local result=$(git worktree list | awk '{print "cd " $1}' | fzf --query "$LBUFFER")
     eval "$result"
     zle accept-line
   }
-  zle -N fzf_git_worktree_cd
-  bindkey '^r' fzf_git_worktree_cd
+  zle -N fzf_git_worktree
+  bindkey '^w' fzf_git_worktree
 
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"

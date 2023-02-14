@@ -13,7 +13,6 @@ abbr gds="git diff --staged"
 abbr gcm="git commit -v -m"
 abbr gba="git branch -a"
 abbr gwa="git worktree add"
-abbr gwr="git worktree remove"
 abbr gwl="git worktree list"
 
 abbr ls="ls -GFS"

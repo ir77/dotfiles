@@ -13,7 +13,6 @@ abbr gds="git diff --staged"
 abbr gcm="git commit -v -m"
 abbr gba="git branch -a"
 abbr gwa="echo  | xargs -I@ git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)/@ @"
-abbr gwr="git worktree list | awk '{print \"git worktree remove \" $1}' | fzf | zsh"
 abbr gwl="git worktree list"
 
 abbr ls="ls -GFS"

@@ -116,6 +116,24 @@ function myAliasSettings {
   zle -N fzf_git_worktree_cd
   bindkey '^w' fzf_git_worktree_cd
 
+  function fzf_git_worktree_remove() {
+    local result=$(git worktree list | awk '{print "git worktree remove  " $1}' | fzf --query "$LBUFFER")
+    eval "$result"
+    zle accept-line
+  }
+  zle -N fzf_git_worktree_remove
+  bindkey '^w^r' fzf_git_worktree_remove
+
+  # function fzf_git_worktree_add() {
+  #   echo "please input branch name: " 
+  #   read INPUT
+  #   local command="$(git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)/$INPUT $INPUT)"
+  #   eval "$command"
+  #   zle accept-line
+  # }
+  # zle -N fzf_git_worktree_add
+  # bindkey '^w^a' fzf_git_worktree_add
+
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"
 eval "$(starship init zsh)"

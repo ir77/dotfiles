@@ -106,7 +106,7 @@ function myAliasSettings {
     zle clear-screen
   }
   zle -N fzf_history
-  bindkey '^f' fzf_history
+  bindkey '^r' fzf_history
 
   function fzf_git_worktree_cd() {
     local result=$(git worktree list | awk '{print "cd " $1}' | fzf --query "$LBUFFER")
@@ -114,20 +114,7 @@ function myAliasSettings {
     zle accept-line
   }
   zle -N fzf_git_worktree_cd
-  bindkey '^r' fzf_git_worktree_cd
-
-  function git-worktree-add() {
-  }
-  zle -N git-worktree-add
-  bindkey '^e' fzf_git_worktree_add
-
-  function git-worktree-remove() {
-    local result=$(git worktree list | awk '{print "git worktree remove " $1}' | fzf --query "$LBUFFER")
-    eval "$result"
-    zle accept-line
-  }
-  zle -N git-worktree-remove
-  bindkey '^w' fzf_git_worktree_remove
+  bindkey '^w' fzf_git_worktree_cd
 
 eval "$(thefuck --alias)"
 eval "$(anyenv init -)"

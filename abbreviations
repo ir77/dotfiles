@@ -12,7 +12,7 @@ abbr glo="git log --oneline -10"
 abbr gds="git diff --staged"
 abbr gcm="git commit -v -m"
 abbr gba="git branch -a"
-abbr gwa="echo  | xargs -I@ git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)/@ @"
+abbr gwa="git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)- feature/"
 abbr gwl="git worktree list"
 
 abbr ls="ls -GFS"

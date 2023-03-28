@@ -125,5 +125,5 @@ function myAliasSettings {
   bindkey '^w^r' fzf_git_worktree_remove
 
 eval "$(thefuck --alias)"
-eval "$(anyenv init -)"
+eval "$(rbenv init - zsh)"
 eval "$(starship init zsh)"

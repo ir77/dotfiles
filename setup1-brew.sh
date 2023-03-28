@@ -26,7 +26,7 @@ brew install fd
 brew install bat
 brew install jq
 brew install tldr
-brew install anyenv
+brew install rbenv ruby-build
 brew install stack
 brew install carthage
 brew install mysql

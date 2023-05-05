@@ -55,8 +55,6 @@ brew install --cask rectangle
 brew install svn # for font install
 brew install --cask homebrew/cask-fonts/font-roboto-mono-for-powerline
 
-anyenv init
-
 # Xcode Setup
 sudo gem install cocoapods
 

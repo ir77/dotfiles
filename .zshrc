@@ -88,7 +88,7 @@ function myAliasSettings {
     zle accept-line
   }
   zle -N fzf-ack-search
-  bindkey '^j' fzf-ack-search
+  bindkey '^w' fzf-ack-search
 
   function fzf_cd() {
     local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
@@ -107,22 +107,6 @@ function myAliasSettings {
   }
   zle -N fzf_history
   bindkey '^r' fzf_history
-
-  function fzf_git_worktree_cd() {
-    local result=$(git worktree list | awk '{print "cd " $1}' | fzf --query "$LBUFFER")
-    eval "$result"
-    zle accept-line
-  }
-  zle -N fzf_git_worktree_cd
-  bindkey '^w' fzf_git_worktree_cd
-
-  function fzf_git_worktree_remove() {
-    local result=$(git worktree list | awk '{print "git worktree remove  " $1}' | fzf --query "$LBUFFER")
-    eval "$result"
-    zle accept-line
-  }
-  zle -N fzf_git_worktree_remove
-  bindkey '^w^r' fzf_git_worktree_remove
 
 eval "$(thefuck --alias)"
 eval "$(rbenv init - zsh)"

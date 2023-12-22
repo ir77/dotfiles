@@ -51,6 +51,7 @@ brew install --cask android-studio
 brew install --cask flutter
 brew install --cask xcodes
 brew install --cask rectangle
+brew install --cask copilot-for-xcode
 
 brew install svn # for font install
 brew install --cask homebrew/cask-fonts/font-roboto-mono-for-powerline

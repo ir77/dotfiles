@@ -28,44 +28,19 @@ brew install jq
 brew install tldr
 brew install rbenv ruby-build
 brew install stack
-brew install carthage
-brew install mysql
-brew install nodebrew
-brew install rustup-init
-brew install deno
-brew install swiftformat
 brew install starship
 brew install olets/tap/zsh-abbr
 
 brew install --cask google-chrome
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり
-brew install --cask caffeine
 brew install --cask karabiner-elements
-brew install --cask kindle
 brew install --cask iterm2
-brew install --cask slack
-brew install --cask deepl
 brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
-brew install --cask flutter
 brew install --cask xcodes
 brew install --cask rectangle
 brew install --cask copilot-for-xcode
 
 brew install svn # for font install
 brew install --cask homebrew/cask-fonts/font-roboto-mono-for-powerline
-
-# Xcode Setup
-sudo gem install cocoapods
-
-# Haskell Setup
-stack setup
-
-# rust Setup
-rustup-init
-
-# Setup Node
-mkdir -p ~/.nodebrew/src
-nodebrew install-binary stable
-nodebrew ls | xargs nodebrew use

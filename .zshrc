@@ -15,18 +15,13 @@ function myEnvironmentSettings {
 
 # --------------------export/source--------------------
 function myExportSettings {
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export PATH="/opt/homebrew/bin:$PATH"
 
   # 言語環境を日本語、UTF-8 にそろえておく
   export LANG=ja_JP.UTF-8
   export LESSCHARSET=utf-8
 
-  export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
-  export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
-  export GOPATH=${HOME}/go
   export XDG_CONFIG_HOME=~/.config
-  export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
   export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
   source /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh

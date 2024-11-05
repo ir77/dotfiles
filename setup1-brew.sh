@@ -14,7 +14,6 @@ brew install zsh-syntax-highlighting
 brew install fzf
 brew install thefuck
 brew install git
-brew install nkf
 brew install tig
 brew install lua
 brew install vim
@@ -25,9 +24,7 @@ brew install ack
 brew install fd
 brew install bat
 brew install jq
-brew install tldr
 brew install rbenv ruby-build
-brew install stack
 brew install starship
 brew install olets/tap/zsh-abbr
 

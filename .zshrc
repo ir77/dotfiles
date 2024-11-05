@@ -15,7 +15,7 @@ function myEnvironmentSettings {
 
 # --------------------export/source--------------------
 function myExportSettings {
-  eval "$(/opt/homebrew/bin/brew shellenv)
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # 言語環境を日本語、UTF-8 にそろえておく
   export LANG=ja_JP.UTF-8

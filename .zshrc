@@ -106,7 +106,6 @@ function myAliasSettings {
   bindkey '^r' fzf_history
 
 eval "$(thefuck --alias)"
-eval "$(rbenv init - zsh)"
 eval "$(starship init zsh)"
 
 

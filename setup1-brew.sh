@@ -10,21 +10,27 @@ brew update
 brew doctor
 
 # brew 
+
+## using .zshrc
 brew install starship # prompt https://starship.rs/ja-JP/
 brew install zsh-completions
 brew install zsh-syntax-highlighting
 brew install olets/tap/zsh-abbr
-brew install vim
-brew install lua
-brew install git
-brew install tig
 brew install ack
 brew install fzf
 brew install fd
 brew install bat
-brew install jq
 brew install thefuck
 brew install trash
+
+## frequently used commands
+brew install jq
+brew install tig
+
+## This command may be unnecessary and could be deleted
+brew install vim
+brew install lua
+brew install git
 
 # brew cask
 brew install --cask google-chrome

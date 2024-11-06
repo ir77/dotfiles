@@ -36,7 +36,4 @@ brew install --cask intellij-idea
 brew install --cask android-studio
 brew install --cask xcodes
 brew install --cask rectangle
-
-# font install
-brew install svn
-brew install --cask homebrew/cask-fonts/font-roboto-mono-for-powerline
+brew install --cask font-roboto-mono-for-powerline

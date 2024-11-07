@@ -21,12 +21,7 @@ function myExportSettings {
   export LANG=ja_JP.UTF-8
   export LESSCHARSET=utf-8
 
-  export PATH="$PATH:/Users/ucucmacmini/flutter/bin"
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
-  export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
-  export GOPATH=${HOME}/go
   export XDG_CONFIG_HOME=~/.config
-  export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
   export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
   source /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh
@@ -111,7 +106,6 @@ function myAliasSettings {
   bindkey '^r' fzf_history
 
 eval "$(thefuck --alias)"
-eval "$(rbenv init - zsh)"
 eval "$(starship init zsh)"
 
 

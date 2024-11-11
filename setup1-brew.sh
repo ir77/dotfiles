@@ -52,3 +52,7 @@ brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
 
+# Setup Node
+mkdir -p ~/.nodebrew/src
+nodebrew install-binary stable
+nodebrew ls | xargs nodebrew use

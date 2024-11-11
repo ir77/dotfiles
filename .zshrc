@@ -21,6 +21,7 @@ function myExportSettings {
   export LANG=ja_JP.UTF-8
   export LESSCHARSET=utf-8
 
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
   export XDG_CONFIG_HOME=~/.config
   export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 

@@ -27,19 +27,28 @@ brew install trash
 brew install jq
 brew install tig
 
-## This command may be unnecessary and could be deleted
+## for vim commands
 brew install vim
 brew install lua
+brew install nodebrew
+
+## This command may be unnecessary and could be deleted
 brew install git
 
 # brew cask
-brew install --cask google-chrome
+## tools
 brew install --cask google-japanese-ime # 設定後に再起動の必要あり
 brew install --cask karabiner-elements
+brew install --cask rectangle
+
+## font
+brew install --cask font-roboto-mono-for-powerline
+
+## applications
 brew install --cask iterm2
+brew install --cask google-chrome
+brew install --cask xcodes
 brew install --cask visual-studio-code
 brew install --cask intellij-idea
 brew install --cask android-studio
-brew install --cask xcodes
-brew install --cask rectangle
-brew install --cask font-roboto-mono-for-powerline
+

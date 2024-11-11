@@ -7,7 +7,7 @@ defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 ## 英語に
 defaults write com.apple.screencapture name ""
 ## 保存先の変更
-## defaults write com.apple.screencapture location ~/新しいフォルダパス
+echo 'defaults write com.apple.screencapture location path'
 
 # Dock
 defaults write com.apple.dock persistent-apps -array #Dock に標準で入っている全てのアプリを消す、Finder とごみ箱は消えない

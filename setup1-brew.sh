@@ -19,52 +19,42 @@ install_if_not_installed() {
 
 install_cask_if_not_installed() {
     local cask_name=$1
-    if ! brew list --cask | grep -q "^${cask_name}\$"; then
+    local app_name=$2
+
+    # /Applications フォルダにアプリケーションが存在するか確認
+    if [ ! -d "/Applications/${app_name}.app" ]; then
         echo "Installing ${cask_name}..."
         brew install --cask "${cask_name}"
     else
-        echo "${cask_name} is already installed."
+        echo "${app_name} is already installed in /Applications."
     fi
 }
 
-cli_tools=(
-    starship
-    zsh-completions
-    zsh-syntax-highlighting
-    olets/tap/zsh-abbr
-    ack
-    fzf
-    fd
-    bat
-    thefuck
-    trash
-    jq
-    tig
-    vim
-    lua
-    nodebrew
-)
+install_if_not_installed "starship"
+install_if_not_installed "zsh-completions"
+install_if_not_installed "zsh-syntax-highlighting"
+install_if_not_installed "olets/tap/zsh-abbr"
+install_if_not_installed "ack"
+install_if_not_installed "fzf"
+install_if_not_installed "fd"
+install_if_not_installed "bat"
+install_if_not_installed "thefuck"
+install_if_not_installed "trash"
+install_if_not_installed "jq"
+install_if_not_installed "tig"
+install_if_not_installed "vim"
+install_if_not_installed "lua"
+install_if_not_installed "nodebrew"
 
-for tool in "${cli_tools[@]}"; do
-    install_if_not_installed "${tool}"
-done
-
-cask_apps=(
-    google-japanese-ime
-    karabiner-elements
-    rectangle
-    iterm2
-    google-chrome
-    xcodes
-    visual-studio-code
-    intellij-idea
-    android-studio
-)
-
-for app in "${cask_apps[@]}"; do
-    install_cask_if_not_installed "${app}"
-done
-
+install_cask_if_not_installed "google-japanese-ime" "Google Japanese Input"
+install_cask_if_not_installed "karabiner-elements" "Karabiner-Elements"
+install_cask_if_not_installed "rectangle" "Rectangle"
+install_cask_if_not_installed "iterm2" "iTerm"
+install_cask_if_not_installed "google-chrome" "Google Chrome"
+install_cask_if_not_installed "xcodes" "Xcodes"
+install_cask_if_not_installed "visual-studio-code" "Visual Studio Code"
+install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
+install_cask_if_not_installed "android-studio" "Android Studio"one
 install_cask_if_not_installed "font-roboto-mono-for-powerline"
 
 if ! command -v nodebrew &>/dev/null; then

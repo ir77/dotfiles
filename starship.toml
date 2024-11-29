@@ -1,4 +1,5 @@
 [custom.xcode-select]
 command = "xcode-select -print-path | cut -d '/' -f 3"
 symbol = "🐥 "
-when = """ ls | grep xcodeproj """
+style	= 'bold blue'
+detect_extensions = ['xcodeproj']

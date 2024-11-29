@@ -1,58 +1,79 @@
-
-# - iTunes認証解除
-# - iCloudサインアウト（Macを探すの解除）
-# - .sshの確認
-
+#!/bin/bash
 xcode-select --install
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
 brew update
 brew doctor
 
-# brew 
+install_if_not_installed() {
+    local package_name=$1
+    if ! brew list --formula | grep -q "^${package_name}\$"; then
+        echo "Installing ${package_name}..."
+        brew install "${package_name}"
+    else
+        echo "${package_name} is already installed."
+    fi
+}
 
-## using .zshrc
-brew install starship # prompt https://starship.rs/ja-JP/
-brew install zsh-completions
-brew install zsh-syntax-highlighting
-brew install olets/tap/zsh-abbr
-brew install ack
-brew install fzf
-brew install fd
-brew install bat
-brew install thefuck
-brew install trash
+install_cask_if_not_installed() {
+    local cask_name=$1
+    if ! brew list --cask | grep -q "^${cask_name}\$"; then
+        echo "Installing ${cask_name}..."
+        brew install --cask "${cask_name}"
+    else
+        echo "${cask_name} is already installed."
+    fi
+}
 
-## frequently used commands
-brew install jq
-brew install tig
+cli_tools=(
+    starship
+    zsh-completions
+    zsh-syntax-highlighting
+    olets/tap/zsh-abbr
+    ack
+    fzf
+    fd
+    bat
+    thefuck
+    trash
+    jq
+    tig
+    vim
+    lua
+    nodebrew
+)
 
-## for vim commands
-brew install vim
-brew install lua
-brew install nodebrew
+for tool in "${cli_tools[@]}"; do
+    install_if_not_installed "${tool}"
+done
 
-## This command may be unnecessary and could be deleted
-brew install git
+cask_apps=(
+    google-japanese-ime
+    karabiner-elements
+    rectangle
+    iterm2
+    google-chrome
+    xcodes
+    visual-studio-code
+    intellij-idea
+    android-studio
+)
 
-# brew cask
-## tools
-brew install --cask google-japanese-ime # 設定後に再起動の必要あり
-brew install --cask karabiner-elements
-brew install --cask rectangle
+for app in "${cask_apps[@]}"; do
+    install_cask_if_not_installed "${app}"
+done
 
-## font
-brew install --cask font-roboto-mono-for-powerline
+install_cask_if_not_installed "font-roboto-mono-for-powerline"
 
-## applications
-brew install --cask iterm2
-brew install --cask google-chrome
-brew install --cask xcodes
-brew install --cask visual-studio-code
-brew install --cask intellij-idea
-brew install --cask android-studio
+if ! command -v nodebrew &>/dev/null; then
+    echo "Nodebrew is not installed properly. Please check the installation."
+else
+    mkdir -p ~/.nodebrew/src
+    nodebrew install-binary stable
+    nodebrew ls | xargs nodebrew use
+fi
 
-# Setup Node
-mkdir -p ~/.nodebrew/src
-nodebrew install-binary stable
-nodebrew ls | xargs nodebrew use
+echo "Setup completed!"
+

@@ -1,8 +1,12 @@
 #!/bin/bash
 xcode-select --install
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    echo "Homebrew is already installed."
+fi
 
 brew update
 brew doctor
@@ -54,7 +58,7 @@ install_cask_if_not_installed "google-chrome" "Google Chrome"
 install_cask_if_not_installed "xcodes" "Xcodes"
 install_cask_if_not_installed "visual-studio-code" "Visual Studio Code"
 install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
-install_cask_if_not_installed "android-studio" "Android Studio"one
+install_cask_if_not_installed "android-studio" "Android Studio"
 install_cask_if_not_installed "font-roboto-mono-for-powerline"
 
 if ! command -v nodebrew &>/dev/null; then

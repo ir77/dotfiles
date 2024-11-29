@@ -1,23 +1,24 @@
 #!/bin/bash
-xcode-select --install
+print_message() {
+    local color=$1
+    local message=$2
 
-if ! command -v brew &>/dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    echo "Homebrew is already installed."
-fi
-
-brew update
-brew doctor
+    case $color in
+        "red")    echo "\033[31m${message}\033[0m" ;;  # 赤
+        "green")  echo "\033[32m${message}\033[0m" ;;  # 緑
+        "yellow") echo "\033[33m${message}\033[0m" ;;  # 黄色
+        *)        echo "${message}" ;;                   # デフォルト
+    esac
+    echo ""  # 改行を追加
+}
 
 install_if_not_installed() {
     local package_name=$1
     if ! brew list --formula | grep -q "^${package_name}\$"; then
-        echo "Installing ${package_name}..."
+        print_message "yellow" "\nInstalling ${package_name}..."
         brew install "${package_name}"
     else
-        echo "${package_name} is already installed."
+        print_message "green" "${package_name} is already installed."
     fi
 }
 
@@ -27,12 +28,25 @@ install_cask_if_not_installed() {
 
     # /Applications フォルダにアプリケーションが存在するか確認
     if [ ! -d "/Applications/${app_name}.app" ]; then
-        echo "Installing ${cask_name}..."
+        print_message "yellow" "Installing ${cask_name}..."
         brew install --cask "${cask_name}"
     else
-        echo "${app_name} is already installed in /Applications."
+        print_message "green" "${app_name} is already installed in /Applications."
     fi
 }
+
+
+xcode-select --install
+
+if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    print_message "green" "Homebrew is already installed."
+fi
+
+brew update
+brew doctor
 
 install_if_not_installed "starship"
 install_if_not_installed "zsh-completions"
@@ -61,13 +75,13 @@ install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
 install_cask_if_not_installed "android-studio" "Android Studio"
 install_cask_if_not_installed "font-roboto-mono-for-powerline"
 
-if ! command -v nodebrew &>/dev/null; then
-    echo "Nodebrew is not installed properly. Please check the installation."
-else
+if ! nodebrew ls | grep -q "v"; then
+    print_message "yellow" "Node.js is not installed via Nodebrew. Installing the latest stable version..."
     mkdir -p ~/.nodebrew/src
     nodebrew install-binary stable
     nodebrew ls | xargs nodebrew use
+else
+    print_message "green" "Node.js is already installed via Nodebrew."
 fi
 
-echo "Setup completed!"
-
+print_message "green" "Setup completed!"

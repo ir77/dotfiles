@@ -49,7 +49,6 @@ brew update
 brew doctor
 
 install_if_not_installed "starship"
-install_if_not_installed "zsh-completions"
 install_if_not_installed "zsh-syntax-highlighting"
 install_if_not_installed "olets/tap/zsh-abbr"
 install_if_not_installed "ack"

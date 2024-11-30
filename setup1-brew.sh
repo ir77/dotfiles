@@ -14,11 +14,15 @@ print_message() {
 
 install_if_not_installed() {
     local package_name=$1
-    if ! brew list --formula | grep -q "^${package_name}\$"; then
+    local app_name=$2
+
+    if brew list --formula | grep -q "^${package_name}\$"; then
+        print_message "green" "${package_name} is already installed."
+    elif brew list --formula | grep -q "^${app_name}\$"; then
+        print_message "green" "${app_name} is already installed."
+    else
         print_message "yellow" "\nInstalling ${package_name}..."
         brew install "${package_name}"
-    else
-        print_message "green" "${package_name} is already installed."
     fi
 }
 
@@ -55,7 +59,7 @@ brew doctor
 install_if_not_installed "starship"
 install_if_not_installed "zsh-completions"
 install_if_not_installed "zsh-syntax-highlighting"
-install_if_not_installed "olets/tap/zsh-abbr"
+install_if_not_installed "olets/tap/zsh-abbr" "zsh-abbr"
 install_if_not_installed "ack"
 install_if_not_installed "fzf"
 install_if_not_installed "fd"

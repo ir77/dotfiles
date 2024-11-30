@@ -59,6 +59,18 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 #}}}
 
+#--------------------- 補完 -------------------{{{
+# zsh-completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+autoload -U compinit
+compinit -u
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
+
+setopt complete_aliases # aliased ls needs if file/dir completions work
+bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+#}}}
+
 # -------------------- エイリアス ------------------{{{
 alias rm='trash' # rmコマンドでゴミ箱に送る
 alias grep="grep -a --color" # grep結果に色を点ける

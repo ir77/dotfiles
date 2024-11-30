@@ -212,6 +212,7 @@
   autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
   autocmd FileType rust setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
   autocmd FileType Makefile setl noexpandtab 
+  autocmd FileType zsh setlocal foldmethod=marker
 
 "-------------------- ファイラー設定 --------------------"
 

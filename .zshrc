@@ -49,9 +49,6 @@ function myHistorySettings {
   # 同時に起動したzshの間でヒストリを共有する
   setopt share_history
 
-  # 同じコマンドをヒストリに残さない
-  setopt hist_ignore_all_dups
-
   # コマンドを打った状態で上下キーを押すと履歴から補完する
   autoload history-search-end
   zle -N history-beginning-search-backward-end history-search-end

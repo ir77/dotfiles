@@ -76,6 +76,9 @@ alias idea="open -na 'IntelliJ IDEA.app' --args"
 
 #--------------------- fzf -------------------{{{
 function fzf-ack-search() {
+  # 1. ack を使ってコード検索を実行。
+  # 2. fzf を用いてインタラクティブに検索結果を選択。
+  # 3. 選択した結果を bat を使ってシンタックスハイライト付きで表示。
   ack "$@" . --ignore-dir=debug |\
     fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' |\
     awk -F ":" '{print $1 " -H " $2}' |\

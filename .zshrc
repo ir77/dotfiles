@@ -76,7 +76,10 @@ alias idea="open -na 'IntelliJ IDEA.app' --args"
 
 #--------------------- fzf -------------------{{{
 function fzf-ack-search() {
-  ack "$@" . --ignore-dir=debug | fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' | awk -F ":" '{print $1 " -H " $2}' | xargs bat --color=always
+  ack "$@" . --ignore-dir=debug |\
+    fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' |\
+    awk -F ":" '{print $1 " -H " $2}' |\
+    xargs bat --color=always
   zle accept-line
 }
 zle -N fzf-ack-search

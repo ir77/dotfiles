@@ -20,7 +20,6 @@ brew "xcode-build-server", args: ["HEAD"]
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 brew "olets/tap/zsh-abbr"
-cask "amazon-q"
 cask "chatgpt"
 cask "cursor"
 cask "font-roboto-mono-for-powerline"

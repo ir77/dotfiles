@@ -43,6 +43,7 @@ brew update
 brew doctor
 brew bundle
 
+# TODO: move to brewfile
 install_cask_if_not_installed "karabiner-elements" "Karabiner-Elements"
 install_cask_if_not_installed "rectangle" "Rectangle"
 install_cask_if_not_installed "iterm2" "iTerm"

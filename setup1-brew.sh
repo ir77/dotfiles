@@ -12,20 +12,6 @@ print_message() {
     echo ""  # 改行を追加
 }
 
-install_if_not_installed() {
-    local package_name=$1
-    local app_name=$2
-
-    if brew list --formula | grep -q "^${package_name}\$"; then
-        print_message "green" "${package_name} is already installed."
-    elif brew list --formula | grep -q "^${app_name}\$"; then
-        print_message "green" "${app_name} is already installed."
-    else
-        print_message "yellow" "\nInstalling ${package_name}..."
-        brew install "${package_name}"
-    fi
-}
-
 install_cask_if_not_installed() {
     local cask_name=$1
     local app_name=$2
@@ -55,34 +41,16 @@ fi
 
 brew update
 brew doctor
+brew bundle
 
-install_if_not_installed "starship"
-install_if_not_installed "zsh-completions"
-install_if_not_installed "zsh-syntax-highlighting"
-install_if_not_installed "olets/tap/zsh-abbr" "zsh-abbr"
-install_if_not_installed "ack"
-install_if_not_installed "fzf"
-install_if_not_installed "fd"
-install_if_not_installed "bat"
-install_if_not_installed "thefuck"
-install_if_not_installed "trash"
-install_if_not_installed "jq"
-install_if_not_installed "tig"
-install_if_not_installed "vim"
-install_if_not_installed "lua"
-install_if_not_installed "nodebrew"
-
-install_cask_if_not_installed "google-japanese-ime" "Google Japanese Input"
 install_cask_if_not_installed "karabiner-elements" "Karabiner-Elements"
 install_cask_if_not_installed "rectangle" "Rectangle"
 install_cask_if_not_installed "iterm2" "iTerm"
 install_cask_if_not_installed "google-chrome" "Google Chrome"
 install_cask_if_not_installed "xcodes" "Xcodes"
 install_cask_if_not_installed "visual-studio-code" "Visual Studio Code"
-install_cask_if_not_installed "cursor" "Cursor"
 install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
 install_cask_if_not_installed "android-studio" "Android Studio"
-install_cask_if_not_installed "font-roboto-mono-for-powerline"
 
 if ! nodebrew ls | grep -q "v"; then
     print_message "yellow" "Node.js is not installed via Nodebrew. Installing the latest stable version..."

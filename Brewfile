@@ -16,12 +16,9 @@ brew "thefuck"
 brew "tig"
 brew "trash", link: true
 brew "vim"
-brew "xcode-build-server", args: ["HEAD"]
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 brew "olets/tap/zsh-abbr"
-cask "chatgpt"
 cask "cursor"
 cask "font-roboto-mono-for-powerline"
 cask "google-japanese-ime"
-vscode "amazonwebservices.codewhisperer-for-command-line-companion"

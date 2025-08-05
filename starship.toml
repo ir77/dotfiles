@@ -7,5 +7,5 @@ when = """ ls | grep xcodeproj """
 [custom.git_duet]
 description = "Displays git-duet authors"
 command = "git config --list | grep duet.env.git | grep initials | awk -F '=' '{print $2}' | tr '\n' ' '"
-when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1"
+when = "test -f .git-authors"
 format = "via 🧑‍🤝‍🧑 [$output](bold green) "

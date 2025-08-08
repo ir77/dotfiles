@@ -44,14 +44,8 @@ brew doctor
 brew bundle
 
 # TODO: move to brewfile
-install_cask_if_not_installed "karabiner-elements" "Karabiner-Elements"
-install_cask_if_not_installed "rectangle" "Rectangle"
-install_cask_if_not_installed "iterm2" "iTerm"
 install_cask_if_not_installed "google-chrome" "Google Chrome"
-install_cask_if_not_installed "xcodes" "Xcodes"
-install_cask_if_not_installed "visual-studio-code" "Visual Studio Code"
 install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
-install_cask_if_not_installed "android-studio" "Android Studio"
 
 if ! nodebrew ls | grep -q "v"; then
     print_message "yellow" "Node.js is not installed via Nodebrew. Installing the latest stable version..."

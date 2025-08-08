@@ -12,24 +12,6 @@ print_message() {
     echo ""  # 改行を追加
 }
 
-install_cask_if_not_installed() {
-    local cask_name=$1
-    local app_name=$2
-    local font_dir="$HOME/Library/Fonts"
-
-    if [ -d "/Applications/${app_name}.app" ]; then
-        print_message "green" "${app_name} is already installed in /Applications."
-    elif brew list --cask | grep -q "^${cask_name}\$"; then
-        print_message "green" "${cask_name} is already installed."
-    elif ls "${font_dir}" | grep -iq "${app_name}"; then
-        print_message "green" "Font ${cask_name} is already installed."
-    else
-        print_message "yellow" "Installing ${cask_name}..."
-        brew install --cask "${cask_name}" || print_message "red" "Failed to install ${cask_name}."
-    fi
-}
-
-
 xcode-select --install
 
 if ! command -v brew &>/dev/null; then
@@ -42,10 +24,6 @@ fi
 brew update
 brew doctor
 brew bundle
-
-# TODO: move to brewfile
-install_cask_if_not_installed "google-chrome" "Google Chrome"
-install_cask_if_not_installed "intellij-idea" "IntelliJ IDEA"
 
 if ! nodebrew ls | grep -q "v"; then
     print_message "yellow" "Node.js is not installed via Nodebrew. Installing the latest stable version..."

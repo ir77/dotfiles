@@ -204,6 +204,10 @@
   let g:netrw_keepdir = 0
 
 "-------------------- その他 --------------------"
+  " コマンドライン補完を見やすく、使いやすくする
+  set wildmenu
+  set wildmode=list:longest,full
+
   " 最後に編集を行った位置から再開
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 

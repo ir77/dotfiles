@@ -39,7 +39,6 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 
 # 重複したコマンドを無視する
-setopt hist_ignore_dups
 setopt hist_ignore_all_dups
 
 # 重複したディレクトリを追加しない

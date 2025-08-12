@@ -184,33 +184,36 @@
   set expandtab " タブをスペースに変更
 
 "-------------------- ファイル設定 --------------------"
-  autocmd BufNewFile,BufRead *.txt setlocal syntax=hybrid.vim
-  autocmd BufNewFile,BufRead *.jinja2 setlocal syntax=htmljinja.vim
-  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=bash
-  autocmd BufNewFile,BufRead *.c,*.h setlocal filetype=c
-  autocmd BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
-  autocmd BufNewFile,BufRead *.cs setlocal filetype=cs
-  autocmd BufNewFile,BufRead *.css setlocal filetype=css
-  autocmd BufNewFile,BufRead *.go setlocal filetype=go
-  autocmd BufNewFile,BufRead *.ino setlocal filetype=arduino
-  autocmd BufNewFile,BufRead *.java setlocal filetype=java
-  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
-  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-  autocmd BufNewFile,BufRead *.pu setlocal filetype=plantuml
-  autocmd BufNewFile,BufRead *.py setlocal filetype=python
-  autocmd BufNewFile,BufRead *.r setlocal filetype=r
-  autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
-  autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
-  autocmd BufNewFile,BufRead *.toml set filetype=toml
-  autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
-  autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
-  autocmd BufNewFile,BufRead *.bashrc setlocal filetype=sh
-  autocmd BufNewFile,BufRead Makefile setlocal filetype=Makefile
-  autocmd BufNewFile,BufRead *.rs setlocal filetype=rust
-  autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
-  autocmd FileType rust setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
-  autocmd FileType Makefile setl noexpandtab 
-  autocmd FileType zsh setlocal foldmethod=marker
+  augroup MyFileSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.txt setlocal syntax=hybrid.vim
+    autocmd BufNewFile,BufRead *.jinja2 setlocal syntax=htmljinja.vim
+    autocmd BufNewFile,BufRead *.bashrc setlocal filetype=bash
+    autocmd BufNewFile,BufRead *.c,*.h setlocal filetype=c
+    autocmd BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
+    autocmd BufNewFile,BufRead *.cs setlocal filetype=cs
+    autocmd BufNewFile,BufRead *.css setlocal filetype=css
+    autocmd BufNewFile,BufRead *.go setlocal filetype=go
+    autocmd BufNewFile,BufRead *.ino setlocal filetype=arduino
+    autocmd BufNewFile,BufRead *.java setlocal filetype=java
+    autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
+    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+    autocmd BufNewFile,BufRead *.pu setlocal filetype=plantuml
+    autocmd BufNewFile,BufRead *.py setlocal filetype=python
+    autocmd BufNewFile,BufRead *.r setlocal filetype=r
+    autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
+    autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
+    autocmd BufNewFile,BufRead *.toml set filetype=toml
+    autocmd BufNewFile,BufRead *.vim,vimrc,gvimrc setlocal filetype=vim
+    autocmd BufNewFile,BufRead *.zshrc setlocal filetype=zsh
+    autocmd BufNewFile,BufRead *.bashrc setlocal filetype=sh
+    autocmd BufNewFile,BufRead Makefile setlocal filetype=Makefile
+    autocmd BufNewFile,BufRead *.rs setlocal filetype=rust
+    autocmd FileType python setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
+    autocmd FileType rust setl tabstop=4 expandtab shiftwidth=4 softtabstop=4
+    autocmd FileType Makefile setl noexpandtab 
+    autocmd FileType zsh setlocal foldmethod=marker
+  augroup END
 
 "-------------------- ファイラー設定 --------------------"
 

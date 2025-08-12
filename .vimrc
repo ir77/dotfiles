@@ -137,7 +137,7 @@
   inoremap <C-D>     <DEL>
   inoremap <C-H>     <BS>
   inoremap <C-B>     <LEFT>
-  inoremap <C-F>     <RIGHt>
+  inoremap <C-F>     <RIGHT>
 
   "BSで削除できるものを指定する
   " indent  : 行頭の空白

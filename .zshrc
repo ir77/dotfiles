@@ -58,7 +58,7 @@ bindkey "^N" history-beginning-search-forward-end
 
 #--------------------- 補完 -------------------{{{
 # zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/opt/homebrew/share/zsh-completions/src $fpath)
 autoload -U compinit
 compinit -u
 

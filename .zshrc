@@ -10,6 +10,19 @@ setopt COMBINING_CHARS # 濁点・半濁点の入ったファイルの表示
 setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 #}}}
 
+# -------------------- zinitの導入 --------------------{{{
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d $ZINIT_HOME ]]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit light olets/zsh-abbr
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+#}}}
+
 # -------------------- export/source --------------------{{{
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -21,8 +34,6 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
-source /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
@@ -57,7 +68,6 @@ bindkey "^N" history-beginning-search-forward-end
 
 #--------------------- 補完 -------------------{{{
 # zsh-completions
-fpath=(/opt/homebrew/share/zsh-completions/src $fpath)
 autoload -U compinit
 compinit -u
 

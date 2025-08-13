@@ -27,6 +27,7 @@ else
 fi
 
 brew update
+brew upgrade
 brew doctor
 brew bundle
 

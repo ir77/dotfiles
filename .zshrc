@@ -10,6 +10,16 @@ setopt COMBINING_CHARS # 濁点・半濁点の入ったファイルの表示
 setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 #}}}
 
+#--------------------- 補完 -------------------{{{
+autoload -U compinit
+compinit -u
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
+
+setopt complete_aliases # aliased ls needs if file/dir completions work
+bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+#}}}
+
 # -------------------- zinitの導入 --------------------{{{
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d $ZINIT_HOME ]]; then
@@ -41,7 +51,6 @@ eval "$(starship init zsh)"
 # Github Personal access tokens管理用
 # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
 source ~/.zshrc_private
-
 #}}}
 
 # -------------------- ヒストリー --------------------{{{
@@ -64,17 +73,6 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-#}}}
-
-#--------------------- 補完 -------------------{{{
-# zsh-completions
-autoload -U compinit
-compinit -u
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
-
-setopt complete_aliases # aliased ls needs if file/dir completions work
-bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 #}}}
 
 # -------------------- エイリアス ------------------{{{

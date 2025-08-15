@@ -81,7 +81,15 @@ alias grep="grep -a --color" # grep結果に色を点ける
 alias idea="open -na 'IntelliJ IDEA.app' --args"
 #}}}
 
-#--------------------- fzf -------------------{{{
+#--------------------- function -------------------{{{
+function gemini-prompt() {
+  gemini --model="gemini-2.5-flash" --prompt "$1"
+}
+
+function gemini-prompt-websearch() {
+  gemini --model="gemini-2.5-flash" --prompt "WebSearch: $1"
+}
+
 function fzf-ack-search() {
   # 1. ack を使ってコード検索を実行。
   # 2. fzf を用いてインタラクティブに検索結果を選択。

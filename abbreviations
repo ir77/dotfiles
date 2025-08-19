@@ -16,10 +16,6 @@ abbr gsw="git switch"
 abbr gwa="git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)- feature/"
 abbr gwl="git worktree list"
 
-abbr ge="gemini --checkpointing"
-abbr gep="gemini-prompt"
-abbr gepw="gemini-prompt-websearch"
-
 abbr ls="eza --header --git --icons --time-style relative"
 abbr la="eza --all --header --git --icons --time-style relative"
 abbr lal="eza --oneline --long --all --header --git --icons --time-style relative"
@@ -27,5 +23,13 @@ abbr ez="eza --header --git --icons --time-style relative"
 abbr ea="eza --all --header --git --icons --time-style relative"
 abbr eal="eza --all --long --header --git --icons --time-style relative"
 
+abbr d="docker"
+abbr dcu="docker compose up"
+abbr dcl="docker container ls"
+
 abbr cp="cp -i"
 abbr mv="mv -i"
+
+abbr ge="gemini --checkpointing"
+abbr gep="gemini-prompt"
+abbr gepw="gemini-prompt-websearch"

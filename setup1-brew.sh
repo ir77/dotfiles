@@ -31,13 +31,4 @@ brew upgrade
 brew doctor
 brew bundle
 
-if ! nodebrew ls | grep -q "v"; then
-  print_message "$YELLOW" "Node.js not installed via Nodebrew. Installing the latest stable version..."
-  mkdir -p ~/.nodebrew/src
-  nodebrew install-binary stable
-  nodebrew use latest
-else
-  print_message "$GREEN" "Node.js is already installed via Nodebrew."
-fi
-
 print_message "$GREEN" "Setup completed!"

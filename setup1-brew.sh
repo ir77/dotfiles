@@ -1,6 +1,5 @@
 #!/bin/bash
 
-readonly RED='\033[31m'
 readonly GREEN='\033[32m'
 readonly YELLOW='\033[33m'
 readonly NC='\033[0m' # No Color

@@ -40,10 +40,17 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export LANG=ja_JP.UTF-8
 export LESSCHARSET=utf-8
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
 export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+if [ ! -d ~/.nvm ] || ! node -v &>/dev/null; then
+  mkdir -p ~/.nvm
+  nvm install --lts
+fi
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"

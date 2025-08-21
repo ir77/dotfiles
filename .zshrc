@@ -82,6 +82,17 @@ alias idea="open -na 'IntelliJ IDEA.app' --args"
 #}}}
 
 #--------------------- function -------------------{{{
+function git() {
+  # 最初の引数が "commit" かつ、`.git-authors` コマンドが存在する場合
+  if [[ "$1" == "commit" ]] && command -v .git-authors &>/dev/null; then
+    # `git duet-commit` を実行する
+    command git duet-commit "${@:2}"
+  else
+    # それ以外の全てのgitコマンドは、そのまま実行する
+    command git "$@"
+  fi
+}
+
 function gemini-prompt() {
   gemini --model="gemini-2.5-flash" --prompt "$1"
 }

@@ -1,30 +1,17 @@
 # Dotfiles
+macOS向けの個人の開発環境設定です。
+zsh, vim, gitなどの設定と、各種ツールを自動でインストールするスクリプトが含まれています。
 
-個人で使っているdotfilesです。
-だいたいいい感じになります。
-
-## zsh
-
+## スクリーンショット
+**Zsh (Starship)**
 ![ 2020-05-09 14 43 12](https://user-images.githubusercontent.com/783878/81465235-83ae0b00-9203-11ea-9a2d-102abd0a8083.png)
 
-## vim
+## 導入手順
+以下のスクリプトを順番に実行してください。
 
-tabbar
-
-![2017-03-13 23 22 50](https://cloud.githubusercontent.com/assets/783878/23858536/15dee8f2-0844-11e7-9abf-2c31342e0cfb.png)
-
-statusbar
-
-![2017-03-13 23 23 04](https://cloud.githubusercontent.com/assets/783878/23858537/1659c342-0844-11e7-8631-1109c068f121.png)
-
-vimのstatusline/tablineはlightlineを使って設定しています。
-> https://github.com/itchyny/lightline.vim
-
-
-# Setup
-```
-$ sh setup1-brew.sh
-$ sh setup2-git.sh
-$ sh setup3-macdefaults.sh
-$ sh setup4-rc.sh
+```bash
+sh setup1-brew.sh        # HomebrewとBrewfileにあるツールをインストール
+sh setup2-git.sh         # Gitの基本設定
+sh setup3-macdefaults.sh # macOSのシステム設定
+sh setup4-rc.sh          # 設定ファイル（.zshrc, .vimrcなど）のシンボリックリンクを作成
 ```

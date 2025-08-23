@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # -------------------- 全体 --------------------{{{
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
@@ -30,7 +32,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 zinit light olets/zsh-abbr
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
+# zinit light zsh-users/zsh-completions # Amazon Q 導入したのでoff
 #}}}
 
 # -------------------- export/source --------------------{{{
@@ -139,3 +141,6 @@ function fzf_history() {
 zle -N fzf_history
 bindkey '^r' fzf_history
 #}}}
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

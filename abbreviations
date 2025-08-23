@@ -30,6 +30,10 @@ abbr dcl="docker container ls"
 abbr cp="cp -i"
 abbr mv="mv -i"
 
+abbr qd="q dashboard"
+abbr qc="q chat"
+abbr qt="q translate"
+
 abbr ge="gemini --checkpointing"
 abbr gep="gemini-prompt"
 abbr gepw="gemini-prompt-websearch"

@@ -24,6 +24,11 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# status item
+# https://zenn.dev/usagimaru/articles/9c4f45b0f3c906
+defaults -currentHost write -globalDomain NSStatusItemSpacing -int 9
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 6
+
 ## index再生成
 killall mds 
 sudo mdutil -i on /

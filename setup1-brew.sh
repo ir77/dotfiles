@@ -29,5 +29,6 @@ brew update
 brew upgrade
 brew doctor
 brew bundle
+brew bundle dump --force --file=- | grep -v "^vscode " > Brewfile # 結果を標準出力に強制, vscodeの拡張はvscode側で管理しているので除く
 
 print_message "$GREEN" "Setup completed!"

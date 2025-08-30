@@ -13,6 +13,7 @@ abbr gp="git push"
 abbr gr="git restore"
 abbr gs="git status"
 abbr gsw="git switch"
+abbr gswc="git switch --create"
 abbr gwa="git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)- feature/"
 abbr gwl="git worktree list"
 

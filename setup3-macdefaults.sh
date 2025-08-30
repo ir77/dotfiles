@@ -1,4 +1,8 @@
-# keyrepeatやtrackpadの速度をいじる行為はバグったときに面倒なことになるので手動で行う
+# keyrepeatやtrackpadの変更はバグったときに面倒なので注意して実施する
+# defaults read -g KeyRepeat # default 2
+# defaults read -g InitialKeyRepeat # default 15
+defaults write -g KeyRepeat -int 2
+defaults write -g InitialKeyRepeat -int 12
 
 # Xcodeにビルド時間を表示する
 defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES

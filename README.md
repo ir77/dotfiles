@@ -4,6 +4,7 @@ zsh, vim, gitなどの設定と、各種ツールを自動でインストール�
 
 ## スクリーンショット
 **Zsh (Starship)**
+
 ![ 2020-05-09 14 43 12](https://user-images.githubusercontent.com/783878/81465235-83ae0b00-9203-11ea-9a2d-102abd0a8083.png)
 
 ## 導入手順
@@ -18,6 +19,9 @@ sh setup4-rc.sh          # 設定ファイル（.zshrc, .vimrcなど）のシン
 ```
 
 ### 更新
+
+```bash
 git pull
 git submodule update --remote
+```
 

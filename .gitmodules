@@ -1,0 +1,3 @@
+[submodule "tools/tab-counter"]
+	path = tools/tab-counter
+	url = https://github.com/ir77/tab-counter

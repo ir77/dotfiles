@@ -10,8 +10,14 @@ zsh, vim, gitなどの設定と、各種ツールを自動でインストール�
 以下のスクリプトを順番に実行してください。
 
 ```bash
-sh setup1-brew.sh        # HomebrewとBrewfileにあるツールをインストール
+git clone --recurse-submodules git@github.com:ir77/dotfiles.git
+sh setup1-brew.sh        # HomebrewとBrewfileにあるツールをインストールと更新
 sh setup2-git.sh         # Gitの基本設定
 sh setup3-macdefaults.sh # macOSのシステム設定
 sh setup4-rc.sh          # 設定ファイル（.zshrc, .vimrcなど）のシンボリックリンクを作成
 ```
+
+### 更新
+git pull
+git submodule update --remote
+

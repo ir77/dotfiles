@@ -13,12 +13,19 @@
                 {
                     "key_code": "spacebar",
                     "modifiers": ["left_command"]
-                },
-                {
-                    "key_code": "4",
-                    "modifiers": ["left_command"]
                 }
             ],
+            "to_delayed_action": {
+                "to_if_invoked": [
+                    {
+                        "key_code": "4",
+                        "modifiers": ["left_command"]
+                    }
+                ]
+            },
+            "parameters": { 
+                "basic.to_delayed_action_delay_milliseconds": 100             
+            },
             "type": "basic"
         }
     ]

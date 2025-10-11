@@ -1,0 +1,25 @@
+{
+    "description": "Show Clipboard history on Tahoe",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "v",
+                "modifiers": {
+                    "mandatory": ["left_shift", "left_command"],
+                    "optional": ["any"]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "spacebar",
+                    "modifiers": ["left_command"]
+                },
+                {
+                    "key_code": "4",
+                    "modifiers": ["left_command"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

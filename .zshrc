@@ -140,6 +140,22 @@ function fzf_history() {
 }
 zle -N fzf_history
 bindkey '^r' fzf_history
+
+killport() {
+  local pids=$(lsof -t -i :$1 2>/dev/null)
+
+  if [[ -z "$pids" ]]; then
+    echo "エラー: ポート $1 を使用中のプロセスは見つかりません。" >&2
+    return 1
+  fi
+
+  echo "--- プロセス情報 ---"
+  lsof -P -i :$1 2>/dev/null
+  echo "----------------------"
+
+  echo "ポート $1 (PID: $pids) のプロセスを終了します。"
+  kill $pids
+}
 #}}}
 
 # Amazon Q post block. Keep at the bottom of this file.

@@ -34,6 +34,8 @@ abbr dcl="docker container ls"
 abbr cp="cp -i"
 abbr mv="mv -i"
 
+abbr kp="killport"
+
 abbr qd="q dashboard"
 abbr qc="q chat"
 abbr qt="q translate"

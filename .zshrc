@@ -133,7 +133,7 @@ zle -N fzf_cd
 bindkey '^s' fzf_cd
 
 function fzf_history() {
-  local history=$'\history -n -r 1 | awk \'!seen[$0]++\' | grep -v "cd"'
+  local history='\history -n 1 | sort | uniq | grep -v "cd" | tail -r'
   local result=$({ eval "$history"; } | fzf --query "$LBUFFER")
   BUFFER="$result"
   zle clear-screen

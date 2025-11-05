@@ -15,7 +15,11 @@ setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動
 
 #--------------------- 補完 -------------------{{{
 autoload -U compinit
-compinit -u
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:warnings' format '%B%F{yellow}補完キャッシュを再生成してください%b%f'
+zstyle ':completion:*' cache-path ~/.zcompcache
+compinit -C
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
 
@@ -31,6 +35,7 @@ if [[ ! -d $ZINIT_HOME ]]; then
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
+zinit ice wait lucid
 zinit light olets/zsh-abbr
 zinit light zsh-users/zsh-syntax-highlighting
 # zinit light zsh-users/zsh-completions # Amazon Q 導入したのでoff
@@ -201,6 +206,6 @@ killport() {
 
 # Amazon Q post block. Keep at the bottom of this file.
 if [[ -o interactive ]]; then
-  zprof
+  zprof | head -n 10
 fi
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

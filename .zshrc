@@ -3,8 +3,6 @@
 # -------------------- 全体 --------------------{{{
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
-setopt nolistbeep # ビープ音を鳴らないようにする
-setopt correct # 自動修正機能 ex.lls →  ls?
 setopt print_eight_bit # 日本語ファイル名を表示可能にする
 setopt no_flow_control # フローコントロールを無効にする
 setopt globdots # 明確なドットの指定なしで.から始まるファイルをマッチ

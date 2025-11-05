@@ -1,7 +1,6 @@
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # -------------------- 全体 --------------------{{{
-zmodload zsh/zprof
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
 setopt nolistbeep # ビープ音を鳴らないようにする
@@ -35,7 +34,7 @@ if [[ ! -d $ZINIT_HOME ]]; then
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
-zinit ice wait lucid
+zinit ice wait lucid 
 zinit light olets/zsh-abbr
 zinit light zsh-users/zsh-syntax-highlighting
 # zinit light zsh-users/zsh-completions # Amazon Q 導入したのでoff
@@ -51,14 +50,23 @@ export LESSCHARSET=utf-8
 export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
+eval "$(thefuck --alias)"
+eval "$(starship init zsh)"
+
+# Github Personal access tokens管理用
+# echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
+source ~/.zshrc_private
+#}}}
+
+# -------------------- nvm --------------------{{{
 export NVM_DIR="$HOME/.nvm"
 
 # Lazy-load nvm to avoid startup cost
 _nvm_lazy_load() {
-  unset -f nvm node npm npx yarn pnpm >/dev/null 2>&1
+  unset -f nvm node npm npx >/dev/null 2>&1
   local nvm_sh="/opt/homebrew/opt/nvm/nvm.sh"
-  local nvm_completion="/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
   [[ -s "$nvm_sh" ]] && source "$nvm_sh"
+  local nvm_completion="/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
   [[ -s "$nvm_completion" ]] && source "$nvm_completion"
   if [[ -s "$NVM_DIR/alias/default" ]]; then
     nvm use default >/dev/null
@@ -85,22 +93,6 @@ npx() {
   command npx "$@"
 }
 
-yarn() {
-  _nvm_lazy_load
-  command yarn "$@"
-}
-
-pnpm() {
-  _nvm_lazy_load
-  command pnpm "$@"
-}
-
-eval "$(thefuck --alias)"
-eval "$(starship init zsh)"
-
-# Github Personal access tokens管理用
-# echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
-source ~/.zshrc_private
 #}}}
 
 # -------------------- ヒストリー --------------------{{{
@@ -132,25 +124,6 @@ alias idea="open -na 'IntelliJ IDEA.app' --args"
 #}}}
 
 #--------------------- function -------------------{{{
-function git() {
-  # 最初の引数が "commit" かつ、`.git-authors` コマンドが存在する場合
-  if [[ "$1" == "commit" ]] && command -v .git-authors &>/dev/null; then
-    # `git duet-commit` を実行する
-    command git duet-commit "${@:2}"
-  else
-    # それ以外の全てのgitコマンドは、そのまま実行する
-    command git "$@"
-  fi
-}
-
-function gemini-prompt() {
-  gemini --model="gemini-2.5-flash" --prompt "$1"
-}
-
-function gemini-prompt-websearch() {
-  gemini --model="gemini-2.5-flash" --prompt "WebSearch: $1"
-}
-
 function fzf-ack-search() {
   # 1. ack を使ってコード検索を実行。
   # 2. fzf を用いてインタラクティブに検索結果を選択。
@@ -205,7 +178,4 @@ killport() {
 #}}}
 
 # Amazon Q post block. Keep at the bottom of this file.
-if [[ -o interactive ]]; then
-  zprof | head -n 10
-fi
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

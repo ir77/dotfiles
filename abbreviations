@@ -19,7 +19,6 @@ abbr gswc="git switch --create"
 abbr gwa="git worktree add $(dirname $(pwd))/$(git symbolic-ref --short HEAD)- feature/"
 abbr gwl="git worktree list"
 
-
 abbr ls="eza --header --git --icons --time-style relative"
 abbr la="eza --all --header --git --icons --time-style relative"
 abbr lal="eza --oneline --long --all --header --git --icons --time-style relative"
@@ -37,9 +36,3 @@ abbr mv="mv -i"
 abbr kp="killport"
 
 abbr qd="q dashboard"
-abbr qc="q chat"
-abbr qt="q translate"
-
-abbr ge="gemini --checkpointing"
-abbr gep="gemini-prompt"
-abbr gepw="gemini-prompt-websearch"

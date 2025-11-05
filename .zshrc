@@ -1,6 +1,7 @@
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # -------------------- 全体 --------------------{{{
+zmodload zsh/zprof
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
 setopt nolistbeep # ビープ音を鳴らないようにする
@@ -46,13 +47,48 @@ export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-if [ ! -d ~/.nvm ] || ! node -v &>/dev/null; then
-  mkdir -p ~/.nvm
-  nvm install --lts
-fi
+# Lazy-load nvm to avoid startup cost
+_nvm_lazy_load() {
+  unset -f nvm node npm npx yarn pnpm >/dev/null 2>&1
+  local nvm_sh="/opt/homebrew/opt/nvm/nvm.sh"
+  local nvm_completion="/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+  [[ -s "$nvm_sh" ]] && source "$nvm_sh"
+  [[ -s "$nvm_completion" ]] && source "$nvm_completion"
+  if [[ -s "$NVM_DIR/alias/default" ]]; then
+    nvm use default >/dev/null
+  fi
+}
+
+nvm() {
+  _nvm_lazy_load
+  nvm "$@"
+}
+
+node() {
+  _nvm_lazy_load
+  command node "$@"
+}
+
+npm() {
+  _nvm_lazy_load
+  command npm "$@"
+}
+
+npx() {
+  _nvm_lazy_load
+  command npx "$@"
+}
+
+yarn() {
+  _nvm_lazy_load
+  command yarn "$@"
+}
+
+pnpm() {
+  _nvm_lazy_load
+  command pnpm "$@"
+}
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
@@ -164,4 +200,7 @@ killport() {
 #}}}
 
 # Amazon Q post block. Keep at the bottom of this file.
+if [[ -o interactive ]]; then
+  zprof
+fi
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

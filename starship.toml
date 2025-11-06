@@ -6,6 +6,6 @@ when = """ ls | grep xcodeproj """
 
 [custom.git_duet]
 description = "Displays git-duet authors"
-command = "git config --list | grep duet.env.git | grep initials | awk -F '=' '{print $2}' | tr '\n' ' '"
+command = "git config --list | grep duet.env.git | grep initials | awk -F '=' '{s=s $2 \" \"} END {if (s == \"\") print \"solo\"; else print s}'"
 when = "test -f .git-authors"
 format = "via 🧑‍🤝‍🧑 [$output](bold green) "

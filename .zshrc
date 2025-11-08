@@ -14,11 +14,7 @@ setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動
 
 #--------------------- 補完 -------------------{{{
 autoload -U compinit
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*:descriptions' format '%B%d%b'
-zstyle ':completion:*:warnings' format '%B%F{yellow}補完キャッシュを再生成してください%b%f'
-zstyle ':completion:*' cache-path ~/.zcompcache
-compinit -C
+compinit -u
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
 

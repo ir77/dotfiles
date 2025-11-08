@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
@@ -14,7 +14,7 @@ setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動
 
 #--------------------- 補完 -------------------{{{
 autoload -U compinit
-compinit -u
+compinit -u -C
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
 
@@ -174,9 +174,9 @@ killport() {
 }
 #}}}
 
-if [[ -o interactive ]]; then
-  zprof | head -n 20
-fi
+# if [[ -o interactive ]]; then
+#   zprof | head -n 10
+# fi
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

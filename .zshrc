@@ -34,8 +34,9 @@ if [[ ! -d $ZINIT_HOME ]]; then
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
-zinit ice wait lucid 
+zinit ice lucid wait
 zinit light olets/zsh-abbr
+zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
 # zinit light zsh-users/zsh-completions # Amazon Q 導入したのでoff
 #}}}

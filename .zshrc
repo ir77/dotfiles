@@ -50,46 +50,11 @@ export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 
+source ~/.nvm/nvm.sh
+
 # Github Personal access tokens管理用
 # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
 source ~/.zshrc_private
-#}}}
-
-# -------------------- nvm --------------------{{{
-export NVM_DIR="$HOME/.nvm"
-
-# Lazy-load nvm to avoid startup cost
-_nvm_lazy_load() {
-  unset -f nvm node npm npx >/dev/null 2>&1
-  local nvm_sh="/opt/homebrew/opt/nvm/nvm.sh"
-  [[ -s "$nvm_sh" ]] && source "$nvm_sh"
-  local nvm_completion="/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-  [[ -s "$nvm_completion" ]] && source "$nvm_completion"
-  if [[ -s "$NVM_DIR/alias/default" ]]; then
-    nvm use default >/dev/null
-  fi
-}
-
-nvm() {
-  _nvm_lazy_load
-  nvm "$@"
-}
-
-node() {
-  _nvm_lazy_load
-  command node "$@"
-}
-
-npm() {
-  _nvm_lazy_load
-  command npm "$@"
-}
-
-npx() {
-  _nvm_lazy_load
-  command npx "$@"
-}
-
 #}}}
 
 # -------------------- ヒストリー --------------------{{{

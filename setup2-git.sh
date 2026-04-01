@@ -1,6 +1,7 @@
 echo 'git settings'
 git config --global push.default matching
 git config --global push.default simple # git pushでcurrentブランチだけアップデートする
+git config --global --add push.autoSetupRemote true
 git config --global pull.rebase false
 git config --global core.editor vim
 git config --global core.quotepath false # git statusで日本語文字の文字化けを防ぐ

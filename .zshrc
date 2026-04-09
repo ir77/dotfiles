@@ -50,7 +50,8 @@ export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 
-source ~/.nvm/nvm.sh
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
 
 # Github Personal access tokens管理用
 # echo "export GITHUB_ACCESS_TOKEN=xxx" > ~/.zshrc_private
@@ -148,3 +149,4 @@ killport() {
 
 # Added by Antigravity
 export PATH="/Users/ucuc/.antigravity/antigravity/bin:$PATH"
+

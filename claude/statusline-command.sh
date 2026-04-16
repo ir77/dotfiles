@@ -23,7 +23,7 @@ branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
 if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
-  git_str="${BOLD}${YELLOW}${branch}${RESET} ${GREEN}+${staged}${RESET}${DIM}/${RESET}${RED}~${unstaged}${RESET}"
+  git_str="${BOLD}${YELLOW}${branch}${RESET} ${RED}~${unstaged}${RESET}${DIM}/${RESET}${GREEN}+${staged}${RESET}"
 else
   git_str=""
 fi

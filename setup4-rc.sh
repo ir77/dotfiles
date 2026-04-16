@@ -13,3 +13,8 @@ ln -snf "$(cd $(dirname $0) && pwd)/.vimrc" ~/
 # Setup Other
 ln -snf "$(cd $(dirname $0) && pwd)/starship.toml" ~/.config
 
+# Setup Claude Code
+mkdir -p ~/.claude
+ln -snf "$(cd $(dirname $0) && pwd)/claude/claude-settings.json" ~/.claude/settings.json
+ln -snf "$(cd $(dirname $0) && pwd)/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+

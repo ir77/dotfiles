@@ -1,5 +1,4 @@
 echo 'git settings'
-git config --global push.default matching
 git config --global push.default simple # git pushでcurrentブランチだけアップデートする
 git config --global --add push.autoSetupRemote true
 git config --global pull.rebase false

@@ -1,5 +1,3 @@
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 # zmodload zsh/zprof
 
 # -------------------- 全体 --------------------{{{
@@ -143,9 +141,6 @@ killport() {
 # if [[ -o interactive ]]; then
 #   zprof | head -n 10
 # fi
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
 
 # Added by Antigravity
 export PATH="/Users/ucuc/.antigravity/antigravity/bin:$PATH"

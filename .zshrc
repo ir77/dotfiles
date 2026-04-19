@@ -27,6 +27,12 @@ zinit light zsh-users/zsh-syntax-highlighting
 
 zinit ice blockf
 zinit light zsh-users/zsh-completions
+
+# 自動提案 (履歴から薄い文字で提案)
+zinit light zsh-users/zsh-autosuggestions
+
+# リアルタイム補完 (入力中に自動でメニューを表示)
+zinit light marlonrichert/zsh-autocomplete
 #}}}
 
 #--------------------- 補完 -------------------{{{
@@ -35,9 +41,23 @@ compinit -u
 
 zinit cdreplay -q # 補完設定を再適用
 
+# zsh-autocomplete の挙動調整
+zstyle ':autocomplete:*' delay 0.1 # メニューが出るまでの遅延(秒)
+zstyle ':autocomplete:tab:*' insert-unambiguous yes # Tabで共通部分を補完
+zstyle ':autocomplete:tab:*' widget-style menu-select # Tabでメニュー選択へ
+
+zstyle ':completion:*' menu select # 補完候補を矢印キーで選べるようにする
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # 補完候補に色を付ける
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
+zstyle ':completion:*' verbose yes # 補完候補の説明を表示する
+zstyle ':completion:*' group-name '' # 補完候補をグループ化する
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f' # グループの見出しを黄色で表示
+zstyle ':completion:*:options' description 'yes' # オプションの説明を表示
+zstyle ':completion:*' list-separator '-->' # 候補と説明の間の区切り
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s' # 選択中のステータス表示
 
 setopt complete_aliases # aliased ls needs if file/dir completions work
+zmodload zsh/complist
 bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 #}}}
 

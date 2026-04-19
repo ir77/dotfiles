@@ -69,7 +69,6 @@ export LESSCHARSET=utf-8
 export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 
-eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
 
 # Vite+ bin (https://viteplus.dev)

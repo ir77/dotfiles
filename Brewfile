@@ -26,7 +26,6 @@ brew "openjdk@17"
 brew "php"
 brew "starship"
 brew "subversion"
-brew "thefuck"
 brew "tig"
 brew "trash", link: true
 brew "vim"

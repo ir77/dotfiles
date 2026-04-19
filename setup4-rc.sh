@@ -14,18 +14,18 @@ ln -snf "$DOTFILES_DIR/.vimrc" ~/
 
 # Setup Other
 ln -snf "$DOTFILES_DIR/starship.toml" ~/.config
+ln -snf "$DOTFILES_DIR/.gitconfig" ~/
 
-if [ ! -L ~/.gitconfig ]; then
+if ! git config --global user.name > /dev/null 2>&1 || ! git config --global user.email > /dev/null 2>&1; then
   echo ""
   echo "========================================================="
   echo " Git settings are now managed via .gitconfig."
-  echo " Please set your user.name and user.email manually:"
-  echo '   git config --global user.name "Your Name"'
-  echo '   git config --global user.email "your.email@example.com"'
+  echo " Please set your user.name and user.email manually in ~/.gitconfig.local:"
+  echo '   git config -f ~/.gitconfig.local user.name "Your Name"'
+  echo '   git config -f ~/.gitconfig.local user.email "your.email@example.com"'
   echo "========================================================="
   echo ""
 fi
-ln -snf "$DOTFILES_DIR/.gitconfig" ~/
 
 # Setup Claude Code
 mkdir -p ~/.claude

@@ -6,14 +6,14 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 ln -snf "$DOTFILES_DIR/.zshrc" ~/
 mkdir -p ~/.config/zsh 
 ln -snf "$DOTFILES_DIR/abbreviations" ~/.config/zsh/abbreviations
+ln -snf "$DOTFILES_DIR/starship.toml" ~/.config
 
 # Setup Vim
 mkdir -p ~/.vim/rc
 ln -snf "$DOTFILES_DIR/dein.toml" ~/.vim/rc
 ln -snf "$DOTFILES_DIR/.vimrc" ~/
 
-# Setup Other
-ln -snf "$DOTFILES_DIR/starship.toml" ~/.config
+# Setup Git
 ln -snf "$DOTFILES_DIR/.gitconfig" ~/
 
 if ! git config --global user.name > /dev/null 2>&1 || ! git config --global user.email > /dev/null 2>&1; then
@@ -27,11 +27,10 @@ if ! git config --global user.name > /dev/null 2>&1 || ! git config --global use
   echo ""
 fi
 
-# Setup Claude Code
+# Setup AI
 mkdir -p ~/.claude
 ln -snf "$DOTFILES_DIR/claude/claude-settings.json" ~/.claude/settings.json
 ln -snf "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
 
-# Setup Gemini CLI
 mkdir -p ~/.gemini
 ln -snf "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json

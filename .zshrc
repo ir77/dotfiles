@@ -1,6 +1,8 @@
 # zmodload zsh/zprof
 
 # -------------------- 全体 --------------------{{{
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
 setopt print_eight_bit # 日本語ファイル名を表示可能にする
@@ -8,16 +10,6 @@ setopt no_flow_control # フローコントロールを無効にする
 setopt globdots # 明確なドットの指定なしで.から始まるファイルをマッチ
 setopt COMBINING_CHARS # 濁点・半濁点の入ったファイルの表示
 setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-#}}}
-
-#--------------------- 補完 -------------------{{{
-autoload -U compinit
-compinit -u -C
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
-
-setopt complete_aliases # aliased ls needs if file/dir completions work
-bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 #}}}
 
 # -------------------- zinitの導入 --------------------{{{
@@ -32,12 +24,24 @@ zinit ice lucid wait
 zinit light olets/zsh-abbr
 zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
+
+zinit ice blockf
 zinit light zsh-users/zsh-completions
 #}}}
 
-# -------------------- export/source --------------------{{{
-eval "$(/opt/homebrew/bin/brew shellenv)"
+#--------------------- 補完 -------------------{{{
+autoload -Uz compinit
+compinit -u
 
+zinit cdreplay -q # 補完設定を再適用
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を無視する
+
+setopt complete_aliases # aliased ls needs if file/dir completions work
+bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+#}}}
+
+# -------------------- export/source --------------------{{{
 # 言語環境を日本語、UTF-8 にそろえておく
 export LANG=ja_JP.UTF-8
 export LESSCHARSET=utf-8

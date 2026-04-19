@@ -132,8 +132,8 @@ zle -N fzf_cd
 bindkey '^s' fzf_cd
 
 function fzf_history() {
+  # historyを新しい順(tail -r)にしてから重複排除(awk)することで、最新の実行履歴を優先して残す
   local result=$(
-    # historyを新しい順(tail -r)にしてから重複排除(awk)することで、最新の実行履歴を優先して残す
     history -n 1 |
     tail -r |
     awk '!seen[$0]++' |

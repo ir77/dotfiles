@@ -33,7 +33,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light marlonrichert/zsh-autocomplete
 
 # シンタックスハイライト (プラグインの最後に読み込むのが原則)
-zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
 #}}}
 

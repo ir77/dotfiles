@@ -32,7 +32,7 @@ zinit ice lucid wait
 zinit light olets/zsh-abbr
 zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
-# zinit light zsh-users/zsh-completions # Amazon Q 導入したのでoff
+zinit light zsh-users/zsh-completions
 #}}}
 
 # -------------------- export/source --------------------{{{

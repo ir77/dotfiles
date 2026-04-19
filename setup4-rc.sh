@@ -18,3 +18,7 @@ mkdir -p ~/.claude
 ln -snf "$(cd $(dirname $0) && pwd)/claude/claude-settings.json" ~/.claude/settings.json
 ln -snf "$(cd $(dirname $0) && pwd)/claude/statusline-command.sh" ~/.claude/statusline-command.sh
 
+# Setup Gemini CLI
+mkdir -p ~/.gemini
+ln -snf "$(cd $(dirname $0) && pwd)/gemini/settings.json" ~/.gemini/settings.json
+

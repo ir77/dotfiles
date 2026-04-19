@@ -22,8 +22,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 zinit ice lucid wait
 zinit light olets/zsh-abbr
-zinit ice lucid wait
-zinit light zsh-users/zsh-syntax-highlighting
 
 zinit ice blockf
 zinit light zsh-users/zsh-completions
@@ -33,6 +31,10 @@ zinit light zsh-users/zsh-autosuggestions
 
 # リアルタイム補完 (入力中に自動でメニューを表示)
 zinit light marlonrichert/zsh-autocomplete
+
+# シンタックスハイライト (プラグインの最後に読み込むのが原則)
+zinit ice lucid wait
+zinit light zsh-users/zsh-syntax-highlighting
 #}}}
 
 #--------------------- 補完 -------------------{{{

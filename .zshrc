@@ -167,5 +167,5 @@ killport() {
 # fi
 
 # Added by Antigravity
-export PATH="/Users/ucuc/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 

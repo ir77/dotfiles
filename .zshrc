@@ -133,10 +133,11 @@ bindkey '^s' fzf_cd
 
 function fzf_history() {
   local result=$(
+    # historyを新しい順(tail -r)にしてから重複排除(awk)することで、最新の実行履歴を優先して残す
     history -n 1 |
+    tail -r |
     awk '!seen[$0]++' |
     grep -v '^cd' |
-    tail -r |
     fzf --query "$LBUFFER" --tiebreak=index
   )  
   BUFFER="$result"

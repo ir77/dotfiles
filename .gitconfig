@@ -1,0 +1,21 @@
+[push]
+	default = simple
+	autoSetupRemote = true
+[pull]
+	rebase = false
+[core]
+	editor = vim
+	quotepath = false
+	pager = delta
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictStyle = zdiff3
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	hunk-header-style = omit
+	color-moved = true

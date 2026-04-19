@@ -1,24 +1,37 @@
 #!/usr/local/bin/zsh
 
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Setup Zsh
-ln -snf "$(cd $(dirname $0) && pwd)/.zshrc" ~/
+ln -snf "$DOTFILES_DIR/.zshrc" ~/
 mkdir -p ~/.config/zsh 
-ln -snf "$(cd $(dirname $0) && pwd)/abbreviations" ~/.config/zsh/abbreviations
+ln -snf "$DOTFILES_DIR/abbreviations" ~/.config/zsh/abbreviations
 
 # Setup Vim
 mkdir -p ~/.vim/rc
-ln -snf "$(cd $(dirname $0) && pwd)/dein.toml" ~/.vim/rc
-ln -snf "$(cd $(dirname $0) && pwd)/.vimrc" ~/
+ln -snf "$DOTFILES_DIR/dein.toml" ~/.vim/rc
+ln -snf "$DOTFILES_DIR/.vimrc" ~/
 
 # Setup Other
-ln -snf "$(cd $(dirname $0) && pwd)/starship.toml" ~/.config
+ln -snf "$DOTFILES_DIR/starship.toml" ~/.config
+
+if [ ! -L ~/.gitconfig ]; then
+  echo ""
+  echo "========================================================="
+  echo " Git settings are now managed via .gitconfig."
+  echo " Please set your user.name and user.email manually:"
+  echo '   git config --global user.name "Your Name"'
+  echo '   git config --global user.email "your.email@example.com"'
+  echo "========================================================="
+  echo ""
+fi
+ln -snf "$DOTFILES_DIR/.gitconfig" ~/
 
 # Setup Claude Code
 mkdir -p ~/.claude
-ln -snf "$(cd $(dirname $0) && pwd)/claude/claude-settings.json" ~/.claude/settings.json
-ln -snf "$(cd $(dirname $0) && pwd)/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+ln -snf "$DOTFILES_DIR/claude/claude-settings.json" ~/.claude/settings.json
+ln -snf "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
 
 # Setup Gemini CLI
 mkdir -p ~/.gemini
-ln -snf "$(cd $(dirname $0) && pwd)/gemini/settings.json" ~/.gemini/settings.json
-
+ln -snf "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json

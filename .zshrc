@@ -25,13 +25,15 @@ zinit light olets/zsh-abbr
 zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
 
-zinit ice blockf
+zinit ice lucid wait'0' blockf
 zinit light zsh-users/zsh-completions
 
 # 自動提案 (履歴から薄い文字で提案)
+zinit ice lucid wait'0'
 zinit light zsh-users/zsh-autosuggestions
 
 # リアルタイム補完 (入力中に自動でメニューを表示)
+zinit ice lucid wait'0'
 zinit light marlonrichert/zsh-autocomplete
 #}}}
 

@@ -26,11 +26,11 @@ zinit light olets/zsh-abbr
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
-# 自動提案 (履歴から薄い文字で提案)
-zinit light zsh-users/zsh-autosuggestions
-
 # リアルタイム補完 (入力中に自動でメニューを表示)
 zinit light marlonrichert/zsh-autocomplete
+
+# 自動提案 (履歴から薄い文字で提案)
+zinit light zsh-users/zsh-autosuggestions
 
 # シンタックスハイライト (プラグインの最後に読み込むのが原則)
 zinit light zsh-users/zsh-syntax-highlighting

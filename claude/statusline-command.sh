@@ -24,8 +24,8 @@ if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
-  git_str="${BOLD}${YELLOW}${branch}${RESET} ${RED}~${unstaged}${RESET}${DIM} / ${RESET}${GREEN}+${staged}${RESET}"
-  [ "$unpushed" -gt 0 ] 2>/dev/null && git_str="${git_str}${DIM} / ${RESET}${MAGENTA}↑${RESET}"
+  git_str="${BOLD}${YELLOW}${branch}${RESET} ${RED}~${unstaged}${RESET}${DIM}/${RESET}${GREEN}+${staged}${RESET}"
+  [ "$unpushed" -gt 0 ] 2>/dev/null && git_str="${git_str}${DIM}/${RESET}${MAGENTA}↑${RESET}"
 else
   git_str=""
 fi
@@ -45,7 +45,7 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   sd_pct=${seven_d:+$(printf '%.0f' "$seven_d")}
   fh_col=$([ -n "$fh_pct" ] && color_pct "$fh_pct" || printf "${DIM}-${RESET}")
   sd_col=$([ -n "$sd_pct" ] && color_pct "$sd_pct" || printf "${DIM}-${RESET}")
-  rate_str="${DIM}5h:${RESET}${fh_col}${DIM} / ${RESET}${DIM}7d:${RESET}${sd_col}"
+  rate_str="${DIM}5h:${RESET}${fh_col}${DIM}/${RESET}${DIM}7d:${RESET}${sd_col}"
   rate_section="${SEP}${rate_str}"
 else
   rate_section=""

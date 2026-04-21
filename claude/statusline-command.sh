@@ -38,13 +38,30 @@ color_pct() {
   else printf '%b' "${RED}${p}%${RESET}"; fi
 }
 
+# 7d rate limit coloring: red if over weekday pace (Mon=20%, Tue=40%, ..., Fri+=100%)
+color_pct_7d() {
+  local p=$1
+  local dow threshold
+  dow=$(date +%u)  # 1=Mon, 2=Tue, ..., 5=Fri, 6=Sat, 7=Sun
+  case "$dow" in
+    1) threshold=20 ;;
+    2) threshold=40 ;;
+    3) threshold=60 ;;
+    4) threshold=80 ;;
+    *) threshold=100 ;;
+  esac
+  if   [ "$p" -gt 80 ] || [ "$p" -gt "$threshold" ]; then printf '%b' "${RED}${p}%${RESET}"
+  elif [ "$p" -gt $(( threshold * 4 / 5 )) ]; then printf '%b' "${YELLOW}${p}%${RESET}"
+  else printf '%b' "${GREEN}${p}%${RESET}"; fi
+}
+
 five_h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 seven_d=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   fh_pct=${five_h:+$(printf '%.0f' "$five_h")}
   sd_pct=${seven_d:+$(printf '%.0f' "$seven_d")}
   fh_col=$([ -n "$fh_pct" ] && color_pct "$fh_pct" || printf "${DIM}-${RESET}")
-  sd_col=$([ -n "$sd_pct" ] && color_pct "$sd_pct" || printf "${DIM}-${RESET}")
+  sd_col=$([ -n "$sd_pct" ] && color_pct_7d "$sd_pct" || printf "${DIM}-${RESET}")
   rate_str="${DIM}5h:${RESET}${fh_col}${DIM}/${RESET}${DIM}7d:${RESET}${sd_col}"
   rate_section="${SEP}${rate_str}"
 else

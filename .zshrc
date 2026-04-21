@@ -3,6 +3,8 @@
 # -------------------- 全体 --------------------{{{
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+ulimit -n 65536 # macOSのデフォルト(256)ではasync系プラグインでfdを使い切るため引き上げ
+
 setopt notify # バックグラウンドジョブの状態変化を即時報告する
 setopt no_beep # ビープ音を鳴らさないようにする
 setopt print_eight_bit # 日本語ファイル名を表示可能にする

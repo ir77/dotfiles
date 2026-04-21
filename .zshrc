@@ -28,9 +28,6 @@ zinit light olets/zsh-abbr
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
-# リアルタイム補完 (入力中に自動でメニューを表示)
-zinit light marlonrichert/zsh-autocomplete
-
 # シンタックスハイライト (プラグインの最後に読み込むのが原則)
 zinit light zsh-users/zsh-syntax-highlighting
 #}}}
@@ -40,11 +37,6 @@ autoload -Uz compinit
 compinit -u
 
 zinit cdreplay -q # 補完設定を再適用
-
-# zsh-autocomplete の挙動調整
-zstyle ':autocomplete:*' delay 0.1 # メニューが出るまでの遅延(秒)
-zstyle ':autocomplete:tab:*' insert-unambiguous yes # Tabで共通部分を補完
-zstyle ':autocomplete:tab:*' widget-style menu-select # Tabでメニュー選択へ
 
 zstyle ':completion:*' menu select # 補完候補を矢印キーで選べるようにする
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # 補完候補に色を付ける
@@ -98,6 +90,8 @@ setopt share_history
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
 #}}}
 
 # -------------------- エイリアス ------------------{{{

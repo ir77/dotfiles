@@ -16,6 +16,5 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
-  "effortLevel": "xhigh",
-  "model": "opus[1m]"
+  "effortLevel": "medium"
 }

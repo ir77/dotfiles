@@ -18,7 +18,7 @@ dir=$(echo "$input" | jq -r '.workspace.current_dir')
 sandbox_global=$(jq -r '.sandbox.enabled // false' ~/.claude/settings.json 2>/dev/null)
 proj_settings="$dir/.claude/settings.json"
 if [ -f "$proj_settings" ]; then
-  sandbox_proj=$(jq -r '.sandbox.enabled // empty' "$proj_settings" 2>/dev/null)
+  sandbox_proj=$(jq -r 'if .sandbox.enabled == null then empty else (.sandbox.enabled | tostring) end' "$proj_settings" 2>/dev/null)
   is_sandboxed="${sandbox_proj:-$sandbox_global}"
 else
   is_sandboxed="$sandbox_global"

@@ -16,5 +16,6 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "tui": "fullscreen"
 }

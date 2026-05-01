@@ -17,7 +17,6 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "outputStyle": "Explanatory",
-  "model": "sonnet[1m]",
   "sandbox": {
     "enabled": true
   },

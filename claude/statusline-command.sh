@@ -23,7 +23,7 @@ if [ -f "$proj_settings" ]; then
 else
   is_sandboxed="$sandbox_global"
 fi
-[ "$is_sandboxed" = "true" ] && sandbox_icon="📦 " || sandbox_icon="⚠️ "
+[ "$is_sandboxed" = "true" ] && sandbox_icon="📦 " || sandbox_icon=""
 
 # --- model ---
 model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \

@@ -18,5 +18,9 @@
   },
   "outputStyle": "Explanatory",
   "effortLevel": "high",
-  "tui": "fullscreen"
+  "tui": "fullscreen",
+  "model": "sonnet[1m]",
+  "sandbox": {
+    "enabled": true
+  }
 }

@@ -13,12 +13,29 @@ BLUE='\033[34m'
 MAGENTA='\033[35m'
 SEP="${DIM} │ ${RESET}"
 
+# --- dir + sandbox (needed before model) ---
+dir=$(echo "$input" | jq -r '.workspace.current_dir')
+sandbox_global=$(jq -r '.sandbox.enabled // false' ~/.claude/settings.json 2>/dev/null)
+proj_settings="$dir/.claude/settings.json"
+if [ -f "$proj_settings" ]; then
+  sandbox_proj=$(jq -r '.sandbox.enabled // empty' "$proj_settings" 2>/dev/null)
+  is_sandboxed="${sandbox_proj:-$sandbox_global}"
+else
+  is_sandboxed="$sandbox_global"
+fi
+[ "$is_sandboxed" = "true" ] && sandbox_icon="📦 " || sandbox_icon="${RED}⚠ ${RESET}"
+
 # --- model ---
-model=$(echo "$input" | jq -r '.model.display_name // "unknown"')
-model_str="${BOLD}${CYAN}${model}${RESET}"
+model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
+  | sed 's/^claude-//' \
+  | sed 's/\([a-z]\)-\([0-9]\)/\1\2/' \
+  | sed 's/\([0-9]\)-\([0-9]\)/\1.\2/' \
+  | awk '{print toupper(substr($0,1,1)) substr($0,2)}' \
+  | sed 's/ context)/)/g' \
+  | sed 's/ (/(/g')
+model_str="${sandbox_icon}${BOLD}${CYAN}${model}${RESET}"
 
 # --- git ---
-dir=$(echo "$input" | jq -r '.workspace.current_dir')
 branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
 if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
@@ -29,6 +46,10 @@ if [ -n "$branch" ]; then
 else
   git_str=""
 fi
+
+# --- project ---
+proj_name=$(basename "$dir")
+proj_str="${BOLD}${BLUE}${proj_name}${RESET}"
 
 # --- rate limits ---
 color_pct() {
@@ -73,9 +94,9 @@ fi
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used")
-  filled=$(( pct * 15 / 100 ))
-  [ "$filled" -gt 15 ] && filled=15
-  empty_count=$(( 15 - filled ))
+  filled=$(( pct * 10 / 100 ))
+  [ "$filled" -gt 10 ] && filled=10
+  empty_count=$(( 10 - filled ))
   bar=""
   i=0; while [ "$i" -lt "$filled" ];  do bar="${bar}█";   i=$(( i + 1 )); done
   i=0; while [ "$i" -lt "$empty_count" ]; do bar="${bar}░"; i=$(( i + 1 )); done
@@ -90,12 +111,12 @@ fi
 # --- cost ---
 total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
-cost_val=$(echo "$total_in $total_out" | awk '{printf "%.4f", ($1 * 3 / 1000000) + ($2 * 15 / 1000000)}')
+cost_val=$(echo "$total_in $total_out" | awk '{printf "%.2f", ($1 * 3 / 1000000) + ($2 * 15 / 1000000)}')
 cost_str="${DIM}cost${RESET} ${BOLD}\$${cost_val}${RESET}"
 
 # --- assemble ---
 if [ -n "$git_str" ]; then
-  printf '%b\n' "${model_str}${SEP}${git_str}${rate_section}${SEP}${bar_str}${SEP}${cost_str}"
+  printf '%b\n' "${proj_str}${SEP}${model_str}${SEP}${git_str}${rate_section}${SEP}${bar_str}${SEP}${cost_str}"
 else
-  printf '%b\n' "${model_str}${rate_section}${SEP}${bar_str}${SEP}${cost_str}"
+  printf '%b\n' "${proj_str}${SEP}${model_str}${rate_section}${SEP}${bar_str}${SEP}${cost_str}"
 fi

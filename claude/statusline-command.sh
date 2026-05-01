@@ -27,9 +27,10 @@ fi
 
 # --- model ---
 model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
-  | sed 's/^claude-//' \
+  | sed 's/^[Cc]laude[- ]//' \
   | sed 's/\([a-z]\)-\([0-9]\)/\1\2/' \
   | sed 's/\([0-9]\)-\([0-9]\)/\1.\2/' \
+  | sed 's/ \([0-9]\)/\1/g' \
   | awk '{print toupper(substr($0,1,1)) substr($0,2)}' \
   | sed 's/ context)/)/g' \
   | sed 's/ (/(/g')

@@ -16,6 +16,10 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {
+    "kotlin-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
   "outputStyle": "Explanatory",
   "sandbox": {
     "enabled": true

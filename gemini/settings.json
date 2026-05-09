@@ -10,7 +10,9 @@
         "sandbox",
         "model-name",
         "context-used",
-        "quota"
+        "quota",
+        "code-changes",
+        "token-count"
       ],
       "showLabels": true
     }

@@ -128,7 +128,7 @@ fi
 total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 cost_val=$(echo "$total_in $total_out" | awk '{printf "%.2f", ($1 * 3 / 1000000) + ($2 * 15 / 1000000)}')
-cost_str="${DIM}cost${RESET} ${BOLD}\$${cost_val}${RESET}"
+cost_str="💰 ${BOLD}\$${cost_val}${RESET}"
 
 # --- assemble ---
 if [ -n "$git_str" ]; then

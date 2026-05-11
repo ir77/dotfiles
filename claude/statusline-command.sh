@@ -34,7 +34,9 @@ model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
   | awk '{print toupper(substr($0,1,1)) substr($0,2)}' \
   | sed 's/ context)/)/g' \
   | sed 's/ (/(/g')
-model_str="${sandbox_icon}${BOLD}${CYAN}${model}${RESET}"
+effort=$(echo "$input" | jq -r '.effort.level // empty')
+[ -n "$effort" ] && model_label="${model}(${effort})" || model_label="${model}"
+model_str="${sandbox_icon}${BOLD}${CYAN}${model_label}${RESET}"
 
 # --- git ---
 branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)

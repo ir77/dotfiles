@@ -110,16 +110,19 @@ fi
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used")
-  filled=$(( pct * 9 / 100 ))
-  [ "$filled" -gt 9 ] && filled=9
-  empty_count=$(( 9 - filled ))
+  units=$(( pct * 18 / 100 ))
+  [ "$units" -gt 18 ] && units=18
+  full=$(( units / 2 ))
+  half=$(( units % 2 ))
+  empty_count=$(( 9 - full - half ))
   bar=""
-  i=0; while [ "$i" -lt "$filled" ];  do bar="${bar}█";   i=$(( i + 1 )); done
+  i=0; while [ "$i" -lt "$full" ]; do bar="${bar}█"; i=$(( i + 1 )); done
+  [ "$half" -eq 1 ] && bar="${bar}▌"
   i=0; while [ "$i" -lt "$empty_count" ]; do bar="${bar}░"; i=$(( i + 1 )); done
   if   [ "$pct" -lt 50 ]; then bar_color="${GREEN}"
   elif [ "$pct" -lt 80 ]; then bar_color="${YELLOW}"
   else bar_color="${RED}"; fi
-  bar_str="${DIM}ctx${RESET} ${bar_color}[${bar}]${RESET} ${BOLD}${pct}%${RESET}"
+  bar_str="${DIM}ctx${RESET} ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
 else
   bar_str="${DIM}ctx [no data]${RESET}"
 fi

@@ -45,10 +45,17 @@ if [ -n "$branch" ]; then
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
   git_str="${BOLD}${YELLOW}${branch}${RESET}"
-  if [ "$staged" -gt 0 ] || [ "$unstaged" -gt 0 ]; then
-    git_str="${git_str} ${RED}~${unstaged}${RESET}${DIM}/${RESET}${GREEN}+${staged}${RESET}"
+  diff_str=""
+  [ "$unstaged" -gt 0 ] && diff_str="${diff_str}${RED}~${unstaged}${RESET}"
+  if [ "$staged" -gt 0 ]; then
+    [ "$unstaged" -gt 0 ] && diff_str="${diff_str}${DIM}/${RESET}"
+    diff_str="${diff_str}${GREEN}+${staged}${RESET}"
   fi
-  [ "$unpushed" -gt 0 ] 2>/dev/null && git_str="${git_str}${DIM}/${RESET}${MAGENTA}↑${RESET}"
+  if [ "$unpushed" -gt 0 ] 2>/dev/null; then
+    [ -n "$diff_str" ] && diff_str="${diff_str}${DIM}/${RESET}"
+    diff_str="${diff_str}${MAGENTA}↑${RESET}"
+  fi
+  [ -n "$diff_str" ] && git_str="${git_str} ${diff_str}"
 else
   git_str=""
 fi

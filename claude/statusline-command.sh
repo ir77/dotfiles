@@ -106,7 +106,12 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   if [ -n "$seven_d" ]; then
     sd_pct=$(printf '%.0f' "$seven_d")
     [ -n "$reset_epoch" ] && sd_label="${DIM}${days_elapsed}/7d:${RESET}" || sd_label="${DIM}7d:${RESET}"
-    sd_part="${sd_label}$(color_pct_7d "$sd_pct")"
+    reset_date_str=""
+    if [ -n "$reset_epoch" ]; then
+      reset_fmt=$(date -r "$reset_epoch" "+%-m/%-d %H:%M" 2>/dev/null)
+      [ -n "$reset_fmt" ] && reset_date_str=" ${DIM}(⌛${reset_fmt})${RESET}"
+    fi
+    sd_part="${sd_label}$(color_pct_7d "$sd_pct")${reset_date_str}"
     [ -n "$rate_parts" ] && rate_parts="${rate_parts} ${sd_part}" || rate_parts="$sd_part"
   fi
   rate_section="${SEP}${rate_parts}"

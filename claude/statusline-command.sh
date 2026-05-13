@@ -151,12 +151,6 @@ else
   bar_str="${DIM}ctx [no data]${RESET}"
 fi
 
-# --- cost ---
-total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
-total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
-cost_val=$(echo "$total_in $total_out" | awk '{printf "%.2f", ($1 * 3 / 1000000) + ($2 * 15 / 1000000)}')
-cost_str="💰 ${BOLD}\$${cost_val}${RESET}"
-
 # --- assemble ---
 # Line 1: project / git
 if [ -n "$git_str" ]; then
@@ -164,6 +158,6 @@ if [ -n "$git_str" ]; then
 else
   line1="${proj_str}"
 fi
-# Line 2: model / context / cost
-line2="${model_str}${SEP}${bar_str}${rate_section}${SEP}${cost_str}"
+# Line 2: model / context / rate limits
+line2="${model_str}${SEP}${bar_str}${rate_section}"
 printf '%b\n%b\n' "$line1" "$line2"

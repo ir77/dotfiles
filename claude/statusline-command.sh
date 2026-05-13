@@ -59,7 +59,7 @@ proj_name=$(basename "$dir")
 proj_str="📁 ${BOLD}${BLUE}${proj_name}${RESET}"
 
 # Align │ separators: pad whichever prefix is shorter
-# 📁/📦 are double-width (2 cols) + 1 space = 3; no sandbox icon = 0
+# 📁 and 🔒/🔓 are double-width (2 cols) + 1 space = 3
 proj_vis=$(( 3 + ${#proj_name} ))
 sandbox_vis=3  # both 🔒 and 🔓 are 2-col emoji + 1 space
 model_vis=$(( sandbox_vis + ${#model_label} ))
@@ -80,7 +80,8 @@ color_pct() {
 # 7d rate limit coloring: red if ahead of even daily pace (uses actual resets_at)
 color_pct_7d() {
   local p=$1
-  local threshold=$(( days_elapsed * 100 / 7 ))
+  local d=$2
+  local threshold=$(( d * 100 / 7 ))
   if   [ "$p" -gt 80 ] || [ "$p" -gt "$threshold" ]; then printf '%b' "${RED}${p}%${RESET}"
   elif [ "$p" -gt $(( threshold * 4 / 5 )) ]; then printf '%b' "${YELLOW}${p}%${RESET}"
   else printf '%b' "${GREEN}${p}%${RESET}"; fi
@@ -122,7 +123,7 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
         reset_date_str=" ${BOLD}(⌛ ${rem_days}d ${rem_hours}h ${rem_mins}m)${RESET}"
       fi
     fi
-    sd_part="${sd_label}$(color_pct_7d "$sd_pct")${reset_date_str}"
+    sd_part="${sd_label}$(color_pct_7d "$sd_pct" "$days_elapsed")${reset_date_str}"
     [ -n "$rate_parts" ] && rate_parts="${rate_parts} ${sd_part}" || rate_parts="$sd_part"
   fi
   rate_section="${SEP}${rate_parts}"

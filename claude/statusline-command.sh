@@ -61,7 +61,7 @@ proj_str="📁 ${BOLD}${BLUE}${proj_name}${RESET}"
 # Align │ separators: pad whichever prefix is shorter
 # 📁/📦 are double-width (2 cols) + 1 space = 3; no sandbox icon = 0
 proj_vis=$(( 3 + ${#proj_name} ))
-[ "$is_sandboxed" = "true" ] && sandbox_vis=3 || sandbox_vis=0
+sandbox_vis=3  # both 🔒 and 🔓 are 2-col emoji + 1 space
 model_vis=$(( sandbox_vis + ${#model_label} ))
 if [ "$proj_vis" -lt "$model_vis" ]; then
   proj_str="${proj_str}$(printf '%*s' $(( model_vis - proj_vis )) '')"

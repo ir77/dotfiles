@@ -44,7 +44,7 @@ if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
-  git_str="${BOLD}${YELLOW}${branch}${RESET}"
+  git_str="${DIM}${RESET} ${BOLD}${YELLOW}${branch}${RESET}"
   [ "$unstaged" -gt 0 ] && u_str="${RED}~${unstaged}${RESET}" || u_str="${DIM}~0${RESET}"
   [ "$staged"   -gt 0 ] && s_str="${GREEN}+${staged}${RESET}"  || s_str="${DIM}+0${RESET}"
   [ "$unpushed" -gt 0 ] && p_str="${MAGENTA}↑${unpushed}${RESET}" || p_str="${DIM}↑0${RESET}"
@@ -56,7 +56,7 @@ fi
 
 # --- project ---
 proj_name=$(basename "$dir")
-proj_str="${BOLD}${BLUE}${proj_name}${RESET}"
+proj_str="📁 ${BOLD}${BLUE}${proj_name}${RESET}"
 
 # --- rate limits ---
 color_pct() {

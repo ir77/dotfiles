@@ -45,17 +45,11 @@ if [ -n "$branch" ]; then
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
   git_str="${BOLD}${YELLOW}${branch}${RESET}"
-  diff_str=""
-  [ "$unstaged" -gt 0 ] && diff_str="${diff_str}${RED}~${unstaged}${RESET}"
-  if [ "$staged" -gt 0 ]; then
-    [ "$unstaged" -gt 0 ] && diff_str="${diff_str}${DIM}/${RESET}"
-    diff_str="${diff_str}${GREEN}+${staged}${RESET}"
-  fi
-  if [ "$unpushed" -gt 0 ] 2>/dev/null; then
-    [ -n "$diff_str" ] && diff_str="${diff_str}${DIM}/${RESET}"
-    diff_str="${diff_str}${MAGENTA}↑${RESET}"
-  fi
-  [ -n "$diff_str" ] && git_str="${git_str} ${diff_str}"
+  [ "$unstaged" -gt 0 ] && u_str="${RED}~${unstaged}${RESET}" || u_str="${DIM}~0${RESET}"
+  [ "$staged"   -gt 0 ] && s_str="${GREEN}+${staged}${RESET}"  || s_str="${DIM}+0${RESET}"
+  [ "$unpushed" -gt 0 ] && p_str="${MAGENTA}↑${unpushed}${RESET}" || p_str="${DIM}↑0${RESET}"
+  diff_str="${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}"
+  git_str="${git_str} ${diff_str}"
 else
   git_str=""
 fi
@@ -146,8 +140,12 @@ cost_val=$(echo "$total_in $total_out" | awk '{printf "%.2f", ($1 * 3 / 1000000)
 cost_str="💰 ${BOLD}\$${cost_val}${RESET}"
 
 # --- assemble ---
+# Line 1: project / git
 if [ -n "$git_str" ]; then
-  printf '%b\n' "${proj_str}${SEP}${model_str}${SEP}${git_str}${SEP}${bar_str}${rate_section}${SEP}${cost_str}"
+  line1="${proj_str}${SEP}${git_str}"
 else
-  printf '%b\n' "${proj_str}${SEP}${model_str}${SEP}${bar_str}${rate_section}${SEP}${cost_str}"
+  line1="${proj_str}"
 fi
+# Line 2: model / context / cost
+line2="${model_str}${SEP}${bar_str}${rate_section}${SEP}${cost_str}"
+printf '%b\n%b\n' "$line1" "$line2"

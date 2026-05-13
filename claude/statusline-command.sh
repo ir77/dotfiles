@@ -23,7 +23,7 @@ if [ -f "$proj_settings" ]; then
 else
   is_sandboxed="$sandbox_global"
 fi
-[ "$is_sandboxed" = "true" ] && sandbox_icon="📦 " || sandbox_icon=""
+[ "$is_sandboxed" = "true" ] && sandbox_icon="🔒 " || sandbox_icon="🔓 "
 
 # --- model ---
 model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
@@ -44,7 +44,7 @@ if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
-  git_str="${DIM}${RESET} ${BOLD}${YELLOW}${branch}${RESET}"
+  git_str=" ${DIM}${RESET} ${BOLD}${YELLOW}${branch}${RESET}"
   [ "$unstaged" -gt 0 ] && u_str="${RED}~${unstaged}${RESET}" || u_str="${DIM}~0${RESET}"
   [ "$staged"   -gt 0 ] && s_str="${GREEN}+${staged}${RESET}"  || s_str="${DIM}+0${RESET}"
   [ "$unpushed" -gt 0 ] && p_str="${MAGENTA}↑${unpushed}${RESET}" || p_str="${DIM}↑0${RESET}"
@@ -113,8 +113,14 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
     [ -n "$reset_epoch" ] && sd_label="${BOLD}${days_elapsed}/7d:${RESET}" || sd_label="${BOLD}7d:${RESET}"
     reset_date_str=""
     if [ -n "$reset_epoch" ]; then
-      reset_fmt=$(date -r "$reset_epoch" "+%-m/%-d %H:%M" 2>/dev/null)
-      [ -n "$reset_fmt" ] && reset_date_str=" ${BOLD}(⌛ ${reset_fmt})${RESET}"
+      now_epoch=$(date +%s)
+      remaining_secs=$(( reset_epoch - now_epoch ))
+      if [ "$remaining_secs" -gt 0 ]; then
+        rem_days=$(( remaining_secs / 86400 ))
+        rem_hours=$(( (remaining_secs % 86400) / 3600 ))
+        rem_mins=$(( (remaining_secs % 3600) / 60 ))
+        reset_date_str=" ${BOLD}(⌛ ${rem_days}d ${rem_hours}h ${rem_mins}m)${RESET}"
+      fi
     fi
     sd_part="${sd_label}$(color_pct_7d "$sd_pct")${reset_date_str}"
     [ -n "$rate_parts" ] && rate_parts="${rate_parts} ${sd_part}" || rate_parts="$sd_part"
@@ -127,11 +133,11 @@ fi
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used")
-  units=$(( pct * 20 / 100 ))
-  [ "$units" -gt 20 ] && units=20
+  units=$(( pct * 22 / 100 ))
+  [ "$units" -gt 22 ] && units=22
   full=$(( units / 2 ))
   half=$(( units % 2 ))
-  empty_count=$(( 10 - full - half ))
+  empty_count=$(( 11 - full - half ))
   bar=""
   i=0; while [ "$i" -lt "$full" ]; do bar="${bar}█"; i=$(( i + 1 )); done
   [ "$half" -eq 1 ] && bar="${bar}▌"
@@ -139,7 +145,7 @@ if [ -n "$used" ]; then
   if   [ "$pct" -lt 50 ]; then bar_color="${GREEN}"
   elif [ "$pct" -lt 80 ]; then bar_color="${YELLOW}"
   else bar_color="${RED}"; fi
-  bar_str="${BOLD}ctx${RESET} ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
+  bar_str="💭 ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
 else
   bar_str="${DIM}ctx [no data]${RESET}"
 fi

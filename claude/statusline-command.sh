@@ -101,15 +101,15 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   rate_parts=""
   if [ -n "$five_h" ]; then
     fh_pct=$(printf '%.0f' "$five_h")
-    rate_parts="${DIM}5h:${RESET}$(color_pct "$fh_pct")"
+    rate_parts="${BOLD}5h:${RESET}$(color_pct "$fh_pct")"
   fi
   if [ -n "$seven_d" ]; then
     sd_pct=$(printf '%.0f' "$seven_d")
-    [ -n "$reset_epoch" ] && sd_label="${DIM}${days_elapsed}/7d:${RESET}" || sd_label="${DIM}7d:${RESET}"
+    [ -n "$reset_epoch" ] && sd_label="${BOLD}${days_elapsed}/7d:${RESET}" || sd_label="${BOLD}7d:${RESET}"
     reset_date_str=""
     if [ -n "$reset_epoch" ]; then
       reset_fmt=$(date -r "$reset_epoch" "+%-m/%-d %H:%M" 2>/dev/null)
-      [ -n "$reset_fmt" ] && reset_date_str=" ${DIM}(⌛ ${reset_fmt})${RESET}"
+      [ -n "$reset_fmt" ] && reset_date_str=" ${BOLD}(⌛ ${reset_fmt})${RESET}"
     fi
     sd_part="${sd_label}$(color_pct_7d "$sd_pct")${reset_date_str}"
     [ -n "$rate_parts" ] && rate_parts="${rate_parts} ${sd_part}" || rate_parts="$sd_part"
@@ -134,7 +134,7 @@ if [ -n "$used" ]; then
   if   [ "$pct" -lt 50 ]; then bar_color="${GREEN}"
   elif [ "$pct" -lt 80 ]; then bar_color="${YELLOW}"
   else bar_color="${RED}"; fi
-  bar_str="${DIM}ctx${RESET} ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
+  bar_str="${BOLD}ctx${RESET} ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
 else
   bar_str="${DIM}ctx [no data]${RESET}"
 fi

@@ -34,7 +34,7 @@ model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
   | awk '{print toupper(substr($0,1,1)) substr($0,2)}' \
   | sed 's/ context)/)/g' \
   | sed 's/ (/(/g')
-effort=$(echo "$input" | jq -r '.effort.level // empty' | sed 's/xhigh/xh/;s/low/l/;s/medium/m/;s/high/h/')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 [ -n "$effort" ] && model_label="${model}(${effort})" || model_label="${model}"
 model_str="${sandbox_icon}${BOLD}${CYAN}${model_label}${RESET}"
 

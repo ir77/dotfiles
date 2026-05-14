@@ -91,11 +91,11 @@ fi
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used")
-  units=$(( pct * 22 / 100 ))
-  [ "$units" -gt 22 ] && units=22
+  units=$(( pct * 20 / 100 ))
+  [ "$units" -gt 20 ] && units=20
   full=$(( units / 2 ))
   half=$(( units % 2 ))
-  empty_count=$(( 11 - full - half ))
+  empty_count=$(( 10 - full - half ))
   bar=""
   i=0; while [ "$i" -lt "$full"        ]; do bar="${bar}█"; i=$(( i + 1 )); done
   [ "$half" -eq 1 ] && bar="${bar}▌"

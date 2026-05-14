@@ -145,7 +145,7 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
         rem_days=$(( remaining_secs / 86400 ))
         rem_hours=$(( (remaining_secs % 86400) / 3600 ))
         rem_mins=$(( (remaining_secs % 3600) / 60 ))
-        rate_str="${rate_str} ${BOLD}(⌛${rem_days}d:${rem_hours}h:${rem_mins}m)${RESET}"
+        rate_str="${rate_str} ${BOLD}(⌛ ${rem_days}d:${rem_hours}h:${rem_mins}m)${RESET}"
       fi
     fi
   fi

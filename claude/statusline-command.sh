@@ -103,7 +103,7 @@ if [ -n "$used" ]; then
   else bar_clr="${C_RED}"; fi
   ctx_str="💭 ${bar_clr}${bar}${RESET} ${BOLD}${pct}%${BOLD_OFF}"
 else
-  ctx_str="${DIM}ctx [no data]${BOLD_OFF}"
+  ctx_str="💭 ${DIM}░░░░░░░░░░░${RESET} ${DIM}--%${RESET}"
 fi
 
 # --- LINE 1: 📁 project ❯  branch ~N/+N/↑N ---

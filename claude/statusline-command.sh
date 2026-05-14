@@ -1,19 +1,28 @@
 #!/usr/bin/env bash
 input=$(cat)
 
-# --- color codes ---
+# ANSI helpers
 RESET='\033[0m'
 BOLD='\033[1m'
 DIM='\033[2m'
-CYAN='\033[36m'
-YELLOW='\033[33m'
-GREEN='\033[32m'
-RED='\033[31m'
-BLUE='\033[34m'
-MAGENTA='\033[35m'
-SEP="${DIM} │ ${RESET}"
+BOLD_OFF='\033[22m'
 
-# --- dir + sandbox (needed before model) ---
+# Starship-inspired palette (bold bright ANSI colors)
+C_DIR='\033[1;94m'     # bold bright blue    — directory (starship directory)
+C_BRANCH='\033[1;95m'  # bold bright purple  — git branch (starship git_branch)
+C_MODEL='\033[1;96m'   # bold bright cyan    — model
+C_SEP='\033[32m'       # green               — ❯ separator
+C_GREEN='\033[92m'     # bright green
+C_YELLOW='\033[93m'    # bright yellow
+C_RED='\033[91m'       # bright red
+C_MAGENTA='\033[95m'   # bright magenta
+
+SEP=" ${C_SEP}❯${RESET} "
+
+# U+E0A0 Nerd Font git branch icon
+GIT_ICON=$(printf '\xee\x82\xa0')
+
+# --- sandbox ---
 dir=$(echo "$input" | jq -r '.workspace.current_dir')
 sandbox_global=$(jq -r '.sandbox.enabled // false' ~/.claude/settings.json 2>/dev/null)
 proj_settings="$dir/.claude/settings.json"
@@ -23,7 +32,7 @@ if [ -f "$proj_settings" ]; then
 else
   is_sandboxed="$sandbox_global"
 fi
-[ "$is_sandboxed" = "true" ] && sandbox_icon="🔒 " || sandbox_icon="🔓 "
+[ "$is_sandboxed" = "true" ] && sandbox_icon="🔒" || sandbox_icon="🔓"
 
 # --- model ---
 model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
@@ -36,7 +45,6 @@ model=$(echo "$input" | jq -r '.model.display_name // "unknown"' \
   | sed 's/ (/(/g')
 effort=$(echo "$input" | jq -r '.effort.level // empty')
 [ -n "$effort" ] && model_label="${model}(${effort})" || model_label="${model}"
-model_str="${sandbox_icon}${BOLD}${CYAN}${model_label}${RESET}"
 
 # --- git ---
 branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -44,55 +52,29 @@ if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
-  git_str=" ${DIM}${RESET} ${BOLD}${YELLOW}${branch}${RESET}"
-  [ "$unstaged" -gt 0 ] && u_str="${RED}~${unstaged}${RESET}" || u_str="${DIM}~0${RESET}"
-  [ "$staged"   -gt 0 ] && s_str="${GREEN}+${staged}${RESET}"  || s_str="${DIM}+0${RESET}"
-  [ "$unpushed" -gt 0 ] && p_str="${MAGENTA}↑${unpushed}${RESET}" || p_str="${DIM}↑0${RESET}"
-  diff_str="${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}"
-  git_str="${git_str} ${diff_str}"
-else
-  git_str=""
-fi
-
-# --- project ---
-proj_name=$(basename "$dir")
-proj_str="📁 ${BOLD}${BLUE}${proj_name}${RESET}"
-
-# Align │ separators: pad whichever prefix is shorter
-# 📁 and 🔒/🔓 are double-width (2 cols) + 1 space = 3
-proj_vis=$(( 3 + ${#proj_name} ))
-sandbox_vis=3  # both 🔒 and 🔓 are 2-col emoji + 1 space
-model_vis=$(( sandbox_vis + ${#model_label} ))
-if [ "$proj_vis" -lt "$model_vis" ]; then
-  proj_str="${proj_str}$(printf '%*s' $(( model_vis - proj_vis )) '')"
-elif [ "$model_vis" -lt "$proj_vis" ]; then
-  model_str="${model_str}$(printf '%*s' $(( proj_vis - model_vis )) '')"
 fi
 
 # --- rate limits ---
 color_pct() {
   local p=$1
-  if   [ "$p" -lt 50 ]; then printf '%b' "${GREEN}${p}%${RESET}"
-  elif [ "$p" -lt 80 ]; then printf '%b' "${YELLOW}${p}%${RESET}"
-  else printf '%b' "${RED}${p}%${RESET}"; fi
+  if   [ "$p" -lt 50 ]; then printf '%b' "${C_GREEN}${p}%${RESET}"
+  elif [ "$p" -lt 80 ]; then printf '%b' "${C_YELLOW}${p}%${RESET}"
+  else printf '%b' "${C_RED}${p}%${RESET}"; fi
 }
 
-# 7d rate limit coloring: red if ahead of even daily pace (uses actual resets_at)
 color_pct_7d() {
-  local p=$1
-  local d=$2
+  local p=$1 d=$2
   local threshold=$(( d * 100 / 7 ))
-  if   [ "$p" -gt 80 ] || [ "$p" -gt "$threshold" ]; then printf '%b' "${RED}${p}%${RESET}"
-  elif [ "$p" -gt $(( threshold * 4 / 5 )) ]; then printf '%b' "${YELLOW}${p}%${RESET}"
-  else printf '%b' "${GREEN}${p}%${RESET}"; fi
+  if   [ "$p" -gt 80 ] || [ "$p" -gt "$threshold" ]; then printf '%b' "${C_RED}${p}%${RESET}"
+  elif [ "$p" -gt $(( threshold * 4 / 5 )) ]; then printf '%b' "${C_YELLOW}${p}%${RESET}"
+  else printf '%b' "${C_GREEN}${p}%${RESET}"; fi
 }
 
 five_h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 seven_d=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 seven_d_resets=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
-# Calculate days elapsed (1–7) in the current 7-day window from resets_at (Unix epoch)
-days_elapsed=4  # fallback: neutral midpoint
+days_elapsed=4
 reset_epoch=""
 if [ -n "$seven_d_resets" ]; then
   reset_epoch="$seven_d_resets"
@@ -102,35 +84,8 @@ if [ -n "$seven_d_resets" ]; then
   [ "$days_elapsed" -lt 1 ] && days_elapsed=1
   [ "$days_elapsed" -gt 7 ] && days_elapsed=7
 fi
-rate_section=""
-if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
-  rate_parts=""
-  if [ -n "$five_h" ]; then
-    fh_pct=$(printf '%.0f' "$five_h")
-    rate_parts="${BOLD}5h:${RESET}$(color_pct "$fh_pct")"
-  fi
-  if [ -n "$seven_d" ]; then
-    sd_pct=$(printf '%.0f' "$seven_d")
-    [ -n "$reset_epoch" ] && sd_label="${BOLD}${days_elapsed}/7d:${RESET}" || sd_label="${BOLD}7d:${RESET}"
-    reset_date_str=""
-    if [ -n "$reset_epoch" ]; then
-      now_epoch=$(date +%s)
-      remaining_secs=$(( reset_epoch - now_epoch ))
-      if [ "$remaining_secs" -gt 0 ]; then
-        rem_days=$(( remaining_secs / 86400 ))
-        rem_hours=$(( (remaining_secs % 86400) / 3600 ))
-        rem_mins=$(( (remaining_secs % 3600) / 60 ))
-        reset_date_str=" ${BOLD}(⌛ ${rem_days}d ${rem_hours}h ${rem_mins}m)${RESET}"
-      fi
-    fi
-    sd_part="${sd_label}$(color_pct_7d "$sd_pct" "$days_elapsed")${reset_date_str}"
-    [ -n "$rate_parts" ] && rate_parts="${rate_parts} ${sd_part}" || rate_parts="$sd_part"
-  fi
-  rate_section="${SEP}${rate_parts}"
-fi
 
-
-# --- context window ---
+# --- context bar ---
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$used" ]; then
   pct=$(printf '%.0f' "$used")
@@ -140,24 +95,57 @@ if [ -n "$used" ]; then
   half=$(( units % 2 ))
   empty_count=$(( 11 - full - half ))
   bar=""
-  i=0; while [ "$i" -lt "$full" ]; do bar="${bar}█"; i=$(( i + 1 )); done
+  i=0; while [ "$i" -lt "$full"        ]; do bar="${bar}█"; i=$(( i + 1 )); done
   [ "$half" -eq 1 ] && bar="${bar}▌"
   i=0; while [ "$i" -lt "$empty_count" ]; do bar="${bar}░"; i=$(( i + 1 )); done
-  if   [ "$pct" -lt 50 ]; then bar_color="${GREEN}"
-  elif [ "$pct" -lt 80 ]; then bar_color="${YELLOW}"
-  else bar_color="${RED}"; fi
-  bar_str="💭 ${bar_color}${bar}${RESET} ${BOLD}${pct}%${RESET}"
+  if   [ "$pct" -lt 50 ]; then bar_clr="${C_GREEN}"
+  elif [ "$pct" -lt 80 ]; then bar_clr="${C_YELLOW}"
+  else bar_clr="${C_RED}"; fi
+  ctx_str="💭 ${bar_clr}${bar}${RESET} ${BOLD}${pct}%${BOLD_OFF}"
 else
-  bar_str="${DIM}ctx [no data]${RESET}"
+  ctx_str="${DIM}ctx [no data]${BOLD_OFF}"
 fi
 
-# --- assemble ---
-# Line 1: project / git
-if [ -n "$git_str" ]; then
-  line1="${proj_str}${SEP}${git_str}"
-else
-  line1="${proj_str}"
+# --- LINE 1: 📁 project ❯  branch ~N/+N/↑N ---
+line1="${C_DIR}📁 $(basename "$dir")${RESET}"
+
+if [ -n "$branch" ]; then
+  # diff stats: each non-zero value gets a color, zeros get dim
+  if [ "$unstaged" -gt 0 ]; then u_str="${C_YELLOW}~${unstaged}${RESET}"; else u_str="${DIM}~0${RESET}"; fi
+  if [ "$staged"   -gt 0 ]; then s_str="${C_GREEN}+${staged}${RESET}";   else s_str="${DIM}+0${RESET}"; fi
+  if [ "$unpushed" -gt 0 ]; then p_str="${C_MAGENTA}↑${unpushed}${RESET}"; else p_str="${DIM}↑0${RESET}"; fi
+
+  line1="${line1}${SEP}${C_BRANCH}${GIT_ICON} ${branch}${RESET} ${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}"
 fi
-# Line 2: model / context / rate limits
-line2="${model_str}${SEP}${bar_str}${rate_section}"
+
+# --- LINE 2: 🔒 model ❯ ctx ❯ rate limits ---
+line2="${C_MODEL}${sandbox_icon} ${model_label}${RESET}"
+line2="${line2}${SEP}${ctx_str}"
+
+if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
+  rate_str=""
+  if [ -n "$five_h" ]; then
+    fh_pct=$(printf '%.0f' "$five_h")
+    rate_str="${BOLD}5h:${BOLD_OFF}$(color_pct "$fh_pct")"
+  fi
+  if [ -n "$seven_d" ]; then
+    sd_pct=$(printf '%.0f' "$seven_d")
+    [ -n "$five_h" ] && rate_str="${rate_str} "
+    [ -n "$reset_epoch" ] && sd_label="${BOLD}${days_elapsed}/7d:${BOLD_OFF}" || sd_label="${BOLD}7d:${BOLD_OFF}"
+    rate_str="${rate_str}${sd_label}$(color_pct_7d "$sd_pct" "$days_elapsed")"
+
+    if [ -n "$reset_epoch" ]; then
+      now_epoch=$(date +%s)
+      remaining_secs=$(( reset_epoch - now_epoch ))
+      if [ "$remaining_secs" -gt 0 ]; then
+        rem_days=$(( remaining_secs / 86400 ))
+        rem_hours=$(( (remaining_secs % 86400) / 3600 ))
+        rem_mins=$(( (remaining_secs % 3600) / 60 ))
+        rate_str="${rate_str} ${BOLD}(⌛ ${rem_days}d ${rem_hours}h ${rem_mins}m)${RESET}"
+      fi
+    fi
+  fi
+  line2="${line2}${SEP}${rate_str}"
+fi
+
 printf '%b\n%b\n' "$line1" "$line2"

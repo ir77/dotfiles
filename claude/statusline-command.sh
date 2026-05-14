@@ -52,6 +52,8 @@ if [ -n "$branch" ]; then
   staged=$(git -C "$dir" diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
   unstaged=$(git -C "$dir" diff --name-only 2>/dev/null | wc -l | tr -d ' ')
   unpushed=$(git -C "$dir" rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
+  untracked=$(git -C "$dir" ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
+  stash_count=$(git -C "$dir" stash list 2>/dev/null | wc -l | tr -d ' ')
 fi
 
 # --- rate limits ---
@@ -111,11 +113,13 @@ line1="${C_DIR}📁 $(basename "$dir")${RESET}"
 
 if [ -n "$branch" ]; then
   # diff stats: each non-zero value gets a color, zeros get dim
-  if [ "$unstaged" -gt 0 ]; then u_str="${C_YELLOW}~${unstaged}${RESET}"; else u_str="${DIM}~0${RESET}"; fi
-  if [ "$staged"   -gt 0 ]; then s_str="${C_GREEN}+${staged}${RESET}";   else s_str="${DIM}+0${RESET}"; fi
-  if [ "$unpushed" -gt 0 ]; then p_str="${C_MAGENTA}↑${unpushed}${RESET}"; else p_str="${DIM}↑0${RESET}"; fi
+  if [ "$unstaged"  -gt 0 ]; then u_str="${C_YELLOW}~${unstaged}${RESET}";   else u_str="${DIM}~0${RESET}"; fi
+  if [ "$staged"    -gt 0 ]; then s_str="${C_GREEN}+${staged}${RESET}";     else s_str="${DIM}+0${RESET}"; fi
+  if [ "$unpushed"  -gt 0 ]; then p_str="${C_MAGENTA}↑${unpushed}${RESET}"; else p_str="${DIM}↑0${RESET}"; fi
+  if [ "$untracked" -gt 0 ]; then q_str="${DIM}/${RESET}${C_RED}?${untracked}${RESET}"; else q_str=""; fi
+  if [ "$stash_count" -gt 0 ]; then stash_str=" ${C_YELLOW}⊙${stash_count}${RESET}"; else stash_str=""; fi
 
-  line1="${line1}${SEP}${C_BRANCH}${GIT_ICON} ${branch}${RESET} ${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}"
+  line1="${line1}${SEP}${C_BRANCH}${GIT_ICON} ${branch}${RESET} ${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}${q_str}${stash_str}"
 fi
 
 # --- LINE 2: 🔒 model ❯ ctx ❯ rate limits ---

@@ -31,6 +31,7 @@ fi
 mkdir -p ~/.claude
 ln -snf "$DOTFILES_DIR/claude/claude-settings.json" ~/.claude/settings.json
 ln -snf "$DOTFILES_DIR/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+ln -snf "$DOTFILES_DIR/.claude/skills" ~/.claude/skills
 
 mkdir -p ~/.gemini
 ln -snf "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json

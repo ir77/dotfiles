@@ -136,6 +136,44 @@ function fzf_history() {
 zle -N fzf_history
 bindkey '^r' fzf_history
 
+function git-duet-interactive() {
+  local authors_file="$(git rev-parse --show-toplevel 2>/dev/null)/.git-authors"
+  [[ -f "$authors_file" ]] || { echo "エラー: .git-authors が見つかりません" >&2; return 1; }
+
+  # 全著者エントリ: "initials  name" (元の順序)
+  local all_entries
+  all_entries=$(awk '/^authors:/{p=1;next}/^[^ ]/{p=0}p' "$authors_file" \
+    | awk '{gsub(/:/,"",$1); printf "%-6s %s\n",$1,substr($0,index($0,$2))}')
+
+  # 直近3ヶ月のactiveなinitials (commit数の多い順)
+  local recent_inits
+  recent_inits=$(
+    git log --since="2 months ago" --format="%ae" 2>/dev/null \
+    | sort | uniq -c | sort -rn | awk '{print $2}' \
+    | awk 'NR==FNR{map[$1]=$2; next} $0 in map{print map[$0]}' \
+        <(awk '/^email_addresses:/{p=1;next}/^[^ ]/{p=0}p' "$authors_file" \
+          | awk '{gsub(/:/,"",$1); print $2,$1}') -
+  )
+
+  # recent優先、残りは元順序で出力
+  local entries
+  entries=$(
+    { echo "$recent_inits"; awk '{print $1}' <<< "$all_entries" } \
+    | awk 'seen[$0]++ == 0' \
+    | while IFS= read -r init; do grep "^$init " <<< "$all_entries"; done
+  )
+
+  local selected
+  selected=$(echo "$entries" | fzf --multi --prompt="git duet> " \
+    --header="TABで複数選択、ENTERで確定" \
+    | awk '{print $1}')
+
+  [[ -z "$selected" ]] && return 0
+
+  local initials=("${(@f)selected}")
+  git duet "${initials[@]}"
+}
+
 killport() {
   local pids=$(lsof -t -i :$1 2>/dev/null)
 

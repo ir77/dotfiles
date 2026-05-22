@@ -155,17 +155,29 @@ function git-duet-interactive() {
           | awk '{gsub(/:/,"",$1); print $2,$1}') -
   )
 
-  # recent優先、残りは元順序で出力
+  # recent優先、残りは元順序で出力。境界にセパレータを挿入
+  local all_inits_ordered
+  all_inits_ordered=$(
+    { echo "$recent_inits"; awk '{print $1}' <<< "$all_entries" } \
+    | awk 'seen[$0]++ == 0'
+  )
+
   local entries
   entries=$(
-    { echo "$recent_inits"; awk '{print $1}' <<< "$all_entries" } \
-    | awk 'seen[$0]++ == 0' \
-    | while IFS= read -r init; do grep "^$init " <<< "$all_entries"; done
+    sep=""
+    while IFS= read -r init; do
+      if [[ -z "$sep" ]] && ! grep -qx "$init" <<< "$recent_inits" 2>/dev/null; then
+        [[ -n "$recent_inits" ]] && echo "  ─────────────────────────────────"
+        sep=1
+      fi
+      grep "^$init " <<< "$all_entries"
+    done <<< "$all_inits_ordered"
   )
 
   local selected
   selected=$(echo "$entries" | fzf --multi --prompt="git duet> " \
     --header="TABで複数選択、ENTERで確定" \
+    | grep -v "^  ─" \
     | awk '{print $1}')
 
   [[ -z "$selected" ]] && return 0

@@ -25,6 +25,6 @@
     "enabled": true
   },
   "effortLevel": "high",
-  "tui": "fullscreen",
+  "tui": "default",
   "includeCoAuthoredBy": false
 }

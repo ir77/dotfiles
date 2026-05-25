@@ -25,7 +25,6 @@
   "sandbox": {
     "enabled": true
   },
-  "effortLevel": "xhigh",
-  "tui": "default",
-  "model": "claude-opus-4-7[1m]"
+  "effortLevel": "high",
+  "tui": "default"
 }

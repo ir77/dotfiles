@@ -60,6 +60,10 @@ export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 export PATH="$HOME/.local/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
 eval "$(starship init zsh)"
 
 # Vite+ bin (https://viteplus.dev)

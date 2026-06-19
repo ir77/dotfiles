@@ -1,7 +1,7 @@
-tap "git-duet/tap"
-tap "hashicorp/tap"
-tap "olets/tap"
-tap "snyk/tap"
+tap "git-duet/tap", trusted: true
+tap "hashicorp/tap", trusted: true
+tap "olets/tap", trusted: true
+tap "snyk/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
@@ -46,8 +46,6 @@ brew "openjdk@17"
 brew "php"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
-# Powerful, clean, object-oriented scripting language
-brew "ruby"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Version control system designed to be a better CVS
@@ -59,11 +57,11 @@ brew "trash", link: true
 # Vi 'workalike' with many additional features
 brew "vim"
 # Pairing tool for Git
-brew "git-duet/tap/git-duet", trusted: true
+brew "git-duet/tap/git-duet"
 # Terraform
-brew "hashicorp/tap/terraform", trusted: true
+brew "hashicorp/tap/terraform"
 # Find & fix known vulnerabilities in open-source dependencies
-brew "snyk/tap/snyk", trusted: true
+brew "snyk/tap/snyk"
 # Tools for building Android applications
 cask "android-studio"
 # Agent orchestration platform
@@ -93,8 +91,6 @@ cask "meetingbar"
 cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# JDK from the Eclipse Foundation (Adoptium)
-cask "temurin"
 # Open-source code editor
 cask "visual-studio-code"
 # Install and switch between multiple versions of Xcode

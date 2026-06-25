@@ -60,9 +60,10 @@ export XDG_CONFIG_HOME=~/.config
 export FZF_DEFAULT_OPTS='--layout=reverse --border --exit-0 --height 80%'
 export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export LDFLAGS="-L/opt/homebrew/opt/ruby@3.3/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby@3.3/include"
+export PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH"
+export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
 
 eval "$(starship init zsh)"
 

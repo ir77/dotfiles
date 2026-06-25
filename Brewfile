@@ -18,8 +18,6 @@ brew "eza"
 brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# Interact with Google Gemini AI models from the command-line
-brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
 # Interpreter for PostScript and PDF
@@ -46,6 +44,8 @@ brew "openjdk@17"
 brew "php"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
+# Powerful, clean, object-oriented scripting language
+brew "ruby@3.3"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Version control system designed to be a better CVS
@@ -57,15 +57,17 @@ brew "trash", link: true
 # Vi 'workalike' with many additional features
 brew "vim"
 # Pairing tool for Git
-brew "git-duet/tap/git-duet"
+brew "git-duet/tap/git-duet", trusted: true
 # Terraform
-brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform", trusted: true
 # Find & fix known vulnerabilities in open-source dependencies
-brew "snyk/tap/snyk"
+brew "snyk/tap/snyk", trusted: true
 # Tools for building Android applications
 cask "android-studio"
 # Agent orchestration platform
 cask "antigravity"
+# Terminal interface for Antigravity agents
+cask "antigravity-cli"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Clipboard extension app
@@ -91,6 +93,8 @@ cask "meetingbar"
 cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# JDK from the Eclipse Foundation (Adoptium)
+cask "temurin"
 # Open-source code editor
 cask "visual-studio-code"
 # Install and switch between multiple versions of Xcode

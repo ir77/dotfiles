@@ -1,6 +1,5 @@
 {
   "includeCoAuthoredBy": false,
-  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -26,6 +25,6 @@
   "sandbox": {
     "enabled": true
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "tui": "default"
 }

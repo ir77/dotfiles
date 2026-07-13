@@ -70,8 +70,6 @@ cask "antigravity"
 cask "antigravity-cli"
 # Anthropic's official Claude AI desktop app
 cask "claude"
-# Clipboard extension app
-cask "clipy"
 # OpenJDK distribution from Amazon
 cask "corretto@21"
 # App to build and share containerised applications and microservices

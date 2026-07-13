@@ -10,6 +10,8 @@ brew "aws-sam-cli"
 brew "awscli-local"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# TIFF library and utilities
+brew "libtiff"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Modern, maintained replacement for ls

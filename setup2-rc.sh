@@ -35,3 +35,6 @@ ln -snf "$DOTFILES_DIR/.claude/skills" ~/.claude/skills
 
 mkdir -p ~/.gemini
 ln -snf "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json
+
+mkdir -p ~/.codex
+ln -snf "$DOTFILES_DIR/codex/config.toml" ~/.codex/config.toml

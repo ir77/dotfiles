@@ -1,6 +1,9 @@
 [projects."/Users/ucuc/Workspace/dotfiles"]
 trust_level = "trusted"
 
+[projects."/Users/ucuc/Workspace/StrikeTrio2026-07"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["permissions", "model-with-reasoning", "context-used", "weekly-limit", "five-hour-limit", "current-dir", "git-branch", "pull-request-number", "branch-changes", "approval-mode"]
 status_line_use_colors = true

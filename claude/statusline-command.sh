@@ -73,6 +73,7 @@ color_pct_7d() {
 }
 
 five_h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+five_h_resets=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
 seven_d=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 seven_d_resets=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
@@ -131,6 +132,16 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   if [ -n "$five_h" ]; then
     fh_pct=$(printf '%.0f' "$five_h")
     rate_str="${BOLD}5h:${BOLD_OFF}$(color_pct "$fh_pct")"
+
+    if [ -n "$five_h_resets" ]; then
+      now_epoch=$(date +%s)
+      fh_remaining_secs=$(( five_h_resets - now_epoch ))
+      if [ "$fh_remaining_secs" -gt 0 ]; then
+        fh_rem_hours=$(( fh_remaining_secs / 3600 ))
+        fh_rem_mins=$(( (fh_remaining_secs % 3600) / 60 ))
+        rate_str="${rate_str} ${BOLD}(⌛ ${fh_rem_hours}h:${fh_rem_mins}m)${RESET}"
+      fi
+    fi
   fi
   if [ -n "$seven_d" ]; then
     sd_pct=$(printf '%.0f' "$seven_d")

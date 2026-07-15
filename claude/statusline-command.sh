@@ -146,7 +146,7 @@ if [ -n "$five_h" ] || [ -n "$seven_d" ]; then
   if [ -n "$seven_d" ]; then
     sd_pct=$(printf '%.0f' "$seven_d")
     [ -n "$five_h" ] && rate_str="${rate_str} "
-    [ -n "$reset_epoch" ] && sd_label="${BOLD}${days_elapsed}/7d:${BOLD_OFF}" || sd_label="${BOLD}7d:${BOLD_OFF}"
+    sd_label="${BOLD}7d:${BOLD_OFF}"
     rate_str="${rate_str}${sd_label}$(color_pct_7d "$sd_pct" "$days_elapsed")"
 
     if [ -n "$reset_epoch" ]; then

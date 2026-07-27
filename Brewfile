@@ -16,6 +16,8 @@ brew "libtiff"
 brew "deno"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool
@@ -97,6 +99,8 @@ cask "notion"
 cask "rectangle"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
+# Remote pair programming app
+cask "tuple"
 # Open-source code editor
 cask "visual-studio-code"
 # Install and switch between multiple versions of Xcode

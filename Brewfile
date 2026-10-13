@@ -1,6 +1,7 @@
 tap "git-duet/tap", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "olets/tap", trusted: true
+tap "oven-sh/bun"
 tap "snyk/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"
@@ -18,6 +19,8 @@ brew "deno"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# Command-line tools for fly.io services
+brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool
@@ -64,6 +67,8 @@ brew "vim"
 brew "git-duet/tap/git-duet", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun", trusted: true
 # Find & fix known vulnerabilities in open-source dependencies
 brew "snyk/tap/snyk", trusted: true
 # Tools for building Android applications

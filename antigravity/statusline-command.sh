@@ -21,6 +21,7 @@ SEP=" ${C_SEP}❯${RESET} "
 
 # Nerd Font icons
 GIT_ICON=$(printf '\xee\x82\xa0')    # U+E0A0 git branch
+ICON_USER=$(printf '\xef\x80\x87')   # U+F007 font-awesome user
 ICON_BOLT=$(printf '\xef\x83\xa7')   # U+F0E7 font-awesome bolt
 ICON_WRENCH=$(printf '\xef\x82\xad') # U+F0AD font-awesome wrench
 ICON_TARGET=$(printf '\xef\x85\x80') # U+F140 font-awesome bullseye
@@ -47,7 +48,7 @@ case "$cycle_mode" in
     mode_label="${ICON_TARGET} plan"
     ;;
   default|"")
-    mode_label=""
+    mode_label="${ICON_USER} manual"
     ;;
   *)
     mode_label="📋 ${cycle_mode}"

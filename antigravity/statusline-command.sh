@@ -19,8 +19,11 @@ C_MAGENTA='\033[95m'   # bright magenta
 
 SEP=" ${C_SEP}❯${RESET} "
 
-# U+E0A0 Nerd Font git branch icon
-GIT_ICON=$(printf '\xee\x82\xa0')
+# Nerd Font icons
+GIT_ICON=$(printf '\xee\x82\xa0')    # U+E0A0 git branch
+ICON_BOLT=$(printf '\xef\x83\xa7')   # U+F0E7 font-awesome bolt
+ICON_WRENCH=$(printf '\xef\x82\xad') # U+F0AD font-awesome wrench
+ICON_TARGET=$(printf '\xef\x85\x80') # U+F140 font-awesome bullseye
 
 # --- Directory ---
 dir=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty')
@@ -33,13 +36,23 @@ is_sandboxed=$(echo "$input" | jq -r '.sandbox.enabled // false')
 # --- Model & Mode (item 5) ---
 model=$(echo "$input" | jq -r '.model.display_name // .model.id // "unknown"')
 cycle_mode=$(echo "$input" | jq -r '.cycle_mode // empty')
-if [ "$cycle_mode" = "accept-edits" ]; then
-  mode_label="⚡ edit"
-elif [ -n "$cycle_mode" ]; then
-  mode_label="📋 ${cycle_mode}"
-else
-  mode_label=""
-fi
+case "$cycle_mode" in
+  accept-edits)
+    mode_label="${ICON_WRENCH} edit"
+    ;;
+  auto|automode)
+    mode_label="${ICON_BOLT} auto"
+    ;;
+  plan)
+    mode_label="${ICON_TARGET} plan"
+    ;;
+  default|"")
+    mode_label=""
+    ;;
+  *)
+    mode_label="📋 ${cycle_mode}"
+    ;;
+esac
 
 if [ -n "$mode_label" ]; then
   model_label="${sandbox_icon} ${model} [${mode_label}]"

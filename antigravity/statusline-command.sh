@@ -34,9 +34,9 @@ is_sandboxed=$(echo "$input" | jq -r '.sandbox.enabled // false')
 model=$(echo "$input" | jq -r '.model.display_name // .model.id // "unknown"')
 cycle_mode=$(echo "$input" | jq -r '.cycle_mode // empty')
 if [ "$cycle_mode" = "accept-edits" ]; then
-  mode_label="⚡edit"
+  mode_label="⚡ edit"
 elif [ -n "$cycle_mode" ]; then
-  mode_label="📋${cycle_mode}"
+  mode_label="📋 ${cycle_mode}"
 else
   mode_label=""
 fi

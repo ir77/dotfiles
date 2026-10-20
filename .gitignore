@@ -3,3 +3,4 @@
 *.private
 .DS_Store
 strike-trio
+.claude/skills/synced/

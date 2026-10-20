@@ -41,6 +41,8 @@ brew "jenv"
 brew "jq"
 # Statically typed programming language for the JVM
 brew "kotlin"
+# Postgres C API library
+brew "libpq", link: true
 # Powerful, lightweight programming language
 brew "lua"
 # Manage multiple Node.js versions
@@ -102,6 +104,8 @@ cask "meetingbar"
 cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Plugin for AWS CLI to start and end sessions that connect to managed instances
+cask "session-manager-plugin"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
 # Remote pair programming app

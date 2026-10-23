@@ -100,40 +100,90 @@ color_pct() {
   else printf '%b' "${C_RED}${p}%${RESET}"; fi
 }
 
-rate_str=""
-g5_rem=$(echo "$input" | jq -r '.quota["gemini-5h"].remaining_fraction // empty')
-g5_reset=$(echo "$input" | jq -r '.quota["gemini-5h"].reset_in_seconds // empty')
-gw_rem=$(echo "$input" | jq -r '.quota["gemini-weekly"].remaining_fraction // empty')
-gw_reset=$(echo "$input" | jq -r '.quota["gemini-weekly"].reset_in_seconds // empty')
+color_pct_7d() {
+  local p=$1 d=$2
+  local threshold=$(( d * 100 / 7 ))
+  if   [ "$p" -gt 80 ] || [ "$p" -gt "$threshold" ]; then printf '%b' "${C_RED}${p}%${RESET}"
+  elif [ "$p" -gt $(( threshold * 4 / 5 )) ]; then printf '%b' "${C_YELLOW}${p}%${RESET}"
+  else printf '%b' "${C_GREEN}${p}%${RESET}"; fi
+}
 
-tp5_rem=$(echo "$input" | jq -r '.quota["3p-5h"].remaining_fraction // empty')
-
-# 3P 5h (if active/consumed)
-if [ -n "$tp5_rem" ] && [ "$tp5_rem" != "1" ]; then
-  tp_used=$(awk "BEGIN {printf \"%.0f\", (1 - $tp5_rem) * 100}")
-  rate_str="${BOLD}3p-5h:${BOLD_OFF}$(color_pct "$tp_used")"
-elif [ -n "$g5_rem" ]; then
-  g5_used=$(awk "BEGIN {printf \"%.0f\", (1 - $g5_rem) * 100}")
-  rate_str="${BOLD}5h:${BOLD_OFF}$(color_pct "$g5_used")"
-  if [ -n "$g5_reset" ] && [ "$g5_reset" -gt 0 ]; then
-    h=$(( g5_reset / 3600 ))
-    m=$(( (g5_reset % 3600) / 60 ))
-    rate_str="${rate_str} ${BOLD}(⌛ ${h}h:${m}m)${RESET}"
+format_duration() {
+  local secs=$1
+  local d=$(( secs / 86400 ))
+  local h=$(( (secs % 86400) / 3600 ))
+  local m=$(( (secs % 3600) / 60 ))
+  if [ "$d" -gt 0 ]; then
+    printf '%dd:%dh:%dm' "$d" "$h" "$m"
+  elif [ "$h" -gt 0 ]; then
+    printf '%dh:%dm' "$h" "$m"
+  else
+    printf '%dm' "$m"
   fi
+}
+
+# Build rate string for one quota family: build_rate LABEL KEY COLOR
+build_rate() {
+  local label="$1" key="$2" color="$3"
+  local q5_rem q5_reset qw_rem qw_reset out="" q5_used qw_used days_elapsed elapsed_secs
+  q5_rem=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].remaining_fraction // empty")
+  q5_reset=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].reset_in_seconds // empty")
+  qw_rem=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].remaining_fraction // empty")
+  qw_reset=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].reset_in_seconds // empty")
+
+  if [ -n "$q5_rem" ]; then
+    q5_used=$(awk "BEGIN {printf \"%.0f\", (1 - $q5_rem) * 100}")
+    out="${BOLD}5h:${BOLD_OFF}$(color_pct "$q5_used")"
+    if [ -n "$q5_reset" ] && [ "$q5_reset" -gt 0 ]; then
+      out="${out} ${BOLD}(⌛ $(format_duration "$q5_reset"))${RESET}"
+    fi
+  fi
+
+  if [ -n "$qw_rem" ]; then
+    qw_used=$(awk "BEGIN {printf \"%.0f\", (1 - $qw_rem) * 100}")
+    [ -n "$out" ] && out="${out} "
+
+    days_elapsed=4
+    if [ -n "$qw_reset" ] && [ "$qw_reset" -gt 0 ]; then
+      # Total weekly window is 7 days (604800 seconds)
+      elapsed_secs=$(( 604800 - qw_reset ))
+      days_elapsed=$(( elapsed_secs / 86400 + 1 ))
+      [ "$days_elapsed" -lt 1 ] && days_elapsed=1
+      [ "$days_elapsed" -gt 7 ] && days_elapsed=7
+    fi
+
+    out="${out}${BOLD}7d:${BOLD_OFF}$(color_pct_7d "$qw_used" "$days_elapsed")"
+    if [ -n "$qw_reset" ] && [ "$qw_reset" -gt 0 ]; then
+      out="${out} ${BOLD}(⌛ $(format_duration "$qw_reset"))${RESET}"
+    fi
+  fi
+  [ -n "$out" ] && out="${color}${label}${RESET} ${out}"
+  printf '%s' "$out"
+}
+
+# Show both quotas; the active model's group goes first with a highlighted label
+ICON_GEMINI=$(printf '\xef\x80\x85')  # U+F005 font-awesome star
+ICON_3P=$(printf '\xef\x86\xb2')      # U+F1B2 font-awesome cube
+
+model_id=$(echo "$input" | jq -r '.model.id // .model.display_name // empty' | tr '[:upper:]' '[:lower:]')
+is_3p=false
+[[ "$model_id" =~ (claude|gpt|o1|o3|sonnet|opus|haiku) ]] && is_3p=true
+
+if [ "$is_3p" = "true" ]; then
+  first_str=$(build_rate "${ICON_3P} 3rd Party" "3p" "$C_BRANCH")
+  second_str=$(build_rate "${ICON_GEMINI} Gemini" "gemini" "$DIM")
+else
+  first_str=$(build_rate "${ICON_GEMINI} Gemini" "gemini" "$C_DIR")
+  second_str=$(build_rate "${ICON_3P} 3rd Party" "3p" "$DIM")
 fi
 
-if [ -n "$gw_rem" ]; then
-  gw_used=$(awk "BEGIN {printf \"%.0f\", (1 - $gw_rem) * 100}")
-  [ -n "$rate_str" ] && rate_str="${rate_str} "
-  rate_str="${rate_str}${BOLD}7d:${BOLD_OFF}$(color_pct "$gw_used")"
-  if [ -n "$gw_reset" ] && [ "$gw_reset" -gt 0 ]; then
-    d=$(( gw_reset / 86400 ))
-    h=$(( (gw_reset % 86400) / 3600 ))
-    rate_str="${rate_str} ${BOLD}(⌛ ${d}d:${h}h)${RESET}"
-  fi
+rate_str="$first_str"
+if [ -n "$second_str" ]; then
+  [ -n "$rate_str" ] && rate_str="${rate_str} ${DIM}│${RESET} "
+  rate_str="${rate_str}${second_str}"
 fi
 
-# --- LINE 1: 📁 project ❯ branch ~N/+N/↑N/?N ⊙stash ---
+# --- LINE 1: 📁 project ❯ branch ~N/+N/↑N/?N ⊙stash ❯ 🤖 model [mode] ❯ ctx ---
 line1="${C_DIR}📁 $(basename "$dir")${RESET}"
 
 if [ -n "$branch" ]; then
@@ -146,9 +196,11 @@ if [ -n "$branch" ]; then
   line1="${line1}${SEP}${C_BRANCH}${GIT_ICON} ${branch}${RESET} ${u_str}${DIM}/${RESET}${s_str}${DIM}/${RESET}${p_str}${q_str}${stash_str}"
 fi
 
-# --- LINE 2: 🤖 model [mode] ❯ ctx ❯ rate limits ---
-line2="${C_MODEL}${model_label}${RESET}"
-line2="${line2}${SEP}${ctx_str}"
-[ -n "$rate_str" ] && line2="${line2}${SEP}${rate_str}"
+# --- LINE 1 (cont.): model ❯ ctx ---
+line1="${line1}${SEP}${C_MODEL}${model_label}${RESET}"
+line1="${line1}${SEP}${ctx_str}"
+
+# --- LINE 2: rate limits ---
+line2="${rate_str}"
 
 printf '%b\n%b\n' "$line1" "$line2"

@@ -170,11 +170,11 @@ is_3p=false
 [[ "$model_id" =~ (claude|gpt|o1|o3|sonnet|opus|haiku) ]] && is_3p=true
 
 if [ "$is_3p" = "true" ]; then
-  first_str=$(build_rate "${ICON_3P} 3rd Party" "3p" "$C_BRANCH")
-  second_str=$(build_rate "${ICON_GEMINI} Gemini" "gemini" "$DIM")
+  first_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$C_BRANCH")
+  second_str=$(build_rate "${ICON_GEMINI}  Gemini" "gemini" "$DIM")
 else
-  first_str=$(build_rate "${ICON_GEMINI} Gemini" "gemini" "$C_DIR")
-  second_str=$(build_rate "${ICON_3P} 3rd Party" "3p" "$DIM")
+  first_str=$(build_rate "${ICON_GEMINI}  Gemini" "gemini" "$C_DIR")
+  second_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$DIM")
 fi
 
 rate_str="$first_str"

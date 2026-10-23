@@ -157,7 +157,13 @@ build_rate() {
       out="${out} ${BOLD}(⌛ $(format_duration "$qw_reset"))${RESET}"
     fi
   fi
-  [ -n "$out" ] && out="${color}${label}${RESET} ${out}"
+  # Inactive group (color == DIM): strip value colors so the whole group is muted
+  if [ -n "$out" ] && [ "$color" = "$DIM" ]; then
+    out=$(printf '%s' "$out" | sed -e 's/\\033\[[0-9;]*m//g' -e $'s/\033\\[[0-9;]*m//g')
+    out="${DIM}${label} ${out}${RESET}"
+  elif [ -n "$out" ]; then
+    out="${color}${label}${RESET} ${out}"
+  fi
   printf '%s' "$out"
 }
 

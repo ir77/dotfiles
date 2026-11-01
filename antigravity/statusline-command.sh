@@ -126,10 +126,33 @@ format_duration() {
 build_rate() {
   local label="$1" key="$2" color="$3"
   local q5_rem q5_reset qw_rem qw_reset out="" q5_used qw_used days_elapsed elapsed_secs
-  q5_rem=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].remaining_fraction // empty")
-  q5_reset=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].reset_in_seconds // empty")
-  qw_rem=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].remaining_fraction // empty")
-  qw_reset=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].reset_in_seconds // empty")
+
+  if [ "$key" = "argon" ]; then
+    q5_rem=$(echo "$input" | jq -r '
+      .quota // {} | to_entries[] |
+      select(.key | test("argon.*5h|5h.*argon"; "i")) |
+      .value.remaining_fraction // empty' 2>/dev/null | head -n 1)
+    q5_reset=$(echo "$input" | jq -r '
+      .quota // {} | to_entries[] |
+      select(.key | test("argon.*5h|5h.*argon"; "i")) |
+      .value.reset_in_seconds // empty' 2>/dev/null | head -n 1)
+
+    qw_rem=$(echo "$input" | jq -r '
+      .quota // {} | to_entries[] |
+      select(.key | test("argon"; "i")) |
+      select(.key | test("5h"; "i") | not) |
+      .value.remaining_fraction // empty' 2>/dev/null | head -n 1)
+    qw_reset=$(echo "$input" | jq -r '
+      .quota // {} | to_entries[] |
+      select(.key | test("argon"; "i")) |
+      select(.key | test("5h"; "i") | not) |
+      .value.reset_in_seconds // empty' 2>/dev/null | head -n 1)
+  else
+    q5_rem=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].remaining_fraction // empty")
+    q5_reset=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].reset_in_seconds // empty")
+    qw_rem=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].remaining_fraction // empty")
+    qw_reset=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].reset_in_seconds // empty")
+  fi
 
   if [ -n "$q5_rem" ]; then
     q5_used=$(awk "BEGIN {printf \"%.0f\", (1 - $q5_rem) * 100}")
@@ -167,27 +190,41 @@ build_rate() {
   printf '%s' "$out"
 }
 
-# Show both quotas; the active model's group goes first with a highlighted label
+# Show quotas; the active model's group goes first with a highlighted label
 ICON_GEMINI=$(printf '\xef\x80\x85')  # U+F005 font-awesome star
 ICON_3P=$(printf '\xef\x86\xb2')      # U+F1B2 font-awesome cube
+ICON_ARGON=$(printf '\xef\x83\x83')   # U+F0C3 font-awesome flask
 
 model_id=$(echo "$input" | jq -r '.model.id // .model.display_name // empty' | tr '[:upper:]' '[:lower:]')
 is_3p=false
+is_argon=false
 [[ "$model_id" =~ (claude|gpt|o1|o3|sonnet|opus|haiku) ]] && is_3p=true
+[[ "$model_id" =~ argon ]] && is_argon=true
 
-if [ "$is_3p" = "true" ]; then
+if [ "$is_argon" = "true" ]; then
+  first_str=$(build_rate "${ICON_ARGON}  Argon" "argon" "$C_MODEL")
+  second_str=$(build_rate "${ICON_GEMINI}  Gemini" "gemini" "$DIM")
+  third_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$DIM")
+elif [ "$is_3p" = "true" ]; then
   first_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$C_BRANCH")
   second_str=$(build_rate "${ICON_GEMINI}  Gemini" "gemini" "$DIM")
+  third_str=$(build_rate "${ICON_ARGON}  Argon" "argon" "$DIM")
 else
   first_str=$(build_rate "${ICON_GEMINI}  Gemini" "gemini" "$C_DIR")
-  second_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$DIM")
+  second_str=$(build_rate "${ICON_ARGON}  Argon" "argon" "$DIM")
+  third_str=$(build_rate "${ICON_3P}  3rd Party" "3p" "$DIM")
 fi
 
-rate_str="$first_str"
-if [ -n "$second_str" ]; then
-  [ -n "$rate_str" ] && rate_str="${rate_str} ${DIM}│${RESET} "
-  rate_str="${rate_str}${second_str}"
-fi
+rate_str=""
+for s in "$first_str" "$second_str" "$third_str"; do
+  if [ -n "$s" ]; then
+    if [ -n "$rate_str" ]; then
+      rate_str="${rate_str} ${DIM}│${RESET} ${s}"
+    else
+      rate_str="${s}"
+    fi
+  fi
+done
 
 # --- LINE 1: 📁 project ❯ branch ~N/+N/↑N/?N ⊙stash ❯ 🤖 model [mode] ❯ ctx ---
 line1="${C_DIR}📁 $(basename "$dir")${RESET}"

@@ -102,8 +102,6 @@ cask "karabiner-elements"
 cask "meetingbar"
 # App to write, plan, collaborate, and get organised
 cask "notion"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Plugin for AWS CLI to start and end sessions that connect to managed instances
 cask "session-manager-plugin"
 # JDK from the Eclipse Foundation (Adoptium)

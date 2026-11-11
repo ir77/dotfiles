@@ -85,6 +85,8 @@ cask "claude"
 cask "codex"
 # OpenJDK distribution from Amazon
 cask "corretto@21"
+# Display control utility
+cask "display-pilot"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
 cask "font-roboto-mono-nerd-font"
@@ -98,7 +100,7 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 # Keyboard customiser
 cask "karabiner-elements"
-# Shows the next meeting in the menu bar
+# Meetings in your menu bar
 cask "meetingbar"
 # App to write, plan, collaborate, and get organised
 cask "notion"

@@ -10,22 +10,16 @@ brew "aws-sam-cli"
 brew "awscli-local"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# TIFF library and utilities
-brew "libtiff"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# Play, record, convert, and stream select audio and video codecs
-brew "ffmpeg"
 # Command-line tools for fly.io services
 brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool
 brew "gh"
-# Interpreter for PostScript and PDF
-brew "ghostscript"
 # Distributed revision control system
 brew "git"
 # Syntax-highlighting pager for git and diff output
@@ -44,8 +38,6 @@ brew "python@3.13"
 brew "ruby@3.3"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Version control system designed to be a better CVS
-brew "subversion"
 # Text interface for Git repositories
 brew "tig"
 # CLI tool that moves files or folder to the trash

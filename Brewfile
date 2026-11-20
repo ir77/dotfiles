@@ -45,8 +45,6 @@ brew "kotlin"
 brew "libpq", link: true
 # Powerful, lightweight programming language
 brew "lua"
-# Manage multiple Node.js versions
-brew "nvm"
 # Development kit for the Java programming language
 brew "openjdk@17"
 # General-purpose scripting language

@@ -58,12 +58,12 @@ gw_rem=$(echo "$input" | jq -r '.quota["gemini-weekly"].remaining_fraction // em
 tp_rem=$(echo "$input" | jq -r '.quota["3p-weekly"].remaining_fraction // empty')
 
 if [ -n "$gw_rem" ]; then
-  gw_used_pct=$(python3 -c "print(round((1 - float('$gw_rem')) * 100))" 2>/dev/null || echo "0")
+  gw_used_pct=$(awk "BEGIN {printf \"%.0f\", (1 - $gw_rem) * 100}")
   rate_str="${BOLD}Gemini:${BOLD_OFF}$(color_pct "$gw_used_pct")"
 fi
 
 if [ -n "$tp_rem" ]; then
-  tp_used_pct=$(python3 -c "print(round((1 - float('$tp_rem')) * 100))" 2>/dev/null || echo "0")
+  tp_used_pct=$(awk "BEGIN {printf \"%.0f\", (1 - $tp_rem) * 100}")
   [ -n "$rate_str" ] && rate_str="${rate_str} "
   rate_str="${rate_str}${BOLD}Third-Party:${BOLD_OFF}$(color_pct "$tp_used_pct")"
 fi

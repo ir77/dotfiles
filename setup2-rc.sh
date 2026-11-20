@@ -35,6 +35,7 @@ ln -snf "$DOTFILES_DIR/.claude/skills" ~/.claude/skills
 
 mkdir -p ~/.gemini
 ln -snf "$DOTFILES_DIR/gemini/settings.json" ~/.gemini/settings.json
+ln -snf "$DOTFILES_DIR/gemini/statusline-command.sh" ~/.gemini/statusline-command.sh
 
 mkdir -p ~/.gemini/antigravity-cli
 ln -snf "$DOTFILES_DIR/antigravity/statusline-command.sh" ~/.gemini/antigravity-cli/statusline-command.sh

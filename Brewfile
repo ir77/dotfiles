@@ -35,18 +35,12 @@ brew "git-delta"
 brew "git-filter-repo"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
-# Manage your Java environment
-brew "jenv"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Statically typed programming language for the JVM
-brew "kotlin"
 # Postgres C API library
 brew "libpq", link: true
 # Powerful, lightweight programming language
 brew "lua"
-# Development kit for the Java programming language
-brew "openjdk@17"
 # General-purpose scripting language
 brew "php"
 # Interpreted, interactive, object-oriented programming language
@@ -104,8 +98,6 @@ cask "meetingbar"
 cask "notion"
 # Plugin for AWS CLI to start and end sessions that connect to managed instances
 cask "session-manager-plugin"
-# JDK from the Eclipse Foundation (Adoptium)
-cask "temurin"
 # Remote pair programming app
 cask "tuple"
 # Open-source code editor

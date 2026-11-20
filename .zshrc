@@ -104,18 +104,20 @@ alias idea="open -na 'IntelliJ IDEA.app' --args"
 #}}}
 
 #--------------------- function -------------------{{{
-function fzf-ack-search() {
-  # 1. ack を使ってコード検索を実行。
+function fzf-rg-search() {
+  # 1. rg (ripgrep) を使ってコード検索を実行。
   # 2. fzf を用いてインタラクティブに検索結果を選択。
   # 3. 選択した結果を bat を使ってシンタックスハイライト付きで表示。
-  ack "$@" . --ignore-dir=debug |\
-    fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' |\
-    awk -F ":" '{print $1 " -H " $2}' |\
-    xargs bat --color=always
+  local selected
+  selected=$(rg --line-number --no-heading --glob '!debug' "" |\
+    fzf --delimiter ':' --preview 'bat --color=always --highlight-line {2} --line-range {2}: {1}')
+  if [[ -n "$selected" ]]; then
+    bat --color=always --highlight-line "${${selected#*:}%%:*}" "${selected%%:*}"
+  fi
   zle accept-line
 }
-zle -N fzf-ack-search
-bindkey '^w' fzf-ack-search
+zle -N fzf-rg-search
+bindkey '^w' fzf-rg-search
 
 function fzf_cd() {
   local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'

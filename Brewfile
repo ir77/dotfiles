@@ -1,8 +1,6 @@
 tap "git-duet/tap", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "snyk/tap", trusted: true
-# Search tool like grep, but optimized for programmers
-brew "ack"
 # CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
 brew "aws-sam-cli"
 # Thin wrapper around the `aws` command-line interface for use with LocalStack
@@ -23,6 +21,8 @@ brew "git"
 brew "jq"
 # Postgres C API library
 brew "libpq", link: true
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Powerful, clean, object-oriented scripting language
 brew "ruby@3.3"
 # Cross-shell prompt for astronauts

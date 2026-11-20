@@ -29,7 +29,10 @@ brew update
 brew upgrade
 brew doctor
 brew bundle
-brew bundle dump --force --file=- | grep -v "^vscode " > Brewfile # 結果を標準出力に強制, vscodeの拡張はvscode側で管理しているので除く
+# Brewfileは手で編集する。インストール済みだがBrewfileにないものを表示する（何も消さない）
+# 後半の `brew cleanup` のキャッシュ削除の予告は不要なので表示しない
+print_message "$YELLOW" "Installed but not in Brewfile (add to Brewfile or brew uninstall):"
+brew bundle cleanup --file=Brewfile | awk '/^Would `brew cleanup`:/ {exit} {print}'
 
 if ! command -v vp &> /dev/null; then
     echo "vp command not found. Installing Vite+..."

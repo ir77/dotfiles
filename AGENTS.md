@@ -18,9 +18,10 @@ macOS開発環境の設定ファイル（dotfiles）と、セットアップの�
 
 ### ツールを追加・削除する場合
 
-- `Brewfile` は `setup1-brew.sh` の実行時に、インストール済みの状態から**再生成**されます。
-  - 追加: `Brewfile` に追記して `brew bundle` を実行する（または `brew install` してから `setup1-brew.sh` を実行する）
-  - 削除: `Brewfile` から行を消すだけでは再生成で復活します。必ず `brew uninstall` も実行してください
+- `Brewfile` は手で編集します（自動では書き換えません）。
+  - 追加: `brew install` したら `Brewfile` にも追記する（`brew bundle add <name>` / `brew bundle add --cask <name>` でも追記できる）
+  - 削除: `Brewfile` から行を消し、`brew uninstall` も実行する
+  - `setup1-brew.sh` は最後に、インストール済みだが `Brewfile` にないものを表示します。表示されたものは追記するか uninstall してください
 
 ### 設定ファイルを追加する場合
 

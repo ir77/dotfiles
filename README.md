@@ -32,7 +32,7 @@ git submodule update --remote
 
 | ファイル | 内容 |
 | --- | --- |
-| `setup1-brew.sh` | Homebrewをインストール・更新し、`brew bundle` で `Brewfile` のツールを入れる。最後に `brew bundle dump` で `Brewfile` を**インストール済みの状態から再生成する** |
+| `setup1-brew.sh` | Homebrewをインストール・更新し、`brew bundle` で `Brewfile` のツールを入れる。最後に、インストール済みだが `Brewfile` にないものを一覧表示する（`Brewfile` は書き換えない） |
 | `setup2-rc.sh` | リポジトリ内の設定ファイルをホームディレクトリへシンボリックリンクする |
 | `setup3-macdefaults.sh` | `defaults write` でmacOSの設定を変更する |
 

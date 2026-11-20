@@ -1,7 +1,6 @@
 tap "git-duet/tap", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "olets/tap", trusted: true
-tap "oven-sh/bun"
 tap "snyk/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"
@@ -39,10 +38,6 @@ brew "imagemagick"
 brew "jq"
 # Postgres C API library
 brew "libpq", link: true
-# Powerful, lightweight programming language
-brew "lua"
-# General-purpose scripting language
-brew "php"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
 # Powerful, clean, object-oriented scripting language
@@ -61,8 +56,6 @@ brew "vim"
 brew "git-duet/tap/git-duet", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
-# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun", trusted: true
 # Find & fix known vulnerabilities in open-source dependencies
 brew "snyk/tap/snyk", trusted: true
 # Tools for building Android applications

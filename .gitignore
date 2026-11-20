@@ -2,5 +2,5 @@
 *.swp
 *.private
 .DS_Store
-strike-trio
+.claude/.cc-writes
 .claude/skills/synced/

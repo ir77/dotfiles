@@ -19,10 +19,6 @@ brew "fzf"
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Quickly rewrite git repository history
-brew "git-filter-repo"
-# Tools and libraries to manipulate images in select formats
-brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Postgres C API library

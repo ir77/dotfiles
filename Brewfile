@@ -14,8 +14,6 @@ brew "bat"
 brew "deno"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# Command-line tools for fly.io services
-brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool

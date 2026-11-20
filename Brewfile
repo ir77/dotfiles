@@ -1,6 +1,5 @@
 tap "git-duet/tap", trusted: true
 tap "hashicorp/tap", trusted: true
-tap "olets/tap", trusted: true
 tap "snyk/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"

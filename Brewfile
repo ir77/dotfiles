@@ -104,4 +104,3 @@ cask "tuple"
 cask "visual-studio-code"
 # Install and switch between multiple versions of Xcode
 cask "xcodes-app"
-npm "corepack"

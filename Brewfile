@@ -50,8 +50,6 @@ brew "snyk/tap/snyk", trusted: true
 cask "android-studio"
 # Agent orchestration platform
 cask "antigravity"
-# Terminal interface for Antigravity agents
-cask "antigravity-cli"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # OpenAI's coding agent that runs in your terminal

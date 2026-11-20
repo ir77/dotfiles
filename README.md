@@ -32,7 +32,7 @@ git submodule update --remote
 
 | ファイル | 内容 |
 | --- | --- |
-| `setup1-brew.sh` | Homebrewをインストール・更新し、`brew bundle` で `Brewfile` のツールを入れる。最後に、インストール済みだが `Brewfile` にないものを一覧表示する（`Brewfile` は書き換えない） |
+| `setup1-brew.sh` | Homebrewをインストール・更新し、`brew bundle` で `Brewfile` のツールと `Vite+` (`vp`)、`Antigravity CLI` (`agy`) を入れる。最後に、インストール済みだが `Brewfile` にないものを一覧表示する（`Brewfile` は書き換えない） |
 | `setup2-rc.sh` | リポジトリ内の設定ファイルをホームディレクトリへシンボリックリンクする |
 | `setup3-macdefaults.sh` | `defaults write` でmacOSの設定を変更する |
 

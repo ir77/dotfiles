@@ -39,4 +39,9 @@ if ! command -v vp &> /dev/null; then
     curl -fsSL https://vite.plus | bash
 fi
 
+if ! command -v agy &> /dev/null; then
+    echo "agy command not found. Installing Antigravity CLI..."
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
+fi
+
 print_message "$GREEN" "Setup completed!"

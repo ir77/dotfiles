@@ -8,19 +8,21 @@
 [core]
 	editor = vim
 	quotepath = false
-	pager = delta
 [init]
 	defaultBranch = main
+[pager]
+	log = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less
+	show = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less
+	diff = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less
 [interactive]
-	diffFilter = delta --color-only
+	diffFilter = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight
+[diff]
+	algorithm = histogram
+	colorMoved = default
+	mnemonicPrefix = true
+	renames = true
 [merge]
 	conflictStyle = zdiff3
-[delta]
-	navigate = true
-	side-by-side = true
-	line-numbers = true
-	hunk-header-style = omit
-	color-moved = true
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential

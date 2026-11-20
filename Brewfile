@@ -30,8 +30,6 @@ brew "imagemagick"
 brew "jq"
 # Postgres C API library
 brew "libpq", link: true
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # Powerful, clean, object-oriented scripting language
 brew "ruby@3.3"
 # Cross-shell prompt for astronauts

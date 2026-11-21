@@ -154,7 +154,6 @@
 
 "--------------------visualモード--------------------"
   vnoremap S	:s///g<LEFT><LEFT><LEFT>
-  vnoremap =	:EasyAlign
   vnoremap J	gJ
 
   " インデント変更時はvisulal modeから抜けないようにする
@@ -196,7 +195,7 @@
 "-------------------- ファイラー設定 --------------------"
 
   let g:netrw_liststyle = 3 " tree style listing
-  let g:netrw_banner = 1 " 上のバナーを見せない
+  let g:netrw_banner = 1 " 上のバナーを見せる (0で非表示)
   let g:netrw_winsize   = 70 " vで開くときにnetrwの領域を30%にする
 
   let g:netrw_altv = 1 " 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)

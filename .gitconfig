@@ -5,6 +5,10 @@
 	autoSetupRemote = true
 [pull]
 	rebase = false
+[fetch]
+	prune = true
+[commit]
+	verbose = true
 [core]
 	editor = vim
 	quotepath = false

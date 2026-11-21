@@ -120,10 +120,15 @@ zle -N fzf-rg-search
 bindkey '^w' fzf-rg-search
 
 function fzf_cd() {
-  local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-  local result=$({ eval "$fdpath"; } | fzf --query "$LBUFFER")
-  eval "$result"
-  zle accept-line
+  local dir
+  dir=$(fd . ~ --full-path --type d --exclude debug --exclude Library | fzf --query "$LBUFFER")
+  if [[ -n "$dir" ]]; then
+    cd -- "$dir"
+    BUFFER=""
+    zle accept-line
+  else
+    zle reset-prompt
+  fi
 }
 zle -N fzf_cd
 bindkey '^s' fzf_cd

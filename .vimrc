@@ -56,36 +56,6 @@
     set ambiwidth=double
   endif
 
-"-------------------- dein.vim --------------------"
-  let s:dein_dir = expand('~/.cache/dein') " プラグインが実際にインストールされるディレクトリ
-  let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-  if &runtimepath !~# '/dein.vim'
-    if !isdirectory(s:dein_repo_dir)
-      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-    endif
-    execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-  endif
-
-  if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
-
-    " プラグインリストを収めた TOML ファイル
-    " 予め TOML ファイル（後述）を用意しておく
-    let g:rc_dir    = expand('~/.vim/rc')
-    let s:toml      = g:rc_dir . '/dein.toml'
-
-    " TOML を読み込み、キャッシュしておく
-    call dein#load_toml(s:toml,      {'lazy': 0})
-
-    call dein#end()
-    call dein#save_state()
-  endif
-
-  if dein#check_install()
-    call dein#install()
-  endif
-
 "--------------------View--------------------"
   set number
   
@@ -97,7 +67,37 @@
   highlight LineNr ctermbg=black
   set cursorline
 
-  set laststatus=2 "ステータスラインを常に表示
+  " インデントの縦線表示 (Vim 9+ の leadmultispace)
+  set list
+  set listchars=tab:»-
+  silent! set listchars+=leadmultispace:\|\ 
+
+  " ステータスラインを常に表示 (Powerline風)
+  set laststatus=2
+  highlight StatusLineMode    ctermfg=235 ctermbg=114 cterm=bold
+  highlight StatusLineModeSep ctermfg=114 ctermbg=238
+  highlight StatusLineFile    ctermfg=252 ctermbg=238
+  highlight StatusLineFileSep ctermfg=238 ctermbg=235
+  highlight StatusLineMid     ctermfg=247 ctermbg=235
+  highlight StatusLineInfoSep ctermfg=238 ctermbg=235
+  highlight StatusLineInfo    ctermfg=250 ctermbg=238
+
+  function! StatuslineMode() abort
+    return get({
+          \ 'n': 'NORMAL', 'i': 'INSERT', 'v': 'VISUAL',
+          \ 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
+          \ 'R': 'REPLACE', 'c': 'COMMAND', 't': 'TERMINAL'
+          \ }, mode(), mode())
+  endfunction
+
+  set statusline=
+  set statusline+=%#StatusLineMode#\ %{StatuslineMode()}\ 
+  set statusline+=%#StatusLineModeSep#
+  set statusline+=%#StatusLineFile#\ %t%m%r\ 
+  set statusline+=%#StatusLineFileSep#
+  set statusline+=%#StatusLineMid#%=
+  set statusline+=%#StatusLineInfoSep#
+  set statusline+=%#StatusLineInfo#\ %{&fenc!=''?&fenc:&enc}\ │\ %{&ff}\ │\ %{&ft!=''?&ft:'no\ ft'}\ │\ %l:%c\ 
 
 "--------------------Normalモード--------------------"
   " move vertically by visual line

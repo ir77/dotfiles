@@ -9,8 +9,6 @@ ln -snf "$DOTFILES_DIR/abbreviations" ~/.config/zsh/abbreviations
 ln -snf "$DOTFILES_DIR/starship.toml" ~/.config
 
 # Setup Vim
-mkdir -p ~/.vim/rc
-ln -snf "$DOTFILES_DIR/dein.toml" ~/.vim/rc
 ln -snf "$DOTFILES_DIR/.vimrc" ~/
 
 # Setup Git

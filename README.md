@@ -44,7 +44,7 @@ git submodule update --remote
 | `.zshrc` | `~/.zshrc` | Zshのメイン設定。マシン固有の設定やトークンは `~/.zshrc_private`（Git管理外）に書く |
 | `abbreviations` | `~/.config/zsh/abbreviations` | [zsh-abbr](https://github.com/olets/zsh-abbr) の略語定義 |
 | `starship.toml` | `~/.config/starship.toml` | [Starship](https://starship.rs/) プロンプトの設定 |
-| `.vimrc`, `dein.toml` | `~/.vimrc`, `~/.vim/rc/dein.toml` | Vimの設定とプラグイン一覧 |
+| `.vimrc` | `~/.vimrc` | Vimの設定 |
 | `.gitconfig` | `~/.gitconfig` | Gitの設定。ユーザー情報は `~/.gitconfig.local`（Git管理外）に書く |
 | `claude/` | `~/.claude/` | Claude Codeの設定とステータスライン |
 | `codex/` | `~/.codex/` | Codex CLIの設定 |

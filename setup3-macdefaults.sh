@@ -18,7 +18,6 @@ echo 'defaults write com.apple.screencapture location path'
 # Dock
 defaults write com.apple.dock persistent-apps -array #Dock に標準で入っている全てのアプリを消す、Finder とごみ箱は消えない
 defaults write com.apple.dock autohide -bool true
-killall Dock
 
 # finder
 defaults write com.apple.finder ShowStatusBar -bool true
@@ -39,9 +38,6 @@ defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 6
 killall mds 
 sudo mdutil -i on /
 sudo mdutil -E /
-
-# バッテリーのパーセントを表示する
-defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 # Kill affected applications
 for app in Finder Dock SystemUIServer; do killall "$app" >/dev/null 2>&1; done

@@ -41,12 +41,8 @@ brew "hashicorp/tap/terraform", trusted: true
 brew "snyk/tap/snyk", trusted: true
 # Tools for building Android applications
 cask "android-studio"
-# Agent orchestration platform
-cask "antigravity"
 # Anthropic's official Claude AI desktop app
 cask "claude"
-# OpenAI's coding agent that runs in your terminal
-cask "codex"
 # OpenJDK distribution from Amazon
 cask "corretto@21"
 # Display control utility

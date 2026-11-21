@@ -12,9 +12,9 @@ zsh, vim, gitなどの設定と、各種ツールを自動でインストール�
 
 ```bash
 git clone --recurse-submodules git@github.com:ir77/dotfiles.git
-sh setup1-brew.sh        # Homebrewのインストール・更新と、Brewfileにあるツールのインストール
-sh setup2-rc.sh          # 設定ファイルのシンボリックリンクを作成
-sh setup3-macdefaults.sh # macOSのシステム設定（Dock、Finderなど）
+bash setup1-brew.sh        # Homebrewのインストール・更新と、Brewfileにあるツールのインストール
+bash setup2-rc.sh          # 設定ファイルのシンボリックリンクを作成
+bash setup3-macdefaults.sh # macOSのシステム設定（Dock、Finderなど）
 ```
 
 `setup2-rc.sh` の実行後、Gitのユーザー情報を `~/.gitconfig.local` に設定してください（スクリプトが案内を表示します）。

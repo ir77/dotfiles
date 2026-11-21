@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # keyrepeatやtrackpadの変更はバグったときに面倒なので注意して実施する
 # defaults read -g KeyRepeat # default 2
 # defaults read -g InitialKeyRepeat # default 15

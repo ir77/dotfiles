@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 readonly GREEN='\033[32m'
 readonly YELLOW='\033[33m'

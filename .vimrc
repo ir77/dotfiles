@@ -72,32 +72,76 @@
   set listchars=tab:»-
   silent! set listchars+=leadmultispace:\|\ 
 
-  " ステータスラインを常に表示 (Powerline風)
+  " ステータスラインを常に表示 (Powerline風・モード連動カラー)
   set laststatus=2
-  highlight StatusLineMode    ctermfg=235 ctermbg=114 cterm=bold
-  highlight StatusLineModeSep ctermfg=114 ctermbg=238
-  highlight StatusLineFile    ctermfg=252 ctermbg=238
-  highlight StatusLineFileSep ctermfg=238 ctermbg=235
-  highlight StatusLineMid     ctermfg=247 ctermbg=235
-  highlight StatusLineInfoSep ctermfg=238 ctermbg=235
-  highlight StatusLineInfo    ctermfg=250 ctermbg=238
+  set noshowmode
 
-  function! StatuslineMode() abort
-    return get({
-          \ 'n': 'NORMAL', 'i': 'INSERT', 'v': 'VISUAL',
-          \ 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
-          \ 'R': 'REPLACE', 'c': 'COMMAND', 't': 'TERMINAL'
-          \ }, mode(), mode())
+  function! s:setup_statusline_hl() abort
+    " モードごとの配色 (jellybeans風: 256色 / True Color 両対応)
+    highlight SLNormal       ctermfg=235 ctermbg=114 cterm=bold guifg=#151515 guibg=#99ad6a gui=bold
+    highlight SLNormalSep    ctermfg=114 ctermbg=238            guifg=#99ad6a guibg=#404040
+    highlight SLInsert       ctermfg=235 ctermbg=75  cterm=bold guifg=#151515 guibg=#70a5eb gui=bold
+    highlight SLInsertSep    ctermfg=75  ctermbg=238            guifg=#70a5eb guibg=#404040
+    highlight SLVisual       ctermfg=235 ctermbg=176 cterm=bold guifg=#151515 guibg=#c6b6ee gui=bold
+    highlight SLVisualSep    ctermfg=176 ctermbg=238            guifg=#c6b6ee guibg=#404040
+    highlight SLReplace      ctermfg=255 ctermbg=203 cterm=bold guifg=#ffffff guibg=#cf6a4c gui=bold
+    highlight SLReplaceSep   ctermfg=203 ctermbg=238            guifg=#cf6a4c guibg=#404040
+    highlight SLCommand      ctermfg=235 ctermbg=221 cterm=bold guifg=#151515 guibg=#fad07a gui=bold
+    highlight SLCommandSep   ctermfg=221 ctermbg=238            guifg=#fad07a guibg=#404040
+    highlight SLTerminal     ctermfg=235 ctermbg=80  cterm=bold guifg=#151515 guibg=#8fbfdc gui=bold
+    highlight SLTerminalSep  ctermfg=80  ctermbg=238            guifg=#8fbfdc guibg=#404040
+
+    highlight SLFile         ctermfg=252 ctermbg=238            guifg=#e8e8d3 guibg=#404040
+    highlight SLFileSep      ctermfg=238 ctermbg=235            guifg=#404040 guibg=#262626
+    highlight SLMid          ctermfg=247 ctermbg=235            guifg=#888888 guibg=#262626
+    highlight SLInfoSep      ctermfg=238 ctermbg=235            guifg=#404040 guibg=#262626
+    highlight SLInfo         ctermfg=250 ctermbg=238            guifg=#c8c8b8 guibg=#404040
+    highlight SLInactive     ctermfg=244 ctermbg=236            guifg=#888888 guibg=#303030
   endfunction
 
-  set statusline=
-  set statusline+=%#StatusLineMode#\ %{StatuslineMode()}\ 
-  set statusline+=%#StatusLineModeSep#
-  set statusline+=%#StatusLineFile#\ %t%m%r\ 
-  set statusline+=%#StatusLineFileSep#
-  set statusline+=%#StatusLineMid#%=
-  set statusline+=%#StatusLineInfoSep#
-  set statusline+=%#StatusLineInfo#\ %{&fenc!=''?&fenc:&enc}\ │\ %{&ff}\ │\ %{&ft!=''?&ft:'no\ ft'}\ │\ %l:%c\ 
+  call s:setup_statusline_hl()
+
+  function! StatuslineActive() abort
+    let l:m = mode()
+    if l:m ==# 'i'
+      let [l:hl, l:sep, l:name] = ['SLInsert', 'SLInsertSep', 'INSERT']
+    elseif l:m ==# 'v'
+      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'VISUAL']
+    elseif l:m ==# 'V'
+      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'V-LINE']
+    elseif l:m ==# "\<C-v>"
+      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'V-BLOCK']
+    elseif l:m ==# 'R'
+      let [l:hl, l:sep, l:name] = ['SLReplace', 'SLReplaceSep', 'REPLACE']
+    elseif l:m ==# 'c'
+      let [l:hl, l:sep, l:name] = ['SLCommand', 'SLCommandSep', 'COMMAND']
+    elseif l:m ==# 't'
+      let [l:hl, l:sep, l:name] = ['SLTerminal', 'SLTerminalSep', 'TERMINAL']
+    else
+      let [l:hl, l:sep, l:name] = ['SLNormal', 'SLNormalSep', 'NORMAL']
+    endif
+
+    let l:s = ''
+    let l:s .= '%#' . l:hl . '# ' . l:name . ' %#' . l:sep . '#'
+    let l:s .= '%#SLFile# %t%m%r %#SLFileSep#'
+    let l:s .= '%#SLMid#%='
+    let l:s .= '%#SLInfoSep#%#SLInfo# %{&fenc!=""?&fenc:&enc} │ %{&ff} │ %{&ft!=""?&ft:"no ft"} '
+    let l:s .= '%#' . l:sep . '#%#' . l:hl . '# %p%% %l:%c '
+    return l:s
+  endfunction
+
+  function! StatuslineInactive() abort
+    return '%#SLInactive# %t%m%r %= %p%% %l:%c '
+  endfunction
+
+  augroup MyStatusline
+    autocmd!
+    autocmd ColorScheme * call s:setup_statusline_hl()
+    autocmd WinEnter,BufEnter * setlocal statusline=%!StatuslineActive()
+    autocmd WinLeave * setlocal statusline=%!StatuslineInactive()
+  augroup END
+
+  set statusline=%!StatuslineActive()
 
 "--------------------Normalモード--------------------"
   " move vertically by visual line

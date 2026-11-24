@@ -125,9 +125,11 @@ format_duration() {
 # Build rate string for one quota family: build_rate LABEL KEY COLOR
 build_rate() {
   local label="$1" key="$2" color="$3"
-  local q5_rem q5_reset qw_rem qw_reset out="" q5_used qw_used days_elapsed elapsed_secs
-  q5_rem=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].remaining_fraction // empty")
-  q5_reset=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].reset_in_seconds // empty")
+  local q5_rem="" q5_reset="" qw_rem qw_reset out="" q5_used qw_used days_elapsed elapsed_secs
+  if [ "$color" != "$DIM" ]; then
+    q5_rem=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].remaining_fraction // empty")
+    q5_reset=$(echo "$input" | jq -r ".quota[\"${key}-5h\"].reset_in_seconds // empty")
+  fi
   qw_rem=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].remaining_fraction // empty")
   qw_reset=$(echo "$input" | jq -r ".quota[\"${key}-weekly\"].reset_in_seconds // empty")
 

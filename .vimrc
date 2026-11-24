@@ -72,75 +72,154 @@
   set listchars=tab:»-
   silent! set listchars+=leadmultispace:\|\ 
 
-  " ステータスラインを常に表示 (Powerline風・モード連動カラー)
+  " ステータスラインを常に表示 (Starship / agy statusline風)
   set laststatus=2
   set noshowmode
 
   function! s:setup_statusline_hl() abort
-    " モードごとの配色 (jellybeans風: 256色 / True Color 両対応)
-    highlight SLNormal       ctermfg=235 ctermbg=114 cterm=bold guifg=#151515 guibg=#99ad6a gui=bold
-    highlight SLNormalSep    ctermfg=114 ctermbg=238            guifg=#99ad6a guibg=#404040
-    highlight SLInsert       ctermfg=235 ctermbg=75  cterm=bold guifg=#151515 guibg=#70a5eb gui=bold
-    highlight SLInsertSep    ctermfg=75  ctermbg=238            guifg=#70a5eb guibg=#404040
-    highlight SLVisual       ctermfg=235 ctermbg=176 cterm=bold guifg=#151515 guibg=#c6b6ee gui=bold
-    highlight SLVisualSep    ctermfg=176 ctermbg=238            guifg=#c6b6ee guibg=#404040
-    highlight SLReplace      ctermfg=255 ctermbg=203 cterm=bold guifg=#ffffff guibg=#cf6a4c gui=bold
-    highlight SLReplaceSep   ctermfg=203 ctermbg=238            guifg=#cf6a4c guibg=#404040
-    highlight SLCommand      ctermfg=235 ctermbg=221 cterm=bold guifg=#151515 guibg=#fad07a gui=bold
-    highlight SLCommandSep   ctermfg=221 ctermbg=238            guifg=#fad07a guibg=#404040
-    highlight SLTerminal     ctermfg=235 ctermbg=80  cterm=bold guifg=#151515 guibg=#8fbfdc gui=bold
-    highlight SLTerminalSep  ctermfg=80  ctermbg=238            guifg=#8fbfdc guibg=#404040
+    " Starship / agy statusline パレット (ANSI 16色 + True Color 両対応)
+    " ベース背景 (アクティブ: 235 / 非アクティブ: 234)
+    highlight SLBase         ctermfg=252 ctermbg=235            guifg=#e0e0e0 guibg=#262626
+    highlight SLDim          ctermfg=244 ctermbg=235            guifg=#808080 guibg=#262626
+    highlight SLSep          ctermfg=2   ctermbg=235            guifg=#5faf5f guibg=#262626
 
-    highlight SLFile         ctermfg=252 ctermbg=238            guifg=#e8e8d3 guibg=#404040
-    highlight SLFileSep      ctermfg=238 ctermbg=235            guifg=#404040 guibg=#262626
-    highlight SLMid          ctermfg=247 ctermbg=235            guifg=#888888 guibg=#262626
-    highlight SLInfoSep      ctermfg=238 ctermbg=235            guifg=#404040 guibg=#262626
-    highlight SLInfo         ctermfg=250 ctermbg=238            guifg=#c8c8b8 guibg=#404040
-    highlight SLInactive     ctermfg=244 ctermbg=236            guifg=#888888 guibg=#303030
+    " モードごとの配色
+    highlight SLNormal       ctermfg=10  ctermbg=235 cterm=bold guifg=#99ad6a guibg=#262626 gui=bold
+    highlight SLInsert       ctermfg=12  ctermbg=235 cterm=bold guifg=#70a5eb guibg=#262626 gui=bold
+    highlight SLVisual       ctermfg=13  ctermbg=235 cterm=bold guifg=#c6b6ee guibg=#262626 gui=bold
+    highlight SLReplace      ctermfg=9   ctermbg=235 cterm=bold guifg=#cf6a4c guibg=#262626 gui=bold
+    highlight SLCommand      ctermfg=11  ctermbg=235 cterm=bold guifg=#fad07a guibg=#262626 gui=bold
+    highlight SLTerminal     ctermfg=14  ctermbg=235 cterm=bold guifg=#5fd7ff guibg=#262626 gui=bold
+
+    " 各セクションの配色
+    highlight SLFile         ctermfg=12  ctermbg=235 cterm=bold guifg=#5fafff guibg=#262626 gui=bold
+    highlight SLMod          ctermfg=11  ctermbg=235 cterm=bold guifg=#fad07a guibg=#262626 gui=bold
+    highlight SLRO           ctermfg=9   ctermbg=235 cterm=bold guifg=#ff5f5f guibg=#262626 gui=bold
+    highlight SLBranch       ctermfg=13  ctermbg=235 cterm=bold guifg=#d787ff guibg=#262626 gui=bold
+    highlight SLGitUnstaged  ctermfg=11  ctermbg=235            guifg=#fad07a guibg=#262626
+    highlight SLGitStaged    ctermfg=10  ctermbg=235            guifg=#99ad6a guibg=#262626
+    highlight SLGitUnpushed  ctermfg=13  ctermbg=235            guifg=#d787ff guibg=#262626
+    highlight SLGitUntracked ctermfg=9   ctermbg=235            guifg=#ff5f5f guibg=#262626
+    highlight SLFileType     ctermfg=14  ctermbg=235 cterm=bold guifg=#5fd7ff guibg=#262626 gui=bold
+    highlight SLPos          ctermfg=255 ctermbg=235 cterm=bold guifg=#ffffff guibg=#262626 gui=bold
+
+    highlight SLInactive     ctermfg=244 ctermbg=234            guifg=#808080 guibg=#1c1c1c
   endfunction
 
   call s:setup_statusline_hl()
 
+  function! s:update_git_info() abort
+    let b:sl_git = ''
+    let l:dir = expand('%:p:h')
+    if empty(l:dir) || !isdirectory(l:dir)
+      let l:dir = getcwd()
+    endif
+    let l:lines = systemlist('git -C ' . shellescape(l:dir) . ' status --porcelain=v2 --branch 2>/dev/null')
+    if v:shell_error != 0 || empty(l:lines)
+      return
+    endif
+
+    let l:branch = ''
+    let l:unstaged = 0
+    let l:staged = 0
+    let l:unpushed = 0
+    let l:untracked = 0
+
+    for l:line in l:lines
+      if l:line =~# '^# branch\.head '
+        let l:branch = l:line[14:]
+      elseif l:line =~# '^# branch\.ab '
+        let l:m = matchlist(l:line, '+\(\d\+\)')
+        if !empty(l:m)
+          let l:unpushed = str2nr(l:m[1])
+        endif
+      elseif l:line =~# '^[12u] '
+        if l:line[2] !=# '.'
+          let l:staged += 1
+        endif
+        if l:line[3] !=# '.'
+          let l:unstaged += 1
+        endif
+      elseif l:line =~# '^? '
+        let l:untracked += 1
+      endif
+    endfor
+
+    if empty(l:branch)
+      return
+    endif
+
+    let l:u_hl = l:unstaged > 0 ? '%#SLGitUnstaged#' : '%#SLDim#'
+    let l:s_hl = l:staged > 0 ? '%#SLGitStaged#' : '%#SLDim#'
+    let l:p_hl = l:unpushed > 0 ? '%#SLGitUnpushed#' : '%#SLDim#'
+
+    let l:g = '%#SLBranch# ' . l:branch . ' '
+    let l:g .= l:u_hl . '~' . l:unstaged
+    let l:g .= '%#SLDim#/' . l:s_hl . '+' . l:staged
+    let l:g .= '%#SLDim#/' . l:p_hl . '↑' . l:unpushed
+    if l:untracked > 0
+      let l:g .= '%#SLDim#/%#SLGitUntracked#?' . l:untracked
+    endif
+    let b:sl_git = l:g
+  endfunction
+
   function! StatuslineActive() abort
     let l:m = mode()
     if l:m ==# 'i'
-      let [l:hl, l:sep, l:name] = ['SLInsert', 'SLInsertSep', 'INSERT']
+      let [l:hl, l:name] = ['SLInsert', 'INSERT']
     elseif l:m ==# 'v'
-      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'VISUAL']
+      let [l:hl, l:name] = ['SLVisual', 'VISUAL']
     elseif l:m ==# 'V'
-      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'V-LINE']
+      let [l:hl, l:name] = ['SLVisual', 'V-LINE']
     elseif l:m ==# "\<C-v>"
-      let [l:hl, l:sep, l:name] = ['SLVisual', 'SLVisualSep', 'V-BLOCK']
+      let [l:hl, l:name] = ['SLVisual', 'V-BLOCK']
     elseif l:m ==# 'R'
-      let [l:hl, l:sep, l:name] = ['SLReplace', 'SLReplaceSep', 'REPLACE']
+      let [l:hl, l:name] = ['SLReplace', 'REPLACE']
     elseif l:m ==# 'c'
-      let [l:hl, l:sep, l:name] = ['SLCommand', 'SLCommandSep', 'COMMAND']
+      let [l:hl, l:name] = ['SLCommand', 'COMMAND']
     elseif l:m ==# 't'
-      let [l:hl, l:sep, l:name] = ['SLTerminal', 'SLTerminalSep', 'TERMINAL']
+      let [l:hl, l:name] = ['SLTerminal', 'TERMINAL']
     else
-      let [l:hl, l:sep, l:name] = ['SLNormal', 'SLNormalSep', 'NORMAL']
+      let [l:hl, l:name] = ['SLNormal', 'NORMAL']
     endif
 
-    let l:s = ''
-    let l:s .= '%#' . l:hl . '# ' . l:name . ' %#' . l:sep . '#'
-    let l:s .= '%#SLFile# %t%m%r %#SLFileSep#'
-    let l:s .= '%#SLMid#%='
-    let l:s .= '%#SLInfoSep#%#SLInfo# %{&fenc!=""?&fenc:&enc} │ %{&ff} │ %{&ft!=""?&ft:"no ft"} '
-    let l:s .= '%#' . l:sep . '#%#' . l:hl . '# %p%% %l:%c '
+    let l:sep = ' %#SLSep#❯ '
+    let l:rsep = ' %#SLSep#❮ '
+    let l:s = '%#SLBase# '
+    let l:s .= '%#' . l:hl . '#[' . l:name . ']'
+    let l:s .= l:sep . '%#SLFile#📄 %t'
+    if &readonly
+      let l:s .= ' %#SLRO#🔒'
+    endif
+    if &modified
+      let l:s .= ' %#SLMod#[+]'
+    endif
+
+    let l:git = get(b:, 'sl_git', '')
+    if !empty(l:git)
+      let l:s .= l:sep . l:git
+    endif
+
+    let l:s .= '%#SLBase#%='
+    let l:s .= '%#SLDim#%{&fenc!=""?&fenc:&enc} │ %{&ff} │ '
+    let l:s .= '%#SLFileType#%{&ft!=""?&ft:"no ft"}'
+    let l:s .= l:rsep . '%#SLPos#%p%% %#SLDim#%l:%c '
     return l:s
   endfunction
 
   function! StatuslineInactive() abort
-    return '%#SLInactive# %t%m%r %= %p%% %l:%c '
+    return '%#SLInactive# 📄 %t%m%r %= %p%% %l:%c '
   endfunction
 
   augroup MyStatusline
     autocmd!
     autocmd ColorScheme * call s:setup_statusline_hl()
+    autocmd BufEnter,BufWritePost,FocusGained,DirChanged * call s:update_git_info()
     autocmd WinEnter,BufEnter * setlocal statusline=%!StatuslineActive()
     autocmd WinLeave * setlocal statusline=%!StatuslineInactive()
   augroup END
 
+  call s:update_git_info()
   set statusline=%!StatuslineActive()
 
 "--------------------Normalモード--------------------"
